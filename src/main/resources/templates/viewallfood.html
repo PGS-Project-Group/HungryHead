@@ -54,11 +54,11 @@
 
         <tr th:each="fooditem, iStat : ${fooditems}">
             <th scope="row" th:text="${iStat.index + 1}">1</th>
-            <td th:text="${fooditem.fName}">Larry</td>
-            <td th:text="${fooditem.fDesc}">Larry</td>
-            <td th:text="${fooditem.fUnitPrice}">Larry</td>
+            <td th:text="${fooditem.name}">Larry</td>
+            <td th:text="${fooditem.description}">Larry</td>
+            <td th:text="${fooditem.unitPrice}">Larry</td>
 
-            <td><a href="" th:href="@{/login/vendorlogin/fooditems/{id}/addfood/{fid} (id=${vid}, fid=${fooditem.fId})}" class="btn btn-danger">Add</a></td>
+            <td><a href="" th:href="@{/login/vendorlogin/fooditems/{id}/addfood/{fid} (id=${vid}, fid=${fooditem.id})}" class="btn btn-danger">Add</a></td>
             
 
         </tr>

@@ -60,17 +60,18 @@ public class VendorController {
 	    @GetMapping("/login/vendorlogin/fooditems/{id}/add")
 		public String getFoodItemsAdd(@PathVariable Long id,Model model) {
 			model.addAttribute("fooditem" ,new FoodItem());
-			model.addAttribute("vid", id);
+			model.addAttribute("vendorId", id);
 			return "FooditemsAdd" ;
 		}
 
 	
 	    @PostMapping("/login/vendorlogin/fooditems/{id}/add")
-		public String postFoodItemsAdd(@ModelAttribute("fooditem")FoodItem food ,@PathVariable Long id ) {
+		public String postFoodItemsAdd(@ModelAttribute("fooditem")FoodItem food ,@PathVariable("id") Long id ) {
+	    	food.setVendorId(id);
 	    	foodService.addfood(food);
 	    	return "redirect:/login/vendorlogin/fooditems/"+id;
 		
-			 }
+		}
 	    
 	    @GetMapping("/login/vendorlogin/fooditems/{id}/delete/{fid}")
 		public String deleteFoodItem(@PathVariable Long id , @PathVariable Long fid) throws FoodNotFoundException {
@@ -82,7 +83,7 @@ public class VendorController {
 		public String updateVendor(@PathVariable Long id , Model model ,@PathVariable Long fid) throws FoodNotFoundException {
 			FoodItem food = foodService.getFoodItemById(fid);
 			model.addAttribute("fooditem",food);
-			model.addAttribute("vid", id);
+			model.addAttribute("vendorId", id);
 			return  "FooditemsAdd";
 		}
 	
