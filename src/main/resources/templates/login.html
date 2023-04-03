@@ -49,36 +49,33 @@
 	
 	<br>
 	<div class="container-fluid">
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-sm-3 pt-3" >
-            <div class="card" style="background-color:white;">
-                <div class="card-body">
-                    <h4 class="card-title">Customer</h4>
-                    <p class="card-text">Click here to login as a Customer</p>
-                    <a href="#" th:href="@{/login/customerlogin}" class="card-link btn btn-primary">Enter</a>
-
-                </div>
-            </div>
+            <div class="card text-center" style="width: 18rem;">
+            <img th:src="@{/images/customerlogo.png}" src="../static/images/customerlogo.png" class="card-img-top">
+            <div class="card-body">
+            <h5 class="card-text">Click here to Login/SignUp as Customer</h5>
+            <a href="#" th:href="@{/login/customerlogin}" class="btn btn-primary">Login/SignUp</a>
+        </div>
+    </div>
         </div>
         <div class="col-sm-3 pt-3" >
-            <div class="card" style="background-color:white;">
-                <div class="card-body">
-                    <h4 class="card-title">Vendor</h4>
-                    <p class="card-text">Click here to login as a Vendor</p>
-                    <a href="#" th:href="@{/login/vendorlogin}" class="card-link btn btn-primary">Enter</a>
-
-                </div>
-            </div>
+            <div class="card text-center" style="width: 18rem;">
+            <img th:src="@{/images/vendorlogo.png}" src="../static/images/vendorlogo.png" class="card-img-top">
+            <div class="card-body">
+            <h5 class="card-text">Click here to Login as Vendor</h5>
+            <a href="#" th:href="@{/login/vendorlogin}" class="btn btn-primary">Login/SignUp</a>
+        </div>
+    </div>
         </div>
         <div class="col-sm-3 pt-3" >
-            <div class="card" style="background-color:white;">
-                <div class="card-body">
-                    <h4 class="card-title">Admin</h4>
-                    <p class="card-text">Click here to login as a Admin</p>
-                    <a href="#" th:href="@{/login/adminlogin}" class="card-link btn btn-primary">Enter</a>
-
-                </div>
-            </div>
+            <div class="card text-center" style="width: 18rem;">
+            <img th:src="@{/images/adminlogo.png}" src="../static/images/adminlogo.png" class="card-img-top">
+            <div class="card-body">
+            <h5 class="card-text">Click here to Login/SignUp as Admin</h5>
+            <a href="#" th:href="@{/login/adminlogin}" class="btn btn-primary">Login/SignUp</a>
+        </div>
+    </div>
         </div>
 
     </div>
