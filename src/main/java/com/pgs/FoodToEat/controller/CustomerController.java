@@ -65,5 +65,4 @@ public class CustomerController {
 		return "customerHome";
 	}
 
-
 }
