@@ -1,5 +1,6 @@
 package com.pgs.FoodToEat.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.pgs.FoodToEat.entity.Admin;
@@ -86,6 +87,15 @@ public class VendorController {
 			model.addAttribute("vendorId", id);
 			return  "FooditemsAdd";
 		}
+	    
+	    @GetMapping("/vendor/home/{id}")
+	    public String getVendorPageForCustomer(@PathVariable("id") Long vendorId, Model m) throws VendorNotFoundException {
+	    	List<FoodItem> foodItems = vendorService.getFoodByVendorId(vendorId);
+	    	String vendorName = vendorService.getVendorById(vendorId).getName();
+	    	m.addAttribute("list_food_items", foodItems);
+	    	m.addAttribute("vendor_name", vendorName);
+	    	return "vendorPageForCustomer.html";
+	    }
 	
 	
 	

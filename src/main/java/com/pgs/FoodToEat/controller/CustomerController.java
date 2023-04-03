@@ -65,20 +65,5 @@ public class CustomerController {
 		return "customerHome";
 	}
 
-//	 @GetMapping("/login/vendorlogin/fooditems/{cid}/add/{vid}/{fid}")
-//		public String getFoodItemsAdd(@PathVariable Long cid,@PathVariable Long vid,@PathVariable Long fid,Model model) {
-//			model.addAttribute("fooditem" ,new FoodItems());
-//			model.addAttribute("vid", id);
-//			return "FooditemsAdd" ;
-//		}
-//
-//	
-//	    @PostMapping("/login/vendorlogin/fooditems/{id}/add")
-//		public String postFoodItemsAdd(@ModelAttribute("fooditem")FoodItems food ,@PathVariable Long id ) {
-//	    	foodService.addfood(food);
-//	    	return "redirect:/login/vendorlogin/fooditems/"+id;
-//		
-//			 }
-//	 
 
 }

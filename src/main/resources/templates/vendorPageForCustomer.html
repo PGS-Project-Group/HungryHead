@@ -192,8 +192,9 @@ h1, h2, h3, h4, h5, h6 {
 	</div>
 	<div class="container">
 		<div class="row">
+
 			<tr th:each="vendor, iStat : ${list_vendor}">
-				<a th:href="@{/vendor/home/{id}(id=${vendor.id})}">
+				<a href="https://www.youtube.com/">
 					<div class="col-lg-4">
 						<div class="cards-container"
 							style="width: 30%; margin-left: 20px; margin-bottom: 20px; padding-top: 20px;">
@@ -213,7 +214,7 @@ h1, h2, h3, h4, h5, h6 {
 
 											<p class="place-name"
 												style="font-weight: 600; padding-bottom: 10px; color: rgba(0, 0, 0, 0.87);">
-												<td th:text="${vendor.name}"></td>
+												<td th:text="${vendor.name}">Larry</td>
 											</p>
 											<p class="place-speciality"
 												style="font-size: 14px; color: rgba(128, 128, 128, 0.97);">Italian,

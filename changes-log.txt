@@ -1,0 +1,3 @@
+Restructured the application
+Fixed food items not showing at vendor end
+Fixed Vendor add, update and delete food. Fixed Customer view food.

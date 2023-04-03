@@ -28,11 +28,6 @@ public class AdminController {
 	@Autowired
 	AdminService adminService;
 
-	@GetMapping("/login")
-	public String getloginpage() {
-		return "login";
-	}
-
 	@GetMapping("/login/adminlogin")
 	public String getadminlogin(Model m) {
 		m.addAttribute("adminobject", new LoginData());
