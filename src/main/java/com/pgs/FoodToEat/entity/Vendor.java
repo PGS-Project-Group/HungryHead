@@ -29,12 +29,22 @@ public class Vendor implements Serializable {
 	private String phone;
 	private String email;
 	private String password;
+	private String typesOfFood;
+	private Double rating;
+	private String imageUrl;
 	
-	public Vendor(String name, String phone, String email, String password) {
+	public Vendor(String name, String phone, String email, String password , String typesOfFood, Double rating,
+			String imageUrl) {
 		super();
 		this.name = name;
 		this.phone = phone;
 		this.email = email;
 		this.password = password;
+		this.typesOfFood = typesOfFood;
+		this.rating = rating;
+		this.imageUrl = imageUrl;
 	}
+
+	
+	
 }

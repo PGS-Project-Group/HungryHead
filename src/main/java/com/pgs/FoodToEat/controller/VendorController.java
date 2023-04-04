@@ -108,20 +108,20 @@ public class VendorController {
 		return "vendorSignUp.html";
 	}
 
-	@PostMapping("/signup/vendorsignup")
-	public String postVendorSignUp(@ModelAttribute("sign_up_object") SignUpData data, Model m)
-			throws VendorNotFoundException {
-		Vendor vendor = new Vendor(data.getName(), data.getPhone(), data.getEmail(), data.getPassword());
-		//vendorService.addVendor(vendor);
-		//vendor = vendorService.signIn(data.getEmail(), data.getPassword());
-		//m.addAttribute("vendorId", vendor.getId());
-		//m.addAttribute("vendorName", vendor.getName());
-		//return "vendorHome.html";
-		//make a new request;
-		VendorRequest vendorReq = new VendorRequest(vendor, false);
-		vendorRequestService.addRequest(vendorReq);
-		return "index.html";
-	}
+//	@PostMapping("/signup/vendorsignup")
+//	public String postVendorSignUp(@ModelAttribute("sign_up_data") SignUpData data, Model m)
+//			throws VendorNotFoundException {
+//		Vendor vendor = new Vendor(data.getName(), data.getPhone(), data.getEmail(), data.getPassword());
+//		//vendorService.addVendor(vendor);
+//		//vendor = vendorService.signIn(data.getEmail(), data.getPassword());
+//		//m.addAttribute("vendorId", vendor.getId());
+//		//m.addAttribute("vendorName", vendor.getName());
+//		//return "vendorHome.html";
+//		//make a new request;
+//		VendorRequest vendorReq = new VendorRequest(vendor, false);
+//		vendorRequestService.addRequest(vendorReq);
+//		return "index.html";
+//	}
 	
 	
 }
