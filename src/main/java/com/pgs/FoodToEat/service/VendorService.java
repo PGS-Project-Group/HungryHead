@@ -3,9 +3,12 @@ package com.pgs.FoodToEat.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.pgs.FoodToEat.entity.FoodItem;
 import com.pgs.FoodToEat.entity.Vendor;
 import com.pgs.FoodToEat.error.VendorNotFoundException;
+
 
 public interface VendorService {
 	public Long getVendorid();

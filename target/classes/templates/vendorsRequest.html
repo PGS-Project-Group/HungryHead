@@ -36,45 +36,35 @@
         </div>
     </div>
 </nav>
-<div class="jumbotron text-center">
-    <h1 class="display-4">Welcome back, Admin</h1>
-    <p>Easily manage your data from this  <mark>Admin-Portal</mark></p>
-</div>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-3 pt-3" >
-            <div class="card" style="background-color:white;">
-                <div class="card-body">
-                    <h4 class="card-title">Customers</h4>
-                    <p class="card-text">Manage all the customers here.</p>
-                    <a href="#" th:href="@{/admin/customers}" class="card-link btn btn-primary">Manage</a>
+<div class="container">
 
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3 pt-3" >
-            <div class="card" style="background-color:white;">
-                <div class="card-body">
-                    <h4 class="card-title">Vendors</h4>
-                    <p class="card-text">Manage all the vendors here.</p>
-                    <a href="#" th:href="@{/admin/vendors}" class="card-link btn btn-primary">Manage</a>
+    <a th:href="@{/admin/vendors/add}" style="margin: 20px 0" class="btn btn-primary">Add Vendor</a>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">SN</th>
+            <th scope="col">Vendor Name</th>
+             <th scope="col">Phone</th>
+            <th scope="col">Email</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Update</th>
+        </tr>
+        </thead>
+        <tbody>
 
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-sm-3 pt-3" >
-            <div class="card" style="background-color:white;">
-                <div class="card-body">
-                    <h4 class="card-title">Vendor Requests</h4>
-                    <p class="card-text">Manage all the vendor requests here.</p>
-                    <a href="#" th:href="@{/admin/vendorRequests}" class="card-link btn btn-primary">Manage</a>
+        <tr th:each="request, iStat : ${list_vendor_requests}">
+            <th scope="row" th:text="${iStat.index + 1}">1</th>
+            <td th:text="${request.vendor.name}">Larry</td>
+            <td th:text="${request.vendor.Phone}">123456789</td>
+            <td th:text="${request.vendor.Email}">larry@gmail.com</td>
+            
 
-                </div>
-            </div>
-        </div>
+            <td><a href="" th:href="@{/admin/vendorRequest/delete/{id}(id=${request.id})}" class="btn btn-danger">Delete</a></td>
+            <td><a href="" th:href="@{/admin/vendorRequest/approve/{id}(id=${request.id})}" class="btn btn-warning">Approve</a></td>
 
-    </div>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 

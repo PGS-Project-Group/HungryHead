@@ -4,11 +4,14 @@ import com.pgs.FoodToEat.entity.Admin;
 import com.pgs.FoodToEat.entity.Customer;
 import com.pgs.FoodToEat.entity.LoginData;
 import com.pgs.FoodToEat.entity.Vendor;
+import com.pgs.FoodToEat.entity.VendorRequest;
 import com.pgs.FoodToEat.error.AdminNotFoundException;
 import com.pgs.FoodToEat.error.CustomerNotFoundException;
 import com.pgs.FoodToEat.error.VendorNotFoundException;
+import com.pgs.FoodToEat.error.VendorRequestNotFoundException;
 import com.pgs.FoodToEat.service.AdminService;
 import com.pgs.FoodToEat.service.CustomerService;
+import com.pgs.FoodToEat.service.VendorRequestService;
 import com.pgs.FoodToEat.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +30,8 @@ public class AdminController {
 	VendorService vendorService;
 	@Autowired
 	AdminService adminService;
+	@Autowired
+	VendorRequestService vendorRequestService;
 
 	@GetMapping("/login/adminlogin")
 	public String getadminlogin(Model m) {
@@ -108,6 +113,27 @@ public class AdminController {
 		Vendor vend = vendorService.getVendorById(id);
 		model.addAttribute("vendor", vend);
 		return "vendorsAdd";
+	}
+	
+	//vendor requuests
+	@GetMapping("/admin/vendorRequests")
+	public String getVendorRequests(Model model) {
+		model.addAttribute("list_vendor_requests", vendorRequestService.getAllRequests());
+		return "vendorsRequest.html";
+	}
+	
+	@GetMapping("/admin/vendorRequest/delete/{id}") 
+	public String deleteVendorRequest(@PathVariable("id") Long id) throws VendorRequestNotFoundException {
+		vendorRequestService.removeRequestById(id);
+		return "redirect:/admin/vendorRequests";
+	}
+	
+	@GetMapping("/admin/vendorRequest/approve/{id}") 
+	public String approveVendorRequest(@PathVariable("id") Long id) throws VendorRequestNotFoundException {
+		VendorRequest request = vendorRequestService.getRequestById(id);
+		vendorRequestService.removeRequestById(id);
+		vendorService.addVendor(request.getVendor());
+		return "redirect:/admin/vendorRequests";
 	}
 
 }
