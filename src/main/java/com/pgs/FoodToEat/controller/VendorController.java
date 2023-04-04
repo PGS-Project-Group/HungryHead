@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import com.pgs.FoodToEat.entity.Admin;
+import com.pgs.FoodToEat.entity.Customer;
 import com.pgs.FoodToEat.entity.FoodItem;
 import com.pgs.FoodToEat.entity.LoginData;
+import com.pgs.FoodToEat.entity.SignUpData;
 import com.pgs.FoodToEat.entity.Vendor;
+import com.pgs.FoodToEat.error.CustomerNotFoundException;
 import com.pgs.FoodToEat.error.FoodNotFoundException;
 import com.pgs.FoodToEat.error.VendorNotFoundException;
 import com.pgs.FoodToEat.service.FoodService;
@@ -92,6 +95,23 @@ public class VendorController {
 		m.addAttribute("list_food_items", foodItems);
 		m.addAttribute("vendor_name", vendorName);
 		return "vendorPageForCustomer.html";
+	}
+	
+	@GetMapping("/signup/vendorsignup")
+	public String preVendorSignUp(Model m) {
+		m.addAttribute("sign_up_object", new SignUpData());
+		return "vendorSignUp.html";
+	}
+
+	@PostMapping("/signup/vendorsignup")
+	public String postVendorSignUp(@ModelAttribute("sign_up_object") SignUpData data, Model m)
+			throws VendorNotFoundException {
+		Vendor vendor = new Vendor(data.getName(), data.getPhone(), data.getEmail(), data.getPassword());
+		vendorService.addVendor(vendor);
+		vendor = vendorService.signIn(data.getEmail(), data.getPassword());
+		m.addAttribute("vendorId", vendor.getId());
+		m.addAttribute("vendorName", vendor.getName());
+		return "vendorHome.html";
 	}
 	
 	

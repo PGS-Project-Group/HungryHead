@@ -3,9 +3,13 @@ package com.pgs.FoodToEat.controller;
 import com.pgs.FoodToEat.entity.Customer;
 import com.pgs.FoodToEat.entity.LoginData;
 import com.pgs.FoodToEat.entity.SignUpData;
+import com.pgs.FoodToEat.entity.Vendor;
 import com.pgs.FoodToEat.error.CustomerNotFoundException;
 import com.pgs.FoodToEat.service.CustomerService;
 import com.pgs.FoodToEat.service.FoodService;
+import com.pgs.FoodToEat.service.VendorService;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +26,8 @@ public class CustomerController {
 	CustomerService customerService;
 	@Autowired
 	FoodService foodService;
+	@Autowired
+	VendorService vendorService;
 
 	@GetMapping("/login/customerlogin")
 	public String preCustomerlogin(Model m) {
@@ -63,6 +69,18 @@ public class CustomerController {
 		m.addAttribute("custId", cust.getId());
 		m.addAttribute("custName", cust.getName());
 		return "customerHome";
+	}
+	
+	@GetMapping("/login/customerlogin/home/{id}")
+	public String getCustomerHome(@PathVariable("id") Long customerId, Model m) {
+		m.addAttribute("customer_id", customerId);
+		FetchHomeData(m);
+		return "index";
+	}
+	
+	public void FetchHomeData(Model m) {
+		List<Vendor> vendors = vendorService.getAllVendors();
+		m.addAttribute("list_vendor", vendors);
 	}
 
 }
