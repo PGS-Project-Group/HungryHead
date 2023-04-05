@@ -83,6 +83,21 @@ public class VendorServiceImpl implements VendorService{
 		List<FoodItem> foods = foodRepository.findByVendorId(id);
 		return foods;
 	}
+
+
+	@Override
+	public List<Vendor> getVerifiedVendor() {
+		return vendorRepository.findByVerified("true");
+	}
+
+
+	@Override
+	public Vendor getVendorByEmail(String email) throws VendorNotFoundException {
+		Optional<Vendor> vendor = vendorRepository.findByEmail(email);
+		if(vendor.isEmpty()) 
+			throw new VendorNotFoundException("Vendor with this email do not exists!");
+		return vendor.get();
+	}
 	
 	
 	

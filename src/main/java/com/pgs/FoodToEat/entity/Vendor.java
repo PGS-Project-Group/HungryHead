@@ -31,10 +31,12 @@ public class Vendor implements Serializable {
 	private String password;
 	private String typesOfFood;
 	private Double rating;
+	@Column(length = 2000)
 	private String imageUrl;
+	private String verified;
 	
 	public Vendor(String name, String phone, String email, String password , String typesOfFood, Double rating,
-			String imageUrl) {
+			String imageUrl, String verified) {
 		super();
 		this.name = name;
 		this.phone = phone;
@@ -43,6 +45,7 @@ public class Vendor implements Serializable {
 		this.typesOfFood = typesOfFood;
 		this.rating = rating;
 		this.imageUrl = imageUrl;
+		this.verified = verified;
 	}
 
 	

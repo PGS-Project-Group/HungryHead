@@ -14,4 +14,5 @@ public interface VendorRequestService {
 	public List<VendorRequest> getAllRequests();
 	public VendorRequest getRequestById(Long id) throws VendorRequestNotFoundException;
 	public void removeRequestById(Long id) throws VendorRequestNotFoundException;
+	public void removeRequestByVendorId(Long id) throws VendorRequestNotFoundException;
 }

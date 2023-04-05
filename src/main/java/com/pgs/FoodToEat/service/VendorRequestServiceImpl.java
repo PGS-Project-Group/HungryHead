@@ -42,4 +42,12 @@ public class VendorRequestServiceImpl implements VendorRequestService {
 		requestRepo.save(request);
 	}
 
+	@Override
+	public void removeRequestByVendorId(Long id) throws VendorRequestNotFoundException {
+		Optional<VendorRequest> request= requestRepo.findByVendorId(id);
+		if(request.isEmpty()) 
+			throw new VendorRequestNotFoundException("Vendor Request Not Found!");
+		requestRepo.deleteById(request.get().getId());
+	}
+
 }

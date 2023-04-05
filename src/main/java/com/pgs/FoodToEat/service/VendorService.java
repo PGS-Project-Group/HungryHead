@@ -18,4 +18,6 @@ public interface VendorService {
 	public Vendor getVendorById(Long id) throws VendorNotFoundException;
 	public Vendor signIn(String email, String password) throws VendorNotFoundException;
 	public List<FoodItem> getFoodByVendorId(Long id);
+	public List<Vendor> getVerifiedVendor();
+	public Vendor getVendorByEmail(String email) throws VendorNotFoundException;
 }

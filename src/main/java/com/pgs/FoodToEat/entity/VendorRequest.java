@@ -17,12 +17,10 @@ public class VendorRequest {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private Vendor vendor;
-	private boolean verified;
-	public VendorRequest(Vendor vendor, boolean verified) {
+	private Long vendorId;
+	public VendorRequest(Long vendorId) {
 		super();
-		this.vendor = vendor;
-		this.verified = verified;
+		this.vendorId = vendorId;
 	}
 	
 	

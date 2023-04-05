@@ -25,7 +25,7 @@ public class WebsiteController {
 	}
 
 	public void FetchHomeData(Model m) {
-		List<Vendor> vendors = vendorService.getAllVendors();
+		List<Vendor> vendors = vendorService.getVerifiedVendor();
 		m.addAttribute("list_vendor", vendors);
 	}
 

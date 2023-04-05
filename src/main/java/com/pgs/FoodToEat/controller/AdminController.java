@@ -13,6 +13,10 @@ import com.pgs.FoodToEat.service.AdminService;
 import com.pgs.FoodToEat.service.CustomerService;
 import com.pgs.FoodToEat.service.VendorRequestService;
 import com.pgs.FoodToEat.service.VendorService;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -115,24 +119,33 @@ public class AdminController {
 		return "vendorsAdd";
 	}
 	
-	//vendor requuests
+	//vendor requests
 	@GetMapping("/admin/vendorRequests")
-	public String getVendorRequests(Model model) {
-		model.addAttribute("list_vendor_requests", vendorRequestService.getAllRequests());
+	public String getVendorRequests(Model model) throws VendorNotFoundException {
+		List<VendorRequest> requests = vendorRequestService.getAllRequests();
+		List<Vendor> vendorsToBeApproved = new ArrayList<>();
+		for(VendorRequest req : requests) {
+			vendorsToBeApproved.add(vendorService.getVendorById(req.getVendorId()));
+		}
+		model.addAttribute("list_vendor_requests", vendorsToBeApproved);
 		return "vendorsRequest.html";
 	}
 	
 	@GetMapping("/admin/vendorRequest/delete/{id}") 
-	public String deleteVendorRequest(@PathVariable("id") Long id) throws VendorRequestNotFoundException {
-		vendorRequestService.removeRequestById(id);
+	public String deleteVendorRequest(@PathVariable("id") Long vendorId) throws VendorRequestNotFoundException, VendorNotFoundException {
+		//remove vendor request and vendor
+		vendorRequestService.removeRequestByVendorId(vendorId);
+		vendorService.removeVendorById(vendorId);
 		return "redirect:/admin/vendorRequests";
 	}
 	
 	@GetMapping("/admin/vendorRequest/approve/{id}") 
-	public String approveVendorRequest(@PathVariable("id") Long id) throws VendorRequestNotFoundException {
-		VendorRequest request = vendorRequestService.getRequestById(id);
-		vendorRequestService.removeRequestById(id);
-		vendorService.addVendor(request.getVendor());
+	public String approveVendorRequest(@PathVariable("id") Long vendorId) throws VendorRequestNotFoundException, VendorNotFoundException {
+		//remove request verify vendor
+		vendorRequestService.removeRequestByVendorId(vendorId);
+		Vendor vendor = vendorService.getVendorById(vendorId);
+		vendor.setVerified("true");
+		vendorService.addVendor(vendor);
 		return "redirect:/admin/vendorRequests";
 	}
 

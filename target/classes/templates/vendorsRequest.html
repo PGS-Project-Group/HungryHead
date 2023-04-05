@@ -44,23 +44,24 @@
         <tr>
             <th scope="col">SN</th>
             <th scope="col">Vendor Name</th>
-             <th scope="col">Phone</th>
+            <th scope="col">Phone</th>
             <th scope="col">Email</th>
+            <th scope="col">Types of Food</th>
             <th scope="col">Delete</th>
-            <th scope="col">Update</th>
+            <th scope="col">Approve</th>
         </tr>
         </thead>
         <tbody>
 
-        <tr th:each="request, iStat : ${list_vendor_requests}">
+        <tr th:each="vendor, iStat : ${list_vendor_requests}">
             <th scope="row" th:text="${iStat.index + 1}">1</th>
-            <td th:text="${request.vendor.name}">Larry</td>
-            <td th:text="${request.vendor.Phone}">123456789</td>
-            <td th:text="${request.vendor.Email}">larry@gmail.com</td>
-            
+            <td th:text="${vendor.name}">Larry</td>
+            <td th:text="${vendor.Phone}">123456789</td>
+            <td th:text="${vendor.Email}">larry@gmail.com</td>
+            <td th:text="${vendor.typesOfFood}"></td>
 
-            <td><a href="" th:href="@{/admin/vendorRequest/delete/{id}(id=${request.id})}" class="btn btn-danger">Delete</a></td>
-            <td><a href="" th:href="@{/admin/vendorRequest/approve/{id}(id=${request.id})}" class="btn btn-warning">Approve</a></td>
+            <td><a href="" th:href="@{/admin/vendorRequest/delete/{id}(id=${vendor.id})}" class="btn btn-danger">Delete</a></td>
+            <td><a href="" th:href="@{/admin/vendorRequest/approve/{id}(id=${vendor.id})}" class="btn btn-warning">Approve</a></td>
 
         </tr>
         </tbody>

@@ -10,6 +10,7 @@ import com.pgs.FoodToEat.entity.LoginData;
 import com.pgs.FoodToEat.entity.SignUpData;
 import com.pgs.FoodToEat.entity.Vendor;
 import com.pgs.FoodToEat.entity.VendorRequest;
+import com.pgs.FoodToEat.entity.VendorSignupData;
 import com.pgs.FoodToEat.error.CustomerNotFoundException;
 import com.pgs.FoodToEat.error.FoodNotFoundException;
 import com.pgs.FoodToEat.error.VendorNotFoundException;
@@ -35,7 +36,7 @@ public class VendorController {
 
 	@Autowired
 	VendorService vendorService;
-	
+
 	@Autowired
 	VendorRequestService vendorRequestService;
 
@@ -101,27 +102,25 @@ public class VendorController {
 		m.addAttribute("vendor_name", vendorName);
 		return "vendorPageForCustomer.html";
 	}
-	
+
 	@GetMapping("/signup/vendorsignup")
 	public String preVendorSignUp(Model m) {
-		m.addAttribute("sign_up_object", new SignUpData());
+		m.addAttribute("sign_up_object", new VendorSignupData());
 		return "vendorSignUp.html";
 	}
 
-//	@PostMapping("/signup/vendorsignup")
-//	public String postVendorSignUp(@ModelAttribute("sign_up_data") SignUpData data, Model m)
-//			throws VendorNotFoundException {
-//		Vendor vendor = new Vendor(data.getName(), data.getPhone(), data.getEmail(), data.getPassword());
-//		//vendorService.addVendor(vendor);
-//		//vendor = vendorService.signIn(data.getEmail(), data.getPassword());
-//		//m.addAttribute("vendorId", vendor.getId());
-//		//m.addAttribute("vendorName", vendor.getName());
-//		//return "vendorHome.html";
-//		//make a new request;
-//		VendorRequest vendorReq = new VendorRequest(vendor, false);
-//		vendorRequestService.addRequest(vendorReq);
-//		return "index.html";
-//	}
-	
-	
+	@PostMapping("/signup/vendorsignup")
+	public String postVendorSignUp(@ModelAttribute("sign_up_data") VendorSignupData data, Model m)
+			throws VendorNotFoundException {
+		Vendor vendor = new Vendor(data.getName(), data.getPhone(), data.getEmail(), data.getPassword(),
+				data.getTypesOfFood(), 0.0d, data.getImageUrl(), "false");
+//make a new request;
+		vendorService.addVendor(vendor);
+		Long vendorId = vendorService.getVendorByEmail(data.getEmail()).getId();
+		VendorRequest vendorReq = new VendorRequest(vendorId);
+		vendorRequestService.addRequest(vendorReq);
+		
+		return "redirect:/";
+	}
+
 }

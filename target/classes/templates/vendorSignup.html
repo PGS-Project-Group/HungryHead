@@ -56,7 +56,7 @@
 
                 <div class="form-outline mb-4">
                     <label for="name">Full Name</label>
-                    <input type="text" name="full_name" id="name"  required th:field="*{name}" placeholder="Your Email" class="form-control form-control-lg">
+                    <input type="text" name="full_name" id="name"  required th:field="*{name}" placeholder="Your Full Name" class="form-control form-control-lg">
                 </div>
 
                 <div class="form-outline mb-4">
@@ -67,6 +67,16 @@
                 <div class="form-outline mb-4">
                     <label for="password">Password</label>
                     <input type="text" class="form-control form-control-lg" th:field="*{password}" placeholder="Password" name="password" id="password">
+                </div> 
+                
+                 <div class="form-outline mb-4">
+                    <label for="types_of_food">Types of Food</label>
+                    <input type="text" class="form-control form-control-lg" th:field="*{typesOfFood}" placeholder="Food Tags" name="types_of_food" id="types_of_food">
+                </div> 
+                
+                 <div class="form-outline mb-4">
+                    <label for="vendor_img_url">Restaurant Home Page Image Url</label>
+                    <input type="text" class="form-control form-control-lg" th:field="*{imageUrl}" placeholder="Restaurant Home Page Image Url" name="vendor_img_url" id="vendor_img_url">
                 </div>                
                <div class="text-center text-lg-start mt-4 pt-2">
             <button type="submit" value="Login" class="btn btn-primary btn-lg"
