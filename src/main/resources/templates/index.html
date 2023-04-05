@@ -110,10 +110,13 @@ h1, h2, h3, h4, h5, h6 {
 
 			<div class="col-md-1 menu">
 				<div style="margin-left: 60px;">
-					<a href="#"> <img src="images/pizza.jpg"
+					<a href="#" th:href="@{/getfood/{type}  (type='Pizza')}" > <img src="images/pizza.jpg"
 						style="width: 120px; border-radius: 20px;">
-						<div class="caption" style="margin-left: 40px;">
-							<p>Pizza</p>
+						<div class="caption" style="margin-left: 10px;">
+							
+							<a href="#" th:href="@{/getfood/{type}  (type='Pizza')}" >Pizza</a>
+							
+							
 						</div>
 					</a>
 				</div>
@@ -121,10 +124,11 @@ h1, h2, h3, h4, h5, h6 {
 
 			<div class="col-md-1 menu">
 				<div style="margin-left: 120px;">
-					<a href="#"> <img src="images/burger.jpg"
+					<a href="#" th:href="@{/getfood/{type}  (type='Burger')}" > <img src="images/burger.jpg"
 						style="width: 120px; border-radius: 20px;">
 						<div class="caption" style="margin-left: 40px;">
-							<p>Burger</p>
+							<a href="#" th:href="@{/getfood/{type}  (type='Burger')}" >Burger</a>
+							
 						</div>
 					</a>
 				</div>
@@ -132,58 +136,58 @@ h1, h2, h3, h4, h5, h6 {
 
 			<div class="col-md-1 menu">
 				<div style="margin-left: 180px;">
-					<a href="#"> <img src="images/biryani.jpg"
+					<a href="#" th:href="@{/getfood/{type}  (type='Biryani')}"> <img  src="images/biryani.jpg"
 						style="width: 120px; border-radius: 20px;">
 						<div class="caption" style="margin-left: 40px;">
-							<p>Biryani</p>
+							<a href="#" th:href="@{/getfood/{type}  (type='Biryani')}" >Biryani</a>
 						</div>
 					</a>
 				</div>
 			</div>
 			<div class="col-md-1 menu">
 				<div style="margin-left: 240px;">
-					<a href="#"> <img src="images/rolls.jpg"
+					<a href="#" th:href="@{/getfood/{type}  (type='Rolls')}" > <img  src="images/rolls.jpg"
 						style="width: 120px; border-radius: 20px;">
 						<div class="caption" style="margin-left: 40px;">
-							<p>Rolls</p>
+							<a href="#" th:href="@{/getfood/{type}  (type='Rolls')}" >Rolls</a>
 						</div>
 					</a>
 				</div>
 			</div>
+			
 			<div class="col-md-1 menu">
 				<div style="margin-left: 300px;">
-					<a href="#"> <img src="images/thali.jpg"
+					<a href="#" th:href="@{/getfood/{type}  (type='Thali')}" > <img src="images/thali.jpg"
 						style="width: 120px; border-radius: 20px;">
 						<div class="caption" style="margin-left: 40px;">
-							<p>Thali</p>
+							<a href="#" th:href="@{/getfood/{type}  (type='Thali')}" >Thali</a>
 						</div>
 					</a>
 				</div>
 			</div>
+			
 			<div class="col-md-1 menu">
 				<div style="margin-left: 360px;">
-					<a href="#"> <img src="images/cake.jpg"
+					<a href="#" th:href="@{/getfood/{type}  (type='Cake')}" > <img src="images/cake.jpg"
 						style="width: 120px; border-radius: 20px;">
 						<div class="caption" style="margin-left: 40px;">
-							<p>Cake</p>
+							<a href="#" th:href="@{/getfood/{type}  (type='Cake')}" >Cake</a>
 						</div>
 					</a>
 				</div>
 			</div>
 			<div class="col-md-1 menu">
 				<div style="margin-left: 420px;">
-					<a href="#"> <img src="images/icecreame.jpg"
+					<a href="#" th:href="@{/getfood/{type}  (type='Creame')}" > <img src="images/icecreame.jpg"
 						style="width: 120px; border-radius: 20px;">
 						<div class="caption" style="margin-left: 40px;">
-							<p>Creame</p>
+							<a href="#" th:href="@{/getfood/{type}  (type='Creame')}" >Creame</a>
 						</div>
 					</a>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
 	<div>
 		<hr>
 		<h5
