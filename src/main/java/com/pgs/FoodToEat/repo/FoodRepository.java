@@ -12,4 +12,6 @@ import com.pgs.FoodToEat.entity.FoodItem;
 public interface FoodRepository extends JpaRepository<FoodItem ,Long> {	
 	Optional<FoodItem> findById(Long id);
 	List<FoodItem> findByVendorId(Long vendorId);
+
+	List<FoodItem> findByNameContainingIgnoreCase(String foodType);
 }

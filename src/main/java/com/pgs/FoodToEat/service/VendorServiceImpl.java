@@ -99,6 +99,11 @@ public class VendorServiceImpl implements VendorService{
 		return vendor.get();
 	}
 	
+	@Override
+	public List<FoodItem> getFoodByType(String foodType) {
+		List<FoodItem> foods = foodRepository.findByNameContainingIgnoreCase(foodType);
+		return foods;
+	}
 	
 	
 	

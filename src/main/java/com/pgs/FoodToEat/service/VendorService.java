@@ -20,4 +20,5 @@ public interface VendorService {
 	public List<FoodItem> getFoodByVendorId(Long id);
 	public List<Vendor> getVerifiedVendor();
 	public Vendor getVendorByEmail(String email) throws VendorNotFoundException;
+	public List<FoodItem> getFoodByType(String foodType );
 }
