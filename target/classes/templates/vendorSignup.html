@@ -45,40 +45,40 @@
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-            <form th:action="@{/signup/vendorsignup}" method="post" th:object="${sign_up_object}">
-             <div class="divider d-flex align-items-center my-4">
+            <form th:action="@{/signup/vendorsignup}" method="post" enctype="multipart/form-data" th:object="${sign_up_object}">
+             <div class="divider d-flex align-items-center my-2">
             <h5 class="text-center fw-bold mx-3 mb-0">Sign Up</h5>
           </div>
-                <div class="form-outline mb-4">
+                <div class="form-outline mb-2">
                     <label for="email">Email</label>
                     <input type="text" name="email" id="email"  required th:field="*{email}" placeholder="Your Email" class="form-control form-control-lg">
                 </div>
 
-                <div class="form-outline mb-4">
+                <div class="form-outline mb-3">
                     <label for="name">Full Name</label>
                     <input type="text" name="full_name" id="name"  required th:field="*{name}" placeholder="Your Full Name" class="form-control form-control-lg">
                 </div>
 
-                <div class="form-outline mb-4">
+                <div class="form-outline mb-2">
                     <label for="phone">Phone</label>
                     <input type="text" name="phone" id="phone"  required th:field="*{phone}" placeholder="Your Phone Number" class="form-control form-control-lg">
                 </div>
 
-                <div class="form-outline mb-4">
+                <div class="form-outline mb-2">
                     <label for="password">Password</label>
                     <input type="text" class="form-control form-control-lg" th:field="*{password}" placeholder="Password" name="password" id="password">
                 </div> 
                 
-                 <div class="form-outline mb-4">
+                 <div class="form-outline mb-2">
                     <label for="types_of_food">Types of Food</label>
                     <input type="text" class="form-control form-control-lg" th:field="*{typesOfFood}" placeholder="Food Tags" name="types_of_food" id="types_of_food">
                 </div> 
                 
-                 <div class="form-outline mb-4">
+                 <div class="form-outline mb-2">
                     <label for="vendor_img_url">Restaurant Home Page Image Url</label>
                     <input type="text" class="form-control form-control-lg" th:field="*{imageUrl}" placeholder="Restaurant Home Page Image Url" name="vendor_img_url" id="vendor_img_url">
                 </div>                
-               <div class="text-center text-lg-start mt-4 pt-2">
+               <div class="text-center text-lg-start mt-3 pt-2">
             <button type="submit" value="Login" class="btn btn-primary btn-lg"
               style="padding-left: 2.5rem; padding-right: 2.5rem;">Signup</button>
             </div>
