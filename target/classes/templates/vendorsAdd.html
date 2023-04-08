@@ -40,18 +40,24 @@
     <div class="row">
         <div class="col-sm-4">
             <form th:action="@{/admin/vendors/add}" method="post" th:object="${vendor}">
-                <input type="hidden" name="id"  th:field="*{Id}">
+                <input type="hidden" name="id"  th:field="*{id}">
                 <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" required th:field="*{Name}" name="name" id="name"  placeholder="Enter name">
+                    <label for="name"> Full Name</label>
+                    <input type="text" class="form-control" required th:field="*{name}" name="name" id="name"  placeholder="Enter name">
                     <label for="phone">Phone</label>
-                    <input type="text" class="form-control" required th:field="*{Phone}" name="phone" id="phone"  placeholder="Enter Contact Number">
+                    <input type="text" class="form-control" required th:field="*{phone}" name="phone" id="phone"  placeholder="Enter Contact Number">
                     <label for="email">Email</label>
-                    <input type="text" class="form-control" required th:field="*{Email}" name="email" id="email"  placeholder="Enter Email Id">
+                    <input type="text" class="form-control" required th:field="*{email}" name="email" id="email"  placeholder="Enter Email Id">
                     <label for="password">Password</label>
-                    <input type="text" class="form-control" required th:field="*{Password}" name="password" id="password"  placeholder="Enter Password">
+                    <input type="text" class="form-control" required th:field="*{password}" name="password" id="password"  placeholder="Enter Password">
                
-                </div>
+                    <label for="types_of_food">Types of Food</label>
+                    <input type="text" class="form-control" th:field="*{typesOfFood}" placeholder="Food Tags" name="types_of_food" id="types_of_food">
+               
+                    <label for="vendor_img_url">Restaurant Home Page Image Url</label>
+                    <input type="text" class="form-control " th:field="*{imageUrl}" placeholder="Restaurant Home Page Image Url" name="vendor_img_url" id="vendor_img_url">
+                  </div>
+               
 
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

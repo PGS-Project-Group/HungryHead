@@ -81,7 +81,7 @@ h1, h2, h3, h4, h5, h6 {
 
 			<div class="w3-right w3-hide-small">
 				<a th:href="@{/}" class="w3-bar-item w3-button">Home</a> 
-				<a th:href="@{/login}" href="#" class="w3-bar-item w3-button">Login/Signup</a> 
+				<a th:href="@{/login}" href="#" class="w3-bar-item w3-button">SignIn</a> 
 				<a th:href="@{/signup/vendorsignup}" class="w3-bar-item w3-button">Join us as a Resturant</a> 
 				<a href="#contact" class="w3-bar-item w3-button">AboutUs</a> 
 				<a href="#contact" class="w3-bar-item w3-button">Contact</a>
@@ -154,6 +154,7 @@ h1, h2, h3, h4, h5, h6 {
 					</a>
 				</div>
 			</div>
+			
 			<div class="col-md-1 menu">
 				<div style="margin-left: 300px;">
 					<a href="#" th:href="@{/getfood/{type}  (type='Thali')}" > <img src="images/thali.jpg"
@@ -164,6 +165,7 @@ h1, h2, h3, h4, h5, h6 {
 					</a>
 				</div>
 			</div>
+			
 			<div class="col-md-1 menu">
 				<div style="margin-left: 360px;">
 					<a href="#" th:href="@{/getfood/{type}  (type='Cake')}" > <img src="images/cake.jpg"
@@ -186,8 +188,6 @@ h1, h2, h3, h4, h5, h6 {
 			</div>
 		</div>
 	</div>
-
-
 	<div>
 		<hr>
 		<h5
@@ -249,13 +249,15 @@ h1, h2, h3, h4, h5, h6 {
 							style="width: 30%; margin-left: 20px; margin-bottom: 20px; padding-top: 20px;">
 							<div class="card"
 								style="background-color: #fff; box-shadow: 10px 10px 40px 2px rgba(128, 128, 128, 0.4); display: inline-block; width: 300px; border-radius: 10px;">
-								<div class="card-media"
-									style="background-image: url(); background-position: center; background-size: cover; height: 200px; width: 100%; object-fit: fit; border-radius: 10px 10px 0 0; position: relative;">
+								  <div class="card-media"
+									style=" background-position: center; background-size: cover; height: 200px; width: 100%; object-fit: fit; border-radius: 10px 10px 0 0; position: relative;">
+									<img th:src="${vendor.imageUrl}" alt="Vendor Image" style="width: 298px; height: 180px;">
 									<div class="delivery-time"
 										style="position: absolute; background-color: #f5f5f5; max-width: 60px; padding: 3px 6px; font-size: 12px; right: 3%; bottom: 6%; border-radius: 4px;">25
 										mins</div>
 									<div class="bookmark"></div>
 								</div>
+								
 								<div class="card-description" style="padding: 10px;">
 									<div class="about-place"
 										style="display: flex; justify-content: space-between; align-items: center;">
@@ -405,9 +407,10 @@ h1, h2, h3, h4, h5, h6 {
 	<footer class="w3-center w3-light-grey w3-padding-32">
 		<p>
 			Powered by <a href="" title="" target="_blank"
-				class="w3-hover-text-green">PGS Interns</a>
+				class="w3-hover-text-green">PGS Interns</a><br>
+				Food To Eat, Copyright @ 2023
 		</p>
-		<p>Food To Eat, Copyright @ 2023</p>
+		
 	</footer>
 
 
