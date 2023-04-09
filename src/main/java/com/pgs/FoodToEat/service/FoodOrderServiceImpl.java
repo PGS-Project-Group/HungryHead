@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pgs.FoodToEat.entity.FoodOrder;
+import com.pgs.FoodToEat.entity.FoodOrderStatus;
 import com.pgs.FoodToEat.error.CustomerNotFoundException;
 import com.pgs.FoodToEat.error.FoodOrderNotFoundException;
 import com.pgs.FoodToEat.repo.FoodOrderRepository;
@@ -61,4 +62,47 @@ public class FoodOrderServiceImpl implements FoodOrderService {
 		List<FoodOrder> orders = orderRepo.findByOrderStatusAndCustomerId(orderStatus, customerId);
 		return orders;
 	}
+
+	@Override
+	public List<FoodOrder> getOrderByOrderStatusAndVendorId(Byte waitingForVendorConfirmation, Long vendorId) {
+		List<FoodOrder> orders = orderRepo.findByOrderStatusAndVendorId(waitingForVendorConfirmation, vendorId);
+		return orders;
+	}
+
+	@Override
+	public void acceptOrderByVendor(Long vendorId, Long orderId) {
+		// TODO Auto-generated method stub
+	 Optional<FoodOrder> order =orderRepo.findById(orderId);
+	 FoodOrder order2 = order.get() ;
+	 order2.setOrderStatus(FoodOrderStatus.CONFIRMED_BY_VENDOR);
+	 orderRepo.save(order2) ;
+	}
+
+	@Override 
+	public void cancelOrderByCustomer(Long orderId) {
+		// TODO Auto-generated method stub
+		 Optional<FoodOrder> order =orderRepo.findById(orderId);
+		 FoodOrder order2 = order.get() ;
+		 order2.setOrderStatus(FoodOrderStatus.CANCEL_BY_CUSTOMER);
+		 orderRepo.save(order2) ;
+	}
+
+	@Override
+	public void rejectOrderByVendor(Long vendorId, Long orderId) {
+		// TODO Auto-generated method stub
+		 Optional<FoodOrder> order =orderRepo.findById(orderId);
+		 FoodOrder order2 = order.get() ;
+		 order2.setOrderStatus(FoodOrderStatus.REJECTED_BY_VENDOR);
+		 orderRepo.save(order2) ;
+	}
+
+	@Override
+	public List<FoodOrder> getOrderHistoryByCustomerId(Long customerId) {
+		
+		return orderRepo.findOrderHistoryByCustomerId(customerId);
+	}
+
+	
+
+	
 }

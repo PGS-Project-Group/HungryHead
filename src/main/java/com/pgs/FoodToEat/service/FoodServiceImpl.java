@@ -47,6 +47,27 @@ public class FoodServiceImpl implements FoodService {
 		List<FoodItem> foods = foodRepository.findAll();
 		return foods;
 	}
+
+	@Override
+	public FoodItem getFoodById(Long foodItemId) {
+		FoodItem foodItem = foodRepository.findById(foodItemId).get();
+		
+		return foodItem;
+	}
+
+	@Override
+	public String getFoodNameById(Long foodItemId) {
+		// TODO Auto-generated method stub
+		FoodItem foodItem = foodRepository.findById(foodItemId).get();
+		return foodItem.getName();
+	}
+
+	@Override
+	public Double getFoodUnitPriceById(Long foodItemId) {
+		// TODO Auto-generated method stub
+		FoodItem foodItem = foodRepository.findById(foodItemId).get();
+		return foodItem.getUnitPrice();
+	}
 	
 	
 	
