@@ -94,12 +94,14 @@ public class VendorController {
 		return "FooditemsAdd";
 	}
 
-	@GetMapping("/vendor/home/{id}")
-	public String getVendorPageForCustomer(@PathVariable("id") Long vendorId, Model m) throws VendorNotFoundException {
+	@GetMapping("/vendor/home/{c_id}/{v_id}")
+	public String getVendorPageForCustomer(@PathVariable("c_id") Long customerId, @PathVariable("v_id") Long vendorId, Model m) throws VendorNotFoundException {
 		List<FoodItem> foodItems = vendorService.getFoodByVendorId(vendorId);
 		String vendorName = vendorService.getVendorById(vendorId).getName();
 		m.addAttribute("list_food_items", foodItems);
 		m.addAttribute("vendor_name", vendorName);
+		m.addAttribute("customer_id", customerId);
+		m.addAttribute("vendor_id", vendorId);
 		return "vendorPageForCustomer.html";
 	}
 

@@ -38,60 +38,39 @@
                             <a class="afix-1" href="#">Edit Cart</a></small></div>
                         </div>
                         <div class="panel-body">
+                            
+                            <tr th:each="item, iStat : ${cart_items}">
                             <div class="form-group">
                                 <div class="col-sm-3 col-xs-3">
-                                    <img class="img-responsive" src="//c1.staticflickr.com/1/466/19681864394_c332ae87df_t.jpg" />
+                                    <img class="img-responsive" th:src="@{${food_items[iStat.index].imageUrl}}" />
                                 </div>
                                 <div class="col-sm-6 col-xs-6">
-                                    <div class="col-xs-12">Product name</div>
-                                    <div class="col-xs-12"><small>Quantity:<span>1</span></small></div>
+                                    <div class="col-xs-12"><td th:text="${food_items[iStat.index].name}"></td></div>
+                                    <div class="col-xs-12"><small>Quantity:<span><td th:text="${item.quantity}"></td></span></small></div>
                                 </div>
                                 <div class="col-sm-3 col-xs-3 text-right">
-                                    <h6><span>$</span>25.00</h6>
+                                    <h6><span>INR </span><td th:text="${food_items[iStat.index].unitPrice*item.quantity}"></td></h6>
                                 </div>
                             </div>
                             <div class="form-group"><hr /></div>
-                            <div class="form-group">
-                                <div class="col-sm-3 col-xs-3">
-                                    <img class="img-responsive" src="//c1.staticflickr.com/1/466/19681864394_c332ae87df_t.jpg" />
-                                </div>
-                                <div class="col-sm-6 col-xs-6">
-                                    <div class="col-xs-12">Product name</div>
-                                    <div class="col-xs-12"><small>Quantity:<span>1</span></small></div>
-                                </div>
-                                <div class="col-sm-3 col-xs-3 text-right">
-                                    <h6><span>$</span>25.00</h6>
-                                </div>
-                            </div>
-                            <div class="form-group"><hr /></div>
-                            <div class="form-group">
-                                <div class="col-sm-3 col-xs-3">
-                                    <img class="img-responsive" src="//c1.staticflickr.com/1/466/19681864394_c332ae87df_t.jpg" />
-                                </div>
-                                <div class="col-sm-6 col-xs-6">
-                                    <div class="col-xs-12">Product name</div>
-                                    <div class="col-xs-12"><small>Quantity:<span>2</span></small></div>
-                                </div>
-                                <div class="col-sm-3 col-xs-3 text-right">
-                                    <h6><span>$</span>50.00</h6>
-                                </div>
-                            </div>
-                            <div class="form-group"><hr /></div>
+                            </tr>
+                            
+                            
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <strong>Subtotal</strong>
-                                    <div class="pull-right"><span>$</span><span>200.00</span></div>
+                                    <div class="pull-right"><span>INR</span><span> <td th:text="${orderData.orderAmount}"></td> </span></div>
                                 </div>
                                 <div class="col-xs-12">
                                     <small>Shipping</small>
-                                    <div class="pull-right"><span>-</span></div>
+                                    <div class="pull-right"><span>0.00</span></div>
                                 </div>
                             </div>
                             <div class="form-group"><hr /></div>
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <strong>Order Total</strong>
-                                    <div class="pull-right"><span>$</span><span>150.00</span></div>
+                                    <div class="pull-right"><span>INR</span><span><td th:text="${orderData.orderAmount}"></td></span></div>
                                 </div>
                             </div>
                         </div>
@@ -231,9 +210,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <button type="submit" class="btn btn-primary btn-submit-fix">Place Order</button>
-                                </div>
+                            <td><a href="" th:href="@{/placeOrder/{c_Id}(c_Id = ${customer_id})}" class="btn btn-warning">Approve</a></td>
                             </div>
                         </div>
                     </div>

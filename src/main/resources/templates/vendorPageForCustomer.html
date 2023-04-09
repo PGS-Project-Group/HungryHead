@@ -118,7 +118,7 @@ h1, h2, h3, h4, h5, h6 {
 		<div class="row">
 
 			<tr th:each="foodItem, iStat : ${list_food_items}">
-				<a href="https://www.youtube.com/">
+				<a th:href="@{/cart/addFood/{c_Id}/{f_Id}(c_Id = ${customer_id}, f_Id = ${foodItem.id})}">
 					<div class="col-lg-4">
 						<div class="cards-container"
 							style="width: 30%; margin-left: 20px; margin-bottom: 20px; padding-top: 20px;">

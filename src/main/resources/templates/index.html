@@ -501,7 +501,8 @@ h1, h2, h3, h4, h5, h6 {
 			    </div>
 				<div class="right-menu">
 				<a th:href="@{/}" >Home</a> 
-				<a th:href="@{/login}" href="#" >SignIn</a> 
+				<a th:href="@{/login}" href="#" >SignIn</a>
+				<a th:href="@{/cart/{c_id}(c_id = ${customer_id})}">Cart</a> 
 				<a th:href="@{/signup/vendorsignup}" >Join us as a Resturant</a>  
 				<a href="#contact" >AboutUs</a> 
 				<a href="#contact" >Contact</a>
@@ -624,7 +625,7 @@ h1, h2, h3, h4, h5, h6 {
 			 -->
 
 			<tr th:each="vendor, iStat : ${list_vendor}">
-				<a th:href="@{/vendor/home/{id}(id=${vendor.id})}">
+				<a th:href="@{/vendor/home/{c_id}/{v_id}(c_id = ${customer_id}, v_id=${vendor.id})}">
 					<div class="col-lg-4">
 						<div class="cards-container"
 							style="width: 30%; margin-left: 20px; margin-bottom: 20px; padding-top: 20px;">
