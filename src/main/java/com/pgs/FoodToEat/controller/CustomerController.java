@@ -10,6 +10,7 @@ import com.pgs.FoodToEat.entity.SignUpData;
 import com.pgs.FoodToEat.entity.Vendor;
 import com.pgs.FoodToEat.error.CustomerNotFoundException;
 import com.pgs.FoodToEat.error.FoodNotFoundException;
+import com.pgs.FoodToEat.error.FoodOrderNotFoundException;
 import com.pgs.FoodToEat.error.OrderItemNotFoundException;
 import com.pgs.FoodToEat.repo.OrderItemRepository;
 import com.pgs.FoodToEat.service.CustomerService;
@@ -84,7 +85,7 @@ public class CustomerController {
 		cust = customerService.signIn(data.getEmail(), data.getPassword());
 		m.addAttribute("custId", cust.getId());
 		m.addAttribute("custName", cust.getName());
-		
+
 		return "customerHome";
 	}
 
@@ -99,43 +100,48 @@ public class CustomerController {
 		List<Vendor> vendors = vendorService.getAllVendors();
 		m.addAttribute("list_vendor", vendors);
 	}
+	
+	/*
+	 * When we click on add button on food item it will increase its quantity by 1 in order
+	 * +,- buttons will be displayed for food items in cart
+	 * */
 
 	@GetMapping("/cart/{id}")
 	public String getCartPage(@PathVariable("id") Long customerId, Model m) throws FoodNotFoundException {
 		// can't be more than 1
-		List<FoodOrder> orders = foodOrderService
-				.getOrderByOrderStatusAndCustomerId(FoodOrderStatus.NOT_CONFIRMED, customerId);
+		List<FoodOrder> orders = foodOrderService.getOrderByOrderStatusAndCustomerId(FoodOrderStatus.NOT_CONFIRMED,
+				customerId);
 		FoodOrder inCartOrder = new FoodOrder();
-		
-		if(orders.size() > 0) {
+
+		if (orders.size() > 0) {
 			inCartOrder = orders.get(0);
 		} else {
 			inCartOrder.setOrderStatus(FoodOrderStatus.NOT_CONFIRMED);
 			inCartOrder.setCustomerId(customerId);
 			foodOrderService.addFoodOrder(inCartOrder);
-			inCartOrder = foodOrderService
-					.getOrderByOrderStatusAndCustomerId(FoodOrderStatus.NOT_CONFIRMED, customerId).get(0);
-			
+			inCartOrder = foodOrderService.getOrderByOrderStatusAndCustomerId(FoodOrderStatus.NOT_CONFIRMED, customerId)
+					.get(0);
+
 		}
-		
+
 		List<OrderItem> items = orderItemService.getOrderItemsByOrderId(inCartOrder.getOrderId());
-		
-		m.addAttribute("order_id", inCartOrder.getOrderId());
+
+		m.addAttribute("orderData", inCartOrder);
 		m.addAttribute("customer_id", customerId);
 		m.addAttribute("cart_items", items);
 		return "checkout.html";
 	}
 
-	//add/increase food item from home page
+	// add food item from home page
 	@PostMapping("/addFood/{customerId}/{orderId}/{foodId}")
 	@ResponseStatus(value = HttpStatus.OK)
-	public void addFoodItemToCart(@PathVariable("customerId") Long customeId, @PathVariable("orderId") Long orderId, 
-			@PathVariable("foodId") Long foodId) throws OrderItemNotFoundException {
+	public void addFoodItemToCart(@PathVariable("customerId") Long customerId, @PathVariable("orderId") Long orderId,
+			@PathVariable("foodId") Long foodId) throws OrderItemNotFoundException, FoodOrderNotFoundException, FoodNotFoundException {
 		boolean itemExists = orderItemService.orderItemExistsByOrderIdAndFoodItemId(orderId, foodId);
-		
-		if(itemExists) {
+
+		if (itemExists) {
 			OrderItem item = orderItemService.getOrderItemByOrderIdAndFoodItemId(orderId, foodId);
-			item.setQuantity(item.getQuantity()+1);
+			item.setQuantity(item.getQuantity() + 1);
 			orderItemService.addOrderItem(item);
 		} else {
 			OrderItem item = new OrderItem();
@@ -144,18 +150,21 @@ public class CustomerController {
 			item.setQuantity(1);
 			orderItemService.addOrderItem(item);
 		}
+		FoodOrder order = foodOrderService.getOrderById(orderId);
+		FoodItem foodItem = foodService.getFoodItemById(foodId);
+		order.setOrderAmount(order.getOrderAmount()+foodItem.getUnitPrice());
 	}
-	
-	
-	//add/increase food item in cart
+
+	// add/increase food item in cart
 	@PostMapping("/cart/{customerId}/addFood/{orderId}/{foodId}")
-	public String increaseFoodItemQuantity(@PathVariable("customerId") Long customerId, @PathVariable("orderId") Long orderId, 
-			@PathVariable("foodId") Long foodId) throws OrderItemNotFoundException {
+	public String increaseFoodItemQuantity(@PathVariable("customerId") Long customerId,
+			@PathVariable("orderId") Long orderId, @PathVariable("foodId") Long foodId)
+			throws OrderItemNotFoundException, FoodOrderNotFoundException, FoodNotFoundException {
 		boolean itemExists = orderItemService.orderItemExistsByOrderIdAndFoodItemId(orderId, foodId);
-		
-		if(itemExists) {
+
+		if (itemExists) {
 			OrderItem item = orderItemService.getOrderItemByOrderIdAndFoodItemId(orderId, foodId);
-			item.setQuantity(item.getQuantity()+1);
+			item.setQuantity(item.getQuantity() + 1);
 			orderItemService.addOrderItem(item);
 		} else {
 			OrderItem item = new OrderItem();
@@ -164,24 +173,37 @@ public class CustomerController {
 			item.setQuantity(1);
 			orderItemService.addOrderItem(item);
 		}
+		FoodOrder order = foodOrderService.getOrderById(orderId);
+		FoodItem foodItem = foodService.getFoodItemById(foodId);
+		order.setOrderAmount(order.getOrderAmount()+foodItem.getUnitPrice());
 		return "redirect:/cart/{id}(id=${customerId})";
 	}
-	
-	
-	
+
 	@PostMapping("/cart/{customerId}/deleteFood/{orderId}/{foodId}")
-	public String decreaseFoodItemQuantity(@PathVariable("customerId") Long customeId, @PathVariable("orderId") Long orderId, 
-			@PathVariable("foodId") Long foodId) throws OrderItemNotFoundException {
+	public String decreaseFoodItemQuantity(@PathVariable("customerId") Long customerId,
+			@PathVariable("orderId") Long orderId, @PathVariable("foodId") Long foodId)
+			throws OrderItemNotFoundException, FoodOrderNotFoundException, FoodNotFoundException {
 		boolean itemExists = orderItemService.orderItemExistsByOrderIdAndFoodItemId(orderId, foodId);
-		
-		if(itemExists) {
+
+		if (itemExists) {
 			OrderItem item = orderItemService.getOrderItemByOrderIdAndFoodItemId(orderId, foodId);
-			item.setQuantity(item.getQuantity()-1);
-			if(item.getQuantity() <= 0) 
+			item.setQuantity(item.getQuantity() - 1);
+			if (item.getQuantity() <= 0)
 				orderItemService.removeOrderItemById(item.getId());
 			orderItemService.addOrderItem(item);
 		}
-		//check if URL is right
+		FoodOrder order = foodOrderService.getOrderById(orderId);
+		FoodItem foodItem = foodService.getFoodItemById(foodId);
+		order.setOrderAmount(order.getOrderAmount()-foodItem.getUnitPrice());
+		// check if URL is right
 		return "redirect:/cart/{id}(id=${customerId})";
+	}
+
+	@PostMapping("/placeOrder/{customerId}/{orderId}")
+	public String placeOrder(@PathVariable("customerId") Long customerId, @PathVariable("orderId") Long orderId)
+			throws FoodOrderNotFoundException {
+		FoodOrder order = foodOrderService.getOrderById(orderId);
+		order.setOrderStatus(FoodOrderStatus.WAITING_FOR_VENDOR_CONFIRMATION);
+		return "orderHistory.html";
 	}
 }
