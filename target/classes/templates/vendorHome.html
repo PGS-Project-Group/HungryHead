@@ -47,7 +47,7 @@
                 <div class="card-body">
                     <h4 class="card-title">View Pending Orders</h4>
                     <p class="card-text">Manage all the orders here.</p>
-                    <a href="#" th:href="@{/admin/customers}" class="card-link btn btn-primary">Manage</a>
+                    <a href="#" th:href="@{/pendingOrders/{vendorid}   (vendorid=${VendorId})}" class="card-link btn btn-primary">Manage</a>
 
                 </div>
             </div>
@@ -57,21 +57,12 @@
                 <div class="card-body">
                     <h4 class="card-title">View Completed Orders</h4>
                     <p class="card-text">Completed Order History.</p>
-                    <a href="#" th:href="@{/admin/customers}" class="card-link btn btn-primary">Manage</a>
+                    <a href="#" th:href="@{/completeOrders/{vendorid}   (vendorid=${VendorId})}" class="card-link btn btn-primary">Manage</a>
 
                 </div>
             </div>
         </div>
-        <div class="col-sm-3 pt-3" >
-            <div class="card" style="background-color:white;">
-                <div class="card-body">
-                    <h4 class="card-title">View Canceled Orders</h4>
-                    <p class="card-text">Cancelled Order History.</p>
-                    <a href="#" th:href="@{/admin/customers}" class="card-link btn btn-primary">Manage</a>
-
-                </div>
-            </div>
-        </div>
+       
         <div class="col-sm-3 pt-3" >
             <div class="card" style="background-color:white;">
                 <div class="card-body">

@@ -5,6 +5,7 @@ import com.pgs.FoodToEat.entity.FoodItem;
 import com.pgs.FoodToEat.entity.FoodOrder;
 import com.pgs.FoodToEat.entity.FoodOrderStatus;
 import com.pgs.FoodToEat.entity.LoginData;
+import com.pgs.FoodToEat.entity.OrderDetails;
 import com.pgs.FoodToEat.entity.OrderItem;
 import com.pgs.FoodToEat.entity.SignUpData;
 import com.pgs.FoodToEat.entity.Vendor;
@@ -12,7 +13,7 @@ import com.pgs.FoodToEat.error.CustomerNotFoundException;
 import com.pgs.FoodToEat.error.FoodNotFoundException;
 import com.pgs.FoodToEat.error.FoodOrderNotFoundException;
 import com.pgs.FoodToEat.error.OrderItemNotFoundException;
-import com.pgs.FoodToEat.repo.OrderItemRepository;
+
 import com.pgs.FoodToEat.service.CustomerService;
 import com.pgs.FoodToEat.service.FoodOrderService;
 import com.pgs.FoodToEat.service.FoodService;
@@ -24,14 +25,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+
 
 @Controller
 public class CustomerController {
@@ -239,5 +240,82 @@ public class CustomerController {
 		order.setOrderStatus(FoodOrderStatus.WAITING_FOR_VENDOR_CONFIRMATION);
 		foodOrderService.addFoodOrder(order);
 		return "redirect:/login/customerlogin/home/"+customerId;
+	}
+	
+	
+	
+	@GetMapping("/customerlogin/home/{id}/myOrders")
+	public String getMyOrdersList(@PathVariable("id") Long customerId , Model model) throws FoodOrderNotFoundException  {
+		List<FoodOrder> list = foodOrderService.getOrderByOrderStatusAndCustomerId(FoodOrderStatus.WAITING_FOR_VENDOR_CONFIRMATION, customerId);
+	    List<OrderDetails>orderList =new ArrayList<>() ;
+	    for(FoodOrder o : list) {
+	   
+	    List<OrderItem> cartItems = orderItemService.getOrderItemsByOrderId(o.getOrderId());
+	    String foodPlusQunatity = "";
+	    Double totalPrice = 0.0 ;
+	    for(OrderItem item : cartItems ) {
+		String foodName = foodService.getFoodNameById(item.getFoodItemId());
+		Double unitPrice = foodService.getFoodUnitPriceById(item.getFoodItemId());
+			
+			foodPlusQunatity = foodPlusQunatity+item.getQuantity()+" x "+foodName+", ";
+			totalPrice = totalPrice+item.getQuantity()*unitPrice;
+		}
+	    String vendorImgUrl =  vendorService.getVendorImageUrlById(o.getVendorId());
+	    String vendorName = vendorService.getVendorNameById(o.getVendorId());
+	    String customerName =customerService.getCustomerNameById(customerId);
+        LocalDateTime orderDateAndTime = o.getOrderDateAndTime();
+        Long OrderId = o.getOrderId();
+        OrderDetails order = new OrderDetails(OrderId ,vendorImgUrl ,foodPlusQunatity,customerName,vendorName,orderDateAndTime,totalPrice);
+       orderList.add(order);
+	    }
+	    model.addAttribute("customerid",customerId );
+	    model.addAttribute("MyOrders", orderList);
+	    return "customerMyOrder" ;
+	  
+	}
+	
+	@GetMapping("/customerlogin/home/{id}/myOrderHistory")
+	public String getMyOrderHistory(@PathVariable("id") Long customerId , Model model) throws FoodOrderNotFoundException  {
+//		List<FoodOrder> list = foodOrderService.getOrderByOrderStatusAndCustomerId(FoodOrderStatus.CONFIRMED_BY_VENDOR, customerId);
+		List<FoodOrder> list = foodOrderService.getOrderHistoryByCustomerId( customerId);
+		
+	    List<OrderDetails>orderList =new ArrayList<>() ;
+	    for(FoodOrder o : list) {
+	   
+	    List<OrderItem> cartItems = orderItemService.getOrderItemsByOrderId(o.getOrderId());
+	    String foodPlusQunatity = "";
+	    Double totalPrice = 0.0 ;
+	    for(OrderItem item : cartItems ) {
+		String foodName = foodService.getFoodNameById(item.getFoodItemId());
+		Double unitPrice = foodService.getFoodUnitPriceById(item.getFoodItemId());
+			
+			foodPlusQunatity = foodPlusQunatity+item.getQuantity()+" x "+foodName+", ";
+			totalPrice = totalPrice+item.getQuantity()*unitPrice;
+		}
+	    String vendorImgUrl =  vendorService.getVendorImageUrlById(o.getVendorId());
+	    String vendorName = vendorService.getVendorNameById(o.getVendorId());
+	    String customerName =customerService.getCustomerNameById(customerId);
+        LocalDateTime orderDateAndTime = o.getOrderDateAndTime();
+        Long OrderId = o.getOrderId();
+        
+        
+        
+        OrderDetails order = new OrderDetails(OrderId ,vendorImgUrl ,foodPlusQunatity,customerName,vendorName,orderDateAndTime,totalPrice);
+        order.setOrderStatus(new FoodOrderStatus().findOrderStatus(o.getOrderStatus()));
+        orderList.add(order);
+	    }
+	    
+	    model.addAttribute("MyOrders", orderList);
+	    return "customerMyOrderHistory" ;
+	  
+	}
+	
+	
+	
+	
+	@GetMapping("/cancelOrder/{customerid}/{orderid}")
+	public String cancelByCustomer(@PathVariable("orderid") Long orderId,@PathVariable("customerid") Long customerId){
+		foodOrderService.cancelOrderByCustomer(orderId);
+		return "redirect:/customerlogin/home/{customerid}/myOrders";
 	}
 }

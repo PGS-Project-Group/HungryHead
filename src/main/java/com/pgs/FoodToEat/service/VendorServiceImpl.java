@@ -104,6 +104,22 @@ public class VendorServiceImpl implements VendorService{
 		List<FoodItem> foods = foodRepository.findByNameContainingIgnoreCase(foodType);
 		return foods;
 	}
+
+
+	@Override
+	public String getVendorNameById(Long vendorId) {
+		// TODO Auto-generated method stub
+		Vendor v = vendorRepository.findById(vendorId).get();
+		return v.getName();
+	}
+
+
+	@Override
+	public String getVendorImageUrlById(Long vendorId) {
+		// TODO Auto-generated method stub
+		Vendor v = vendorRepository.findById(vendorId).get();
+		return v.getImageUrl();
+	}
 	
 	
 	

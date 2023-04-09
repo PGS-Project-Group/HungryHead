@@ -16,4 +16,11 @@ public interface FoodOrderService {
 	public List<FoodOrder> getOrderByVendorId(Long vendorId);
 	public List<FoodOrder> getOrderByOrderStatus(Byte orderStatus);
 	public List<FoodOrder> getOrderByOrderStatusAndCustomerId(Byte orderStatus, Long customerId);
+	public List<FoodOrder> getOrderByOrderStatusAndVendorId(Byte waitingForVendorConfirmation, Long vendorId);
+	public void acceptOrderByVendor(Long vendorId, Long orderId);
+	public void cancelOrderByCustomer(Long orderId);
+	public void rejectOrderByVendor(Long vendorId, Long orderId);
+	public List<FoodOrder> getOrderHistoryByCustomerId(Long customerId);
+	
+	
 }

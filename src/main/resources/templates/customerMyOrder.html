@@ -25,10 +25,10 @@
             <ul class="navbar-nav mr-auto"></ul>
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/login/customerlogin}" href="#">Customer-Home</a>
+                    <a class="nav-link" th:href="@{/admin}" href="#">Customer-Home</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/}" href="#">Logout</a>
+                    <a class="nav-link" th:href="@{/logout}" href="#">Logout</a>
                 </li>
 
             </ul>
@@ -36,46 +36,45 @@
         </div>
     </div>
 </nav>
-<div class="jumbotron text-center">
-    <h1 class="display-4">Welcome back, <span th:text="${custName}"></span></h1>
-    <p>Easily order food from here</p>
-</div>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-3 pt-3" >
-            <div class="card" style="background-color:white;">
-                <div class="card-body">
-                    <h4 class="card-title">Food Items</h4>
-                    <p class="card-text">View all the Food Items here.</p>
-                    <a href="#" th:href="@{/login/customerlogin/home/{id}  (id=${custId})}" class="card-link btn btn-primary">Food Items</a>
+<div class="container">
 
-                </div>
-            </div>
-        </div>
-         <div class="col-sm-3 pt-3" >
-            <div class="card" style="background-color:white;">
-                <div class="card-body">
-                    <h4 class="card-title">Order History</h4>
-                    <p class="card-text">View your orders here.</p>
-                    <a href="#" th:href="@{/customerlogin/home/{id}/myOrderHistory  (id=${custId})}" class="card-link btn btn-primary">Orders</a>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3 pt-3" >
-            <div class="card" style="background-color:white;">
-                <div class="card-body">
-                    <h4 class="card-title">My Orders</h4>
-                    <p class="card-text">View your orders here.</p>
-                    <a href="#" th:href="@{/customerlogin/home/{id}/myOrders  (id=${custId})}" class="card-link btn btn-primary">Orders</a>
-
-                </div>
-            </div>
-        </div>
+   
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">SN</th>
+              <th scope="col">Vendor</th>
+            <th scope="col">Vendor Name</th>
+            <th scope="col">Food Items</th>
         
+            <th scope="col">Date/Time</th>
+            
+            <th scope="col">Total Price</th>
+          
+            
+            <th scope="col">Cancel</th>
+           
+        </tr>
+        </thead>
+        <tbody>
         
+    
 
-    </div>
+        <tr th:each="myorder, iStat : ${MyOrders}">
+            <th scope="row" th:text="${iStat.index + 1}">1</th>
+             <td ><div class="card-media" th:style="'background-image: url(' + ${myorder.vendorImgUrl} + '); background-position: center; background-size: cover; height: 200px; width: 100%; object-fit: fit; border-radius: 10px 10px 0 0; position: relative;'">
+									</td>
+		    <td th:text="${myorder.vendorName}">Larry</td>
+            <td th:text="${myorder.foodItems}">Larry</td>
+            
+            <td th:text="${myorder.orderDateAndTime}">Larry</td>
+            <td th:text="${myorder.totalPrice}">Larry</td>
+           
+            <td><a th:href="@{/cancelOrder/{customerid}/{orderid}  (orderid =${myorder.orderId},customerid =${customerid})}"  class="btn btn-danger">Cancel</a></td>
+            
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 
