@@ -1,8 +1,6 @@
 package com.pgs.FoodToEat.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,14 +15,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FoodOrder implements Serializable {
+public class OrderItem implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	private Long orderId;
-	private Long customerId;
-	private Long vendorId;
-	private LocalDateTime orderDateAndTime;
-	private Byte orderStatus;
-	private String remark;
-	private Double orderAmount;
+	private Long foodItemId;
+	private Integer quantity;
 }
