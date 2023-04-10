@@ -1,18 +1,12 @@
 package com.pgs.FoodToEat.controller;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.pgs.FoodToEat.entity.Admin;
 import com.pgs.FoodToEat.entity.Customer;
 import com.pgs.FoodToEat.entity.FoodItem;
-import com.pgs.FoodToEat.entity.FoodOrder;
-import com.pgs.FoodToEat.entity.FoodOrderStatus;
 import com.pgs.FoodToEat.entity.LoginData;
-import com.pgs.FoodToEat.entity.OrderDetails;
-import com.pgs.FoodToEat.entity.OrderItem;
 import com.pgs.FoodToEat.entity.SignUpData;
 import com.pgs.FoodToEat.entity.Vendor;
 import com.pgs.FoodToEat.entity.VendorRequest;
@@ -20,11 +14,8 @@ import com.pgs.FoodToEat.entity.VendorSignupData;
 import com.pgs.FoodToEat.error.CustomerNotFoundException;
 import com.pgs.FoodToEat.error.FoodNotFoundException;
 import com.pgs.FoodToEat.error.VendorNotFoundException;
-import com.pgs.FoodToEat.service.CustomerService;
-import com.pgs.FoodToEat.service.FoodOrderService;
 import com.pgs.FoodToEat.service.FoodService;
 import com.pgs.FoodToEat.service.FoodServiceImpl;
-import com.pgs.FoodToEat.service.OrderItemService;
 import com.pgs.FoodToEat.service.VendorRequestService;
 import com.pgs.FoodToEat.service.VendorService;
 import com.pgs.FoodToEat.service.VendorServiceImpl;
@@ -42,20 +33,15 @@ public class VendorController {
 
 	@Autowired
 	FoodService foodService;
-	@Autowired
-	FoodOrderService foodOrderService;
 
 	@Autowired
 	VendorService vendorService;
-	@Autowired
-	CustomerService customerService;
 
 	@Autowired
 	VendorRequestService vendorRequestService;
-
-	@Autowired
-	OrderItemService orderItemService;
 	
+	
+
 	@GetMapping("/login/vendorlogin")
 	public String getvendorlogin(Model m) {
 		m.addAttribute("vendorobject", new LoginData());
@@ -114,10 +100,17 @@ public class VendorController {
 	public String getVendorPageForCustomer(@PathVariable("c_id") Long customerId, @PathVariable("v_id") Long vendorId, Model m) throws VendorNotFoundException {
 		List<FoodItem> foodItems = vendorService.getFoodByVendorId(vendorId);
 		String vendorName = vendorService.getVendorById(vendorId).getName();
+		String vendorImageUrl=vendorService.getVendorById(vendorId).getImageUrl();
+		String vendorDescription=vendorService.getVendorById(vendorId).getTypesOfFood();
+		Double vendorRating=vendorService.getVendorById(vendorId).getRating();
 		m.addAttribute("list_food_items", foodItems);
 		m.addAttribute("vendor_name", vendorName);
+		m.addAttribute("vendor_imageUrl",vendorImageUrl);
+		m.addAttribute("vendor_description", vendorDescription);
+		m.addAttribute("vendor_rating", vendorRating);
 		m.addAttribute("customer_id", customerId);
 		m.addAttribute("vendor_id", vendorId);
+
 		return "vendorPageForCustomer.html";
 	}
 
@@ -140,88 +133,5 @@ public class VendorController {
 		
 		return "redirect:/";
 	}
-	
-	
-	@GetMapping("/pendingOrders/{vendorid}")
-	public String pendingCustomerOrders(@PathVariable("vendorid") Long vendorId , Model model) {
-		List<FoodOrder> list = foodOrderService.getOrderByOrderStatusAndVendorId(FoodOrderStatus.WAITING_FOR_VENDOR_CONFIRMATION, vendorId);
-	    List<OrderDetails>orderList =new ArrayList<>() ;
-	    for(FoodOrder o : list) {
-	   
-	    List<OrderItem> cartItems = orderItemService.getOrderItemsByOrderId(o.getOrderId());
-	    String foodPlusQunatity = "";
-	    Double totalPrice = 0.0 ;
-	    for(OrderItem item : cartItems ) {
-		String foodName = foodService.getFoodNameById(item.getFoodItemId());
-		Double unitPrice = foodService.getFoodUnitPriceById(item.getFoodItemId());
-			
-			foodPlusQunatity =foodPlusQunatity+ item.getQuantity()+" x "+foodName+", ";
-			totalPrice = totalPrice+item.getQuantity()*unitPrice;
-		}
-	    String vendorImgUrl =  vendorService.getVendorImageUrlById(vendorId);
-	    String vendorName = vendorService.getVendorNameById(vendorId);
-	    String customerName =customerService.getCustomerNameById(o.getCustomerId());
-        LocalDateTime orderDateAndTime = o.getOrderDateAndTime();
-        Long OrderId = o.getOrderId();
-        OrderDetails order = new OrderDetails(OrderId,vendorImgUrl ,foodPlusQunatity,customerName,vendorName,orderDateAndTime,totalPrice);
-       orderList.add(order);
-	    }
-	    
-	    model.addAttribute("MyOrders", orderList);
-	    model.addAttribute("vendorid" , vendorId);
-	    return "vendorPendingOrders" ;
-	  
-	}
-	
-	
-	
-	@GetMapping("/AcceptOrder/{vendorid}/{orderid}")
-	public String  AcceptOrder(@PathVariable("vendorid") Long vendorId ,@PathVariable("orderid") Long orderId ) {
-		foodOrderService.acceptOrderByVendor(vendorId , orderId);
-		return "redirect:/pendingOrders/"+ vendorId ;
-	 
-	
-	}
-	
-	@GetMapping("/RejectOrder/{vendorid}/{orderid}")
-	public String  RejectOrder(@PathVariable("vendorid") Long vendorId ,@PathVariable("orderid") Long orderId ) {
-		foodOrderService.rejectOrderByVendor(vendorId , orderId);
-		return "redirect:/pendingOrders/"+ vendorId ;
-	 
-	
-	}
-	
-	
-	@GetMapping("/completeOrders/{vendorid}")
-	public String completeCustomerOrders(@PathVariable("vendorid") Long vendorId , Model model) {
-		List<FoodOrder> list = foodOrderService.getOrderByOrderStatusAndVendorId(FoodOrderStatus.CONFIRMED_BY_VENDOR, vendorId);
-	    List<OrderDetails>orderList =new ArrayList<>() ;
-	    for(FoodOrder o : list) {
-	   
-	    List<OrderItem> cartItems = orderItemService.getOrderItemsByOrderId(o.getOrderId());
-	    String foodPlusQunatity = "";
-	    Double totalPrice = 0.0 ;
-	    for(OrderItem item : cartItems ) {
-		String foodName = foodService.getFoodNameById(item.getFoodItemId());
-		Double unitPrice = foodService.getFoodUnitPriceById(item.getFoodItemId());
-			
-			foodPlusQunatity =foodPlusQunatity+ item.getQuantity()+" x "+foodName+", ";
-			totalPrice = totalPrice+item.getQuantity()*unitPrice;
-		}
-	    String vendorImgUrl =  vendorService.getVendorImageUrlById(vendorId);
-	    String vendorName = vendorService.getVendorNameById(vendorId);
-	    String customerName =customerService.getCustomerNameById(o.getCustomerId());
-        LocalDateTime orderDateAndTime = o.getOrderDateAndTime();
-        Long OrderId = o.getOrderId();
-        OrderDetails order = new OrderDetails(OrderId,vendorImgUrl ,foodPlusQunatity,customerName,vendorName,orderDateAndTime,totalPrice);
-       orderList.add(order);
-	    }
-	    
-	    model.addAttribute("MyOrders", orderList);
-	    model.addAttribute("vendorid" , vendorId);
-	    return "vendorCompleteOrders" ;
-	  
-	}
-	
-	
+
 }
