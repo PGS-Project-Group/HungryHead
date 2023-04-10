@@ -56,6 +56,12 @@ public class CustomerServiceImpl implements CustomerService {
 			throw new CustomerNotFoundException("Customer with this combination of email and password not found!");
 		return customer.get();
 	}
+
+	@Override
+	public String getCustomerNameById(Long customerId) {
+		Customer customer = customerRepository.findById(customerId).get();
+		return customer.getName();
+	}
 	
 	
 //	public void addCustomer(Customers customer) {

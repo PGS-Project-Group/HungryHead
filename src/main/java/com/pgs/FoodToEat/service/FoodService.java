@@ -17,4 +17,10 @@ public interface FoodService {
 	public FoodItem getFoodItemById(Long fid) throws FoodNotFoundException;
 
 	public List<FoodItem> getAllFood();
+
+	public FoodItem getFoodById(Long foodItemId);
+
+	public String getFoodNameById(Long foodItemId);
+
+	public Double getFoodUnitPriceById(Long foodItemId);
 }

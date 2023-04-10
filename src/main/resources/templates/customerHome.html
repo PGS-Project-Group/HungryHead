@@ -52,26 +52,27 @@
                 </div>
             </div>
         </div>
+         <div class="col-sm-3 pt-3" >
+            <div class="card" style="background-color:white;">
+                <div class="card-body">
+                    <h4 class="card-title">Order History</h4>
+                    <p class="card-text">View your orders here.</p>
+                    <a href="#" th:href="@{/customerlogin/home/{id}/myOrderHistory  (id=${custId})}" class="card-link btn btn-primary">Orders</a>
+
+                </div>
+            </div>
+        </div>
         <div class="col-sm-3 pt-3" >
             <div class="card" style="background-color:white;">
                 <div class="card-body">
                     <h4 class="card-title">My Orders</h4>
                     <p class="card-text">View your orders here.</p>
-                    <a href="#" th:href="@{/admin/customers}" class="card-link btn btn-primary">Orders</a>
+                    <a href="#" th:href="@{/customerlogin/home/{id}/myOrders  (id=${custId})}" class="card-link btn btn-primary">Orders</a>
 
                 </div>
             </div>
         </div>
-        <div class="col-sm-3 pt-3" >
-            <div class="card" style="background-color:white;">
-                <div class="card-body">
-                    <h4 class="card-title"> Order History</h4>
-                    <p class="card-text">View Order History.</p>
-                    <a href="#" th:href="@{/admin/customers}" class="card-link btn btn-primary">Orders</a>
-
-                </div>
-            </div>
-        </div>
+        
         
 
     </div>
