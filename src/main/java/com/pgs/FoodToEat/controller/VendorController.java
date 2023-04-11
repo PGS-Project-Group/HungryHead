@@ -114,10 +114,17 @@ public class VendorController {
 	public String getVendorPageForCustomer(@PathVariable("c_id") Long customerId, @PathVariable("v_id") Long vendorId, Model m) throws VendorNotFoundException {
 		List<FoodItem> foodItems = vendorService.getFoodByVendorId(vendorId);
 		String vendorName = vendorService.getVendorById(vendorId).getName();
+		String vendorImageUrl=vendorService.getVendorById(vendorId).getImageUrl();
+		String vendorDescription=vendorService.getVendorById(vendorId).getTypesOfFood();
+		Double vendorRating=vendorService.getVendorById(vendorId).getRating();
 		m.addAttribute("list_food_items", foodItems);
 		m.addAttribute("vendor_name", vendorName);
+		m.addAttribute("vendor_imageUrl",vendorImageUrl);
+		m.addAttribute("vendor_description", vendorDescription);
+		m.addAttribute("vendor_rating", vendorRating);
 		m.addAttribute("customer_id", customerId);
 		m.addAttribute("vendor_id", vendorId);
+
 		return "vendorPageForCustomer.html";
 	}
 
