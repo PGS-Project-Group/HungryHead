@@ -23,7 +23,7 @@ public class WebsiteController {
 	@GetMapping("/")
 	public String getHomePage(Model m) {
 		FetchHomeData(m);
-		return "index.html";
+		return "login.html";
 	}
 
 	public void FetchHomeData(Model m) {
@@ -39,14 +39,12 @@ public class WebsiteController {
 	}
 	
 	@GetMapping("/getfood/{type}") 
-	public String getFoodByType(@PathVariable("type") String foodType, Model m) {
-		
+	public String getFoodByType(@PathVariable("type") String foodType, Model m) {	
 		List<FoodItem> foodItems = vendorService.getFoodByType(foodType);
-		
 		m.addAttribute("list_food_items", foodItems);
 		m.addAttribute("food_type", foodType );
-		 
 		return "foodListByType";
 	}
 	
+
 }

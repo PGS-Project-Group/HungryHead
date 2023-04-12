@@ -90,7 +90,7 @@ public class AdminController {
 
 	@GetMapping("/admin/vendors")
 	public String getVendors(Model model) {
-		model.addAttribute("vendors", vendorService.getAllVendors());
+		model.addAttribute("vendors", vendorService.getVerifiedVendor());
 		return "vendors";
 	}
 

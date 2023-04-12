@@ -14,5 +14,6 @@ public interface CustomerService {
 	public void removeCustomerById(Long id) throws CustomerNotFoundException;
 	public Customer getCustomerById(Long id) throws CustomerNotFoundException;
 	public Customer signIn(String email, String password) throws CustomerNotFoundException;
+	public String getCustomerNameById(Long customerId);
 
 }

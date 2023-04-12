@@ -2,6 +2,7 @@ package com.pgs.FoodToEat.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,4 +27,6 @@ public class FoodItem implements Serializable{
 	private String description;
 	private Double unitPrice;
 	private Long vendorId;
+	@Column(length = 2000)
+	private String imageUrl;
 }

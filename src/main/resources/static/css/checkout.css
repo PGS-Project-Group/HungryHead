@@ -228,10 +228,11 @@ ol, ul {
 }
 
 .panel-info {
-    border-color: #999;
+    border-color: #c0c0c0;
 }
 
 .panel-heading {
+	font-size:20px;
     border-top-left-radius: 1px;
     border-top-right-radius: 1px;
 }

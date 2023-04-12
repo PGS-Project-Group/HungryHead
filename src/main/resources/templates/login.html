@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
@@ -93,4 +93,53 @@
 		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 		crossorigin="anonymous"></script>
 </body>
+</html> -->
+
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+ 
+    <!-- poppins font by google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <title>Food To Eat</title>
+  </head>
+  
+  <body>
+  
+   <section class="hero__section" style="background-image: url(https://images.unsplash.com/photo-1615719413546-198b25453f85?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYzMDQwMjkwNA&ixlib=rb-1.2.1&q=85);  min-height: 100%;min-width: 1024px;width: 100%;height: auto;position: fixed;top: 0;left: 0;">
+      
+		<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+	  <div class="container-fluid">	    
+		<div class="collapse navbar-collapse " id="navbarSupportedContent">
+		  <ul class="navbar-nav me-auto order-0 ">
+			<div class="right-menu">
+				 <a href="#" th:href="@{/login/customerlogin}" style = "font-weight: 600;">SignIn/SignUp</a> 
+				<a th:href="@{/signup/vendorsignup}" style = "font-weight: 600;">Join us as a Resturant</a> 
+				
+				<a th:href="@{/login/adminlogin}" style = "font-weight: 600;">Admin Login</a>  
+				</div>
+		  </ul>
+			</div>
+		</div>
+	</nav>
+     
+      <div class="hero__section_container">
+        <section class="hero__section" style="background-image: url(data:image/png;base64,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);  
+                 min-height: 20%;min-width: 100px;width: 20%;; margin-top:10% "></section>
+        <div  style = "font-size:35px;font-weight: 600;"> Discover the best food & drinks in India </div>
+      </div>
+    </section>
+  </body>
 </html>
