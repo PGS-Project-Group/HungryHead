@@ -64,7 +64,8 @@ public class CustomerController {
 		m.addAttribute("custName", cust.getName());
 
 		getCurrNotConfirmedOrder(cust.getId());
-		return "customerHome";
+		FetchHomeData(m);
+		return "index";
 	}
 
 //	@GetMapping("/login/customerlogin/viewfood/{id}")
@@ -88,8 +89,8 @@ public class CustomerController {
 		cust = customerService.signIn(data.getEmail(), data.getPassword());
 		m.addAttribute("custId", cust.getId());
 		m.addAttribute("custName", cust.getName());
-
-		return "customerHome";
+		FetchHomeData(m);
+		return "index";
 	}
 
 	@GetMapping("/login/customerlogin/home/{id}")
@@ -234,13 +235,15 @@ public class CustomerController {
 	}
 
 	@GetMapping("/placeOrder/{customerId}")
-	public String placeOrder(@PathVariable("customerId") Long customerId)
+	public String placeOrder(@PathVariable("customerId") Long customerId , Model m )
 			throws FoodOrderNotFoundException {
 		FoodOrder order = foodOrderService.getOrderByOrderStatusAndCustomerId(FoodOrderStatus.NOT_CONFIRMED, customerId).get(0);
 		order.setOrderDateAndTime(LocalDateTime.now());
 		order.setOrderStatus(FoodOrderStatus.WAITING_FOR_VENDOR_CONFIRMATION);
 		foodOrderService.addFoodOrder(order);
-		return "redirect:/login/customerlogin/home/"+customerId;
+		m.addAttribute("custId", customerId);
+		FetchHomeData(m);
+		return "index";
 	}
 	
 	

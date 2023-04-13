@@ -38,11 +38,12 @@ public class WebsiteController {
 		return "login.html";
 	}
 	
-	@GetMapping("/getfood/{type}") 
-	public String getFoodByType(@PathVariable("type") String foodType, Model m) {	
+	@GetMapping("/getfood/{type}/{c_id}") 
+	public String getFoodByType(@PathVariable("c_id") Long customerId, @PathVariable("type") String foodType, Model m) {	
 		List<FoodItem> foodItems = vendorService.getFoodByType(foodType);
 		m.addAttribute("list_food_items", foodItems);
 		m.addAttribute("food_type", foodType );
+		m.addAttribute("customer_id", customerId);
 		return "foodListByType";
 	}
 	
