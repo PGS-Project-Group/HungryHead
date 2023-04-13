@@ -62,15 +62,28 @@ public class VendorController {
 		return "vendorlogin";
 	}
 
+//	@PostMapping("/login/vendorlogin")
+//	public String postVendorlogin(@ModelAttribute("vendorobject") LoginData login, Model m)
+//			throws VendorNotFoundException {
+//		String mail = login.getEmail();
+//		String pass = login.getPassword();
+//		Vendor vendor = vendorService.signIn(mail, pass);
+//		m.addAttribute("VendorId", vendor.getId());
+//		m.addAttribute("VendorName", vendor.getName());
+//		return "vendorHome";
+//	}
+	
 	@PostMapping("/login/vendorlogin")
-	public String postVendorlogin(@ModelAttribute("vendorobject") LoginData login, Model m)
+	public String postVendorlogin(@ModelAttribute("vendorobject") LoginData login, Model model)
 			throws VendorNotFoundException {
 		String mail = login.getEmail();
 		String pass = login.getPassword();
 		Vendor vendor = vendorService.signIn(mail, pass);
-		m.addAttribute("VendorId", vendor.getId());
-		m.addAttribute("VendorName", vendor.getName());
-		return "vendorHome";
+		model.addAttribute("vendorId", vendor.getId());
+		model.addAttribute("vendorName", vendor.getName());
+		model.addAttribute("foodItems", vendorService.getFoodByVendorId( vendor.getId()));
+		
+		return "vendorHomePage";
 	}
 
 	@GetMapping("/login/vendorlogin/fooditems/{id}")

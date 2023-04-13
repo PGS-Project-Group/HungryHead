@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Food To Eat</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+	<link rel="stylesheet" th:href="@{/css/index.css}">
+
+	
+	
+<!-- 	
+	
+ -->
+    <link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+	
+    <link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
+	
+	<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Lato:400,400i,700">
+	
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	  
+
+	
+	
+	
+</head>
+<body>
+	<!-- Header showcase-->
+	<header class="header" style="height:27px;" > 
+	
+<!--  
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#"> <img
+				th:src="@{/images/logo.png}" src="../static/images/logo.png"
+				width="auto" height="40" class="d-inline-block align-top" alt="" />
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto"></ul>
+				<ul class="navbar-nav">
+			    </div>
+				<div class="right-menu">
+				<a th:href="@{/}" >Home</a> 
+				<a th:href="@{/login}" href="#" >SignIn</a>
+				<a th:href="@{/cart/{c_id}(c_id = ${customer_id})}">Cart</a> 
+				<a th:href="@{/signup/vendorsignup}" >Join us as a Resturant</a>  
+				<a href="#contact" >AboutUs</a> 
+				<a href="#contact" >Contact</a>
+				</div>
+				</ul>
+
+			</div>
+		</div>
+	</nav> -->
+	
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#"> <img
+				th:src="@{/images/logo.png}" src="../static/images/logo.png"
+				width="auto" height="40" class="d-inline-block align-top" alt="" />
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto"></ul>
+				<ul class="navbar-nav">
+			    </div>
+				<div class="right-menu">
+				<a th:href="@{/}" > Vendor Home</a> 
+				<a th:href="@{/customerlogin/home/{id}/myOrders  (id=${custId})}" href="#" >Logout</a>
+				
+				</div>
+				</ul>
+
+			</div>
+		</div>
+	</nav> 
+	
+		
+	</header>
+	<br>
+	<br>
+	<table class="table">
+        
+        <tbody>
+
+        <tr>
+          <td>Manage All The Customer Order Requests</td>
+           <td><a href="" th:href="@{/pendingOrders/{vendorid}   (vendorid=${vendorId})}" class="btn btn-warning">Manage</a></td>
+        </tr>
+        <tr >
+          <td >View All Completed Orders</td>
+           <td><a href="" th:href="@{/completeOrders/{vendorid}   (vendorid=${vendorId})}" class="btn btn-warning">View</a></td>
+        </tr>
+        <tr >
+          <td>Add New FoodItems</td>
+           <td><a href="" th:href="@{/login/vendorlogin/fooditems/{id}(id=${vendorId})}" class="btn btn-warning">Add</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <h5 style="color: gray; font-size: 30px; margin-left: 35%; margin-bottom: 40px; font-weight: normal"><span th:text="${vendorName}"></span>'s Menu</h5>
+	
+	 <hr style="border-color: #444444;">
+      
+	  <div class="container">
+	      <tr th:each="foodItem, iStat : ${foodItems}">
+	           <div class="about-place"
+		          style="display: flex; justify-content: space-between; align-items: center;">
+	              <div class="place">
+	                 <p class="place-name"
+	                 style="font-weight: 600; font-size:1.5rem; font-weight:bold; padding-bottom: 10px; color: rgba(0, 0, 0, 0.87);">
+	                 <td th:text="${foodItem.name}">Larry</td>
+	                 </p>
+	                 <p class="per-person"
+	                 style="font-size: 18px; color: rgba(0,0,0,1); padding-top:0px;">INR
+	                 <td th:text="${foodItem.unitPrice}">Larry</td></p>
+	                 <p class="place-speciality"
+		             style="font-size: 16px; color: rgba(128, 128, 128, 0.97);margin-top:-20px;">
+		             <td th:text="${foodItem.description}">Larry</td></p>
+	              </div>
+                  <div class="place-review ml-auto" style="margin-top:-10px;">
+	                  <div class="card-media"
+	                    style=" background-position: center; background-size: cover; height: 75px; width: 100px; object-fit: fit; border-radius: 10px; position: relative;">
+	                    <img th:src="${foodItem.imageUrl}" alt="Food Image" style="width: 100px; height: 75px; border-radius: 10px;">
+	                  </div>		
+	                  <div style="padding-top:15px;display: flex; justify-content: center; align-items: center;">
+                      <a href="#" th:href="@{/login/vendorlogin/fooditems/{id}/delete/{fid} (id=${vendorId}, fid=${foodItem.id})}" class="btn btn-primary btn-sm" style="margin-top:-10px;">Delete</a>
+                      </div>
+                      <div style="padding-top:15px;display: flex; justify-content: center; align-items: center;">
+                      <a href="#" th:href="@{/login/vendorlogin/fooditems/{id}/update/{fid} (id=${vendorId}, fid=${foodItem.id})}" class="btn btn-primary btn-sm" style="margin-top:-10px;">Update</a>
+                      </div>
+                  </div>
+	          </div>
+           <hr>
+       </tr>
+    </div>
+</div>
+	
+	
+	
+	
+
+	
+	<!-- Footer -->
+	<section class="footer-bar" style="width:100%;margin-top:20px;">
+		
+			<div class="footer-copyright" style="text-align:center; padding-bottom:0px;">
+					<p>
+			Powered by <a href="" title="" target="_blank"
+				class="w3-hover-text-green">PGS Interns</a><br>
+				Food To Eat, Copyright @ 2023
+		</p>
+			</div>
+		
+		
+	</section>
+	
+		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
+</body>
+</html>
