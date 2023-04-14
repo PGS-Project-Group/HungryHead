@@ -107,22 +107,22 @@
 
         <tr>
           <td>Manage All The Customer Order Requests</td>
-           <td><a href="" th:href="@{/pendingOrders/{vendorid}   (vendorid=${vendorId})}" class="btn btn-warning">Manage</a></td>
+           <td><a href="" th:href="@{/vendor/{vendorid}/orderRequest    (vendorid=${vendorId})}" class="btn btn-warning">Manage</a></td>
         </tr>
         <tr >
           <td >View All Completed Orders</td>
-           <td><a href="" th:href="@{/completeOrders/{vendorid}   (vendorid=${vendorId})}" class="btn btn-warning">View</a></td>
+           <td><a href="" th:href="@{/vendor/{vendorid}/orderHistory   (vendorid=${vendorId})}" class="btn btn-warning">View</a></td>
         </tr>
         <tr >
           <td>Add New FoodItems</td>
-           <td><a href="" th:href="@{/login/vendorlogin/fooditems/{id}(id=${vendorId})}" class="btn btn-warning">Add</a></td>
+           <td><a href="" th:href="@{/vendor/{vendorid}/addNewFoodItems (vendorid=${vendorId})}" class="btn btn-warning">Add</a></td>
         </tr>
         </tbody>
     </table>
     <br>
     <h5 style="color: gray; font-size: 30px; margin-left: 40%; margin-bottom: 40px; font-weight: normal"><span th:text="${vendorName}"></span>'s Menu</h5>
 	<h5 style="color: gray;  margin-left: 35%; margin-bottom: 40px; font-weight: normal">
-	<form th:action="@{/searchFood/{vendorid}   (vendorid=${vendorId})}" method="post">
+	<form th:action="@{/vendor/{vendorid}/foodItemsByName  (vendorid=${vendorId})}" method="post">
     <input type="text" id="name" name="name"   placeholder="Enter Food Name"/>
     <button type="submit">Search</button></h5>
 </form>
@@ -150,10 +150,10 @@
 	                    <img th:src="${foodItem.imageUrl}" alt="Food Image" style="width: 100px; height: 75px; border-radius: 10px;">
 	                  </div>		
 	                  <div style="padding-top:15px;display: flex; justify-content: center; align-items: center;">
-                      <a href="#" th:href="@{/login/vendorlogin/fooditems/{id}/delete/{fid} (id=${vendorId}, fid=${foodItem.id})}" class="btn btn-primary btn-sm" style="margin-top:-10px;">Delete</a>
+                      <a href="#" th:href="@{/vendor/{vendorid}/updateFoodItem/{foodid} (vendorid=${vendorId}, foodid=${foodItem.id})}" class="btn btn-primary btn-sm" style="margin-top:-10px;">Update</a>
                       </div>
                       <div style="padding-top:15px;display: flex; justify-content: center; align-items: center;">
-                      <a href="#" th:href="@{/login/vendorlogin/fooditems/{id}/update/{fid} (id=${vendorId}, fid=${foodItem.id})}" class="btn btn-primary btn-sm" style="margin-top:-10px;">Update</a>
+                      <a href="#" th:href="@{/vendor/{vendorid}/deleteFoodItem/{foodid} (vendorid=${vendorId}, foodid=${foodItem.id})}" class="btn btn-primary btn-sm" style="margin-top:-10px;">Delete</a>
                       </div>
                   </div>
 	          </div>
