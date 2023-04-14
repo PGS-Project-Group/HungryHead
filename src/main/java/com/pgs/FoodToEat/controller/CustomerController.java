@@ -20,6 +20,7 @@ import com.pgs.FoodToEat.service.FoodService;
 import com.pgs.FoodToEat.service.OrderItemService;
 import com.pgs.FoodToEat.service.VendorService;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,13 +49,13 @@ public class CustomerController {
 	@Autowired
 	OrderItemService orderItemService;
 
-	@GetMapping("/login/customerlogin")
+	@GetMapping("/customer/login")
 	public String preCustomerlogin(Model m) {
 		m.addAttribute("customerobject", new LoginData());
 		return "customerlogin";
 	}
 
-	@PostMapping("/login/customerlogin")
+	@PostMapping("/customer/login")
 	public String postcustomerlogin(@ModelAttribute("customerobject") LoginData login, Model m)
 			throws CustomerNotFoundException {
 		String mail = login.getEmail();
@@ -65,7 +66,7 @@ public class CustomerController {
 
 		getCurrNotConfirmedOrder(cust.getId());
 		FetchHomeData(m);
-		return "index";
+		return "redirect:/customer/"+cust.getId()+"/home";
 	}
 
 //	@GetMapping("/login/customerlogin/viewfood/{id}")
@@ -75,13 +76,13 @@ public class CustomerController {
 //		return "viewallfood";
 //	}
 
-	@GetMapping("/signup/customersignup")
+	@GetMapping("/customer/signup")
 	public String preCustomerSignUp(Model m) {
 		m.addAttribute("sign_up_object", new SignUpData());
 		return "customerSignUp.html";
 	}
 
-	@PostMapping("/signup/customersignup")
+	@PostMapping("/customer/signup")
 	public String postCustomerSignUp(@ModelAttribute("sign_up_object") SignUpData data, Model m)
 			throws CustomerNotFoundException {
 		Customer cust = new Customer(data.getName(), data.getPhone(), data.getEmail(), data.getPassword());
@@ -90,12 +91,13 @@ public class CustomerController {
 		m.addAttribute("custId", cust.getId());
 		m.addAttribute("custName", cust.getName());
 		FetchHomeData(m);
-		return "index";
+		return "redirect:/customer/"+cust.getId()+"/home";
 	}
 
-	@GetMapping("/login/customerlogin/home/{id}")
+	
+	@GetMapping("/customer/{id}/home")
 	public String getCustomerHome(@PathVariable("id") Long customerId, Model m) {
-		m.addAttribute("customer_id", customerId);
+		m.addAttribute("custId", customerId);
 		FetchHomeData(m);
 		return "index";
 	}
@@ -110,7 +112,7 @@ public class CustomerController {
 	 * +,- buttons will be displayed for food items in cart
 	 * */
 
-	@GetMapping("/cart/{id}")
+	@GetMapping("/customer/{id}/cart")
 	public String getCartPage(@PathVariable("id") Long customerId, Model m) throws FoodNotFoundException {
 		// can't be more than 1
 		FoodOrder inCartOrder = getCurrNotConfirmedOrder(customerId);
@@ -160,7 +162,7 @@ public class CustomerController {
 		}
 		
 		if(foodItem.getVendorId() != order.getVendorId()) {
-			return "redirect:/cart/"+customerId;
+			return "redirect:/customer/"+customerId+"/cart";
 		}
 
 		boolean itemExists = orderItemService.orderItemExistsByOrderIdAndFoodItemId(order.getOrderId(), foodId);
@@ -180,7 +182,7 @@ public class CustomerController {
 		
 		order.setOrderAmount(order.getOrderAmount()+foodItem.getUnitPrice());
 		foodOrderService.addFoodOrder(order);
-		return "redirect:/cart/"+customerId;
+		return "redirect:/customer/"+customerId+"/cart";
 	}
 
 	// add/increase food item in cart
@@ -207,7 +209,7 @@ public class CustomerController {
 		FoodItem foodItem = foodService.getFoodItemById(foodId);
 		order.setOrderAmount(order.getOrderAmount()+foodItem.getUnitPrice());
 		foodOrderService.addFoodOrder(order);
-		return "redirect:/cart/"+customerId;
+		return "redirect:/customer/"+customerId+"/cart";
 	}
 
 	@GetMapping("/cart/decrQuantity/{customerId}/{foodId}")
@@ -231,7 +233,7 @@ public class CustomerController {
 		order.setOrderAmount(order.getOrderAmount()-foodItem.getUnitPrice());
 		foodOrderService.addFoodOrder(order);
 		// check if URL is right
-		return "redirect:/cart/"+customerId;
+		return "redirect:/customer/"+customerId+"/cart";
 	}
 
 	@GetMapping("/placeOrder/{customerId}")
@@ -243,17 +245,17 @@ public class CustomerController {
 		foodOrderService.addFoodOrder(order);
 		m.addAttribute("custId", customerId);
 		FetchHomeData(m);
-		return "index";
+		return "redirect:/customer/"+customerId+"/home" ;
 	}
 	
 	
 	
-	@GetMapping("/customerlogin/home/{id}/myOrders")
+	@GetMapping("/customer/{id}/myOrders")
 	public String getMyOrdersList(@PathVariable("id") Long customerId , Model model) throws FoodOrderNotFoundException  {
 		List<FoodOrder> list = foodOrderService.getOrderByOrderStatusAndCustomerId(FoodOrderStatus.WAITING_FOR_VENDOR_CONFIRMATION, customerId);
 	    List<OrderDetails>orderList =new ArrayList<>() ;
 	    for(FoodOrder o : list) {
-	   
+	    
 	    List<OrderItem> cartItems = orderItemService.getOrderItemsByOrderId(o.getOrderId());
 	    String foodPlusQunatity = "";
 	    Double totalPrice = 0.0 ;
@@ -278,7 +280,7 @@ public class CustomerController {
 	  
 	}
 	
-	@GetMapping("/customerlogin/home/{id}/myOrderHistory")
+	@GetMapping("/customer/{id}/myOrderHistory")
 	public String getMyOrderHistory(@PathVariable("id") Long customerId , Model model) throws FoodOrderNotFoundException  {
 //		List<FoodOrder> list = foodOrderService.getOrderByOrderStatusAndCustomerId(FoodOrderStatus.CONFIRMED_BY_VENDOR, customerId);
 		List<FoodOrder> list = foodOrderService.getOrderHistoryByCustomerId( customerId);
@@ -320,6 +322,6 @@ public class CustomerController {
 	@GetMapping("/cancelOrder/{customerid}/{orderid}")
 	public String cancelByCustomer(@PathVariable("orderid") Long orderId,@PathVariable("customerid") Long customerId){
 		foodOrderService.cancelOrderByCustomer(orderId);
-		return "redirect:/customerlogin/home/{customerid}/myOrders";
+		return "redirect:/customer/{customerid}/myOrders";
 	}
 }

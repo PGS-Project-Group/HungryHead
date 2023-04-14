@@ -531,10 +531,10 @@ h1, h2, h3, h4, h5, h6 {
 				<ul class="navbar-nav">
 			    </div>
 				<div class="right-menu">
-				<a th:href="@{/}" >Home</a> 
-				<a th:href="@{/customerlogin/home/{id}/myOrders  (id=${custId})}" href="#" >My Orders</a>
-				<a th:href="@{/customerlogin/home/{id}/myOrderHistory  (id=${custId})}" >Order History</a>
-				<a th:href="@{/cart/{c_id}(c_id = ${customer_id})}">Cart</a> 
+				<a th:href="@{/customer/{id}/home  (id=${custId}) }" >Home</a> 
+				<a th:href="@{/customer/{id}/myOrders  (id=${custId})}" href="#" >My Orders</a>
+				<a th:href="@{/customer/{id}/myOrderHistory  (id=${custId})}" >Order History</a>
+				<a th:href="@{/customer/{c_id}/cart (c_id = ${custId})}">Cart</a> 
 				<!--  <a href="#contact" >AboutUs</a> 
 				<a href="#contact" >Contact</a>-->
 				</div>
@@ -556,42 +556,42 @@ h1, h2, h3, h4, h5, h6 {
 		
 		
 			<div class="hover" >
-			<a href="#" th:href="@{/getfood/{type}/{c_id}   (type='Pizza' , c_id = ${custId})}" > <img src="https://kauveryhospital.com/blog/wp-content/uploads/2021/04/pizza-5179939_960_720.jpg" style="height:150px;"></a>
+			<a href="#" th:href="@{/customer/{c_id}/food/getbytype={type}   (type='Pizza' , c_id = ${custId})}" > <img src="https://kauveryhospital.com/blog/wp-content/uploads/2021/04/pizza-5179939_960_720.jpg" style="height:150px;"></a>
 				<div class="order-title-bg">
 					<p class="order-title">Pizza</p>
 				</div>
 			</div>
 			
 			<div class="hover">
-				<a href="#" th:href="@{/getfood/{type}/{c_id}   (type='Burger'  , c_id = ${custId} )}" > <img src="https://images.pexels.com/photos/1633578/pexels-photo-1633578.jpeg?auto=compress&cs=tinysrgb&w=600" style="height:150px;"></a>
+				<a href="#" th:href="@{/customer/{c_id}/food/getbytype={type}   (type='Burger'  , c_id = ${custId} )}" > <img src="https://images.pexels.com/photos/1633578/pexels-photo-1633578.jpeg?auto=compress&cs=tinysrgb&w=600" style="height:150px;"></a>
 				<div class="order-title-bg">
 					<p class="order-title">Burger</p>
 				</div>
 			</div>
 			
 			<div class="hover">
-				<a href="#" th:href="@{/getfood/{type}/{c_id}   (type='Biryani'  , c_id = ${custId} )}" > <img src="https://images.pexels.com/photos/7837978/pexels-photo-7837978.jpeg?auto=compress&cs=tinysrgb&w=600" style="height:150px;"></a>
+				<a href="#" th:href="@{/customer/{c_id}/food/getbytype={type}  (type='Biryani'  , c_id = ${custId} )}" > <img src="https://images.pexels.com/photos/7837978/pexels-photo-7837978.jpeg?auto=compress&cs=tinysrgb&w=600" style="height:150px;"></a>
 				<div class="order-title-bg">
 					<p class="order-title">Biryani</p>
 				</div>
 			</div>
 			
 			<div class="hover">
-				<a href="#" th:href="@{/getfood/{type}/{c_id}   (type='Rolls'  , c_id = ${custId} )}" > <img src="https://static.toiimg.com/thumb/53942854.cms?width=1200&height=900" style="height:150px;"></a>
+				<a href="#" th:href="@{/customer/{c_id}/food/getbytype={type}  (type='Rolls'  , c_id = ${custId} )}" > <img src="https://static.toiimg.com/thumb/53942854.cms?width=1200&height=900" style="height:150px;"></a>
 				<div class="order-title-bg">
 					<p class="order-title">Rolls</p>
 				</div>
 			</div>
 			
 			<div class="hover">
-				<a href="#" th:href="@{/getfood/{type}/{c_id}   (type='Thali' , c_id = ${custId})}" > <img src="https://thumbs.dreamstime.com/b/indian-thali-26440151.jpg" style="height:150px;"></a>
+				<a href="#" th:href="@{/customer/{c_id}/food/getbytype={type}   (type='Thali' , c_id = ${custId})}" > <img src="https://thumbs.dreamstime.com/b/indian-thali-26440151.jpg" style="height:150px;"></a>
 				<div class="order-title-bg">
 					<p class="order-title">Thali</p>
 				</div>
 			</div>
 			
 			<div class="hover">
-				<a href="#" th:href="@{/getfood/{type}/{c_id}   (type='Cake' , c_id = ${custId})}" > <img src="https://images.pexels.com/photos/8478058/pexels-photo-8478058.jpeg?auto=compress&cs=tinysrgb&w=600" style="height:150px;"></a>
+				<a href="#" th:href="@{/customer/{c_id}/food/getbytype={type}   (type='Cake' , c_id = ${custId})}" > <img src="https://images.pexels.com/photos/8478058/pexels-photo-8478058.jpeg?auto=compress&cs=tinysrgb&w=600" style="height:150px;"></a>
 				<div class="order-title-bg">
 					<p class="order-title">Cake</p>
 				</div>
@@ -651,7 +651,7 @@ h1, h2, h3, h4, h5, h6 {
 			 -->
 
 			<tr th:each="vendor, iStat : ${list_vendor}">
-				<a th:href="@{/vendor/home/{c_id}/{v_id}(c_id = ${custId}, v_id=${vendor.id})}">
+				<a th:href="@{/customer/{c_id}/vendor/{v_id} (c_id = ${custId}, v_id=${vendor.id})}">
 					<div class="col-lg-4">
 						<div class="cards-container"
 							style="width: 30%; margin-left: 20px; margin-bottom: 20px; padding-top: 20px;">

@@ -124,7 +124,7 @@ public class VendorController {
 		return "FooditemsAdd";
 	}
 
-	@GetMapping("/vendor/home/{c_id}/{v_id}")
+	@GetMapping("/customer/{c_id}/vendor/{v_id}")
 	public String getVendorPageForCustomer(@PathVariable("c_id") Long customerId, @PathVariable("v_id") Long vendorId, Model m) throws VendorNotFoundException {
 		List<FoodItem> foodItems = vendorService.getFoodByVendorId(vendorId);
 		String vendorName = vendorService.getVendorById(vendorId).getName();
