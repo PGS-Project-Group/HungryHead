@@ -31,7 +31,7 @@
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-        <form th:action="@{/login/customerlogin}" method="post" th:object="${customerobject}">
+        <form th:action="@{/customer/login}" method="post" th:object="${customerobject}">
         
           <div class="divider d-flex text-center align-items-center my-4">
             <div  style = "color:white; margin-left:27%; font-weight: 400; font-size:40px;">Sign In</div>
@@ -52,7 +52,7 @@
                    style="padding-left: 1.5rem; padding-right: 1.5rem;">Login
            </button>
        
-            <p class="medium fw-bold mt-2 pt-1 mb-0" style = "color:white; font-weight: 600; font-size: 20px;">Don't have an account? <a href="#" th:href="@{/signup/customersignup}"  style = "font-weight: 600; font-color:grey;" >Register Here!</a></p>
+            <p class="medium fw-bold mt-2 pt-1 mb-0" style = "color:white; font-weight: 600; font-size: 20px;">Don't have an account? <a href="#" th:href="@{/customer/signup}"  style = "font-weight: 600; font-color:grey;" >Register Here!</a></p>
           </div>
         </form>
       </div>

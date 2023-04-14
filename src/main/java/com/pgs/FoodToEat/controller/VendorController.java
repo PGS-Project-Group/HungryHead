@@ -108,6 +108,82 @@ public class VendorController {
 		return "vendorHomePage";
 	}
 
+
+	@GetMapping("/login/vendorlogin/fooditems/{id}")
+	public String getFoodItems(@PathVariable Long id, Model model) {
+		model.addAttribute("fooditems", vendorService.getFoodByVendorId(id));
+		model.addAttribute("vid", id);
+		return "fooditems";
+	}
+
+	@GetMapping("/login/vendorlogin/fooditems/{id}/add")
+	public String getFoodItemsAdd(@PathVariable Long id, Model model) {
+		model.addAttribute("fooditem", new FoodItem());
+		model.addAttribute("vendorId", id);
+		return "FooditemsAdd";
+	}
+
+	@PostMapping("/login/vendorlogin/fooditems/{id}/add")
+	public String postFoodItemsAdd(@ModelAttribute("fooditem") FoodItem food, @PathVariable("id") Long id) {
+		food.setVendorId(id);
+		foodService.addfood(food);
+		return "redirect:/login/vendorlogin/fooditems/" + id;
+
+	}
+
+	@GetMapping("/login/vendorlogin/fooditems/{id}/delete/{fid}")
+	public String deleteFoodItem(@PathVariable Long id, @PathVariable Long fid) throws FoodNotFoundException {
+		foodService.removeFoodById(fid);
+		return "redirect:/login/vendorlogin/fooditems/" + id;
+	}
+
+	@GetMapping("/login/vendorlogin/fooditems/{id}/update/{fid}")
+	public String updateVendor(@PathVariable Long id, Model model, @PathVariable Long fid)
+			throws FoodNotFoundException {
+		FoodItem food = foodService.getFoodItemById(fid);
+		model.addAttribute("fooditem", food);
+		model.addAttribute("vendorId", id);
+		return "FooditemsAdd";
+	}
+
+	@GetMapping("/customer/{c_id}/vendor/{v_id}")
+	public String getVendorPageForCustomer(@PathVariable("c_id") Long customerId, @PathVariable("v_id") Long vendorId, Model m) throws VendorNotFoundException {
+		List<FoodItem> foodItems = vendorService.getFoodByVendorId(vendorId);
+		String vendorName = vendorService.getVendorById(vendorId).getName();
+		String vendorImageUrl=vendorService.getVendorById(vendorId).getImageUrl();
+		String vendorDescription=vendorService.getVendorById(vendorId).getTypesOfFood();
+		Double vendorRating=vendorService.getVendorById(vendorId).getRating();
+		m.addAttribute("list_food_items", foodItems);
+		m.addAttribute("vendor_name", vendorName);
+		m.addAttribute("vendor_imageUrl",vendorImageUrl);
+		m.addAttribute("vendor_description", vendorDescription);
+		m.addAttribute("vendor_rating", vendorRating);
+		m.addAttribute("customer_id", customerId);
+		m.addAttribute("vendor_id", vendorId);
+
+		return "vendorPageForCustomer.html";
+	}
+
+	@GetMapping("/signup/vendorsignup")
+	public String preVendorSignUp(Model m) {
+		m.addAttribute("sign_up_object", new VendorSignupData());
+		return "vendorSignUp.html";
+	}
+
+	@PostMapping("/signup/vendorsignup")
+	public String postVendorSignUp(@ModelAttribute("sign_up_data") VendorSignupData data, Model m)
+			throws VendorNotFoundException {
+		Vendor vendor = new Vendor(data.getName(), data.getPhone(), data.getEmail(), data.getPassword(),
+				data.getTypesOfFood(), 0.0d, data.getImageUrl(), "false");
+//make a new request;
+		vendorService.addVendor(vendor);
+		Long vendorId = vendorService.getVendorByEmail(data.getEmail()).getId();
+		VendorRequest vendorReq = new VendorRequest(vendorId);
+		vendorRequestService.addRequest(vendorReq);
+		
+		return "redirect:/";
+	}
+
 	
 	@GetMapping("/vendor/{vendorid}/orderRequest")
 	public String pendingCustomerOrders(@PathVariable("vendorid") Long vendorId , Model model) {
