@@ -24,7 +24,7 @@
 		  <ul class="navbar-nav me-auto order-0 ">
 			<div class="right-menu">
 				 <a href="#" th:href="@{/}" style = "font-size:25px; margin-right:20px">Home</a>
-				 <a href="#" th:href="@{/login/vendorlogin}" style = "font-size:25px;">LogIn Here</a>
+				 <a href="#" th:href="@{/vendor/login}" style = "font-size:25px;">LogIn Here</a>
 				</div>
 		  </ul>
 		</div>
@@ -34,7 +34,7 @@
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-            <form th:action="@{/signup/vendorsignup}" method="post" enctype="multipart/form-data" th:object="${sign_up_object}">
+            <form th:action="@{/vendor/signup}" method="post" enctype="multipart/form-data" th:object="${sign_up_object}">
              <div class="divider d-flex align-items-center my-2">
             <div class="divider d-flex align-items-center my-2">
                 <div style = "color:white; margin-left:90%; font-weight: 400; font-size:40px;">SignUp</div>
