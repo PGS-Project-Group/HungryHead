@@ -61,10 +61,10 @@ public class VendorController {
 		boolean vendorWithPhoneExists = (vendorService.getVendorByEmail(data.getPhone()) != null);
 		
 		if(vendorWithEmailExists) {
-			m.addAttribute("vendor_sign_in_status_code", VendorStatus.VENDOR_WITH_EMAIL_FOUND);
+			m.addAttribute("vendor_sign_up_status_code", VendorStatus.VENDOR_WITH_EMAIL_FOUND);
 			return "redirect:/vendor/signup";
 		} else if(vendorWithPhoneExists) {
-			m.addAttribute("vendor_sign_in_status_code", VendorStatus.VENDOR_WITH_PHONE_FOUND);
+			m.addAttribute("vendor_sign_up_status_code", VendorStatus.VENDOR_WITH_PHONE_FOUND);
 			return "redirect:/vendor/signup";
 		}
 		
@@ -75,7 +75,7 @@ public class VendorController {
 		Long vendorId = vendorService.getVendorByEmail(data.getEmail()).getId();
 		VendorRequest vendorReq = new VendorRequest(vendorId);
 		vendorRequestService.addRequest(vendorReq);
-		m.addAttribute("vendor_sign_in_status_code", VendorStatus.VENDOR_CODE_OK);
+		m.addAttribute("vendor_sign_up_status_code", VendorStatus.VENDOR_CODE_OK);
 		return "redirect:/";
 	}
 
