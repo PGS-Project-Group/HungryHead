@@ -3,33 +3,24 @@ package com.pgs.FoodToEat.controller;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import com.pgs.FoodToEat.entity.Admin;
-import com.pgs.FoodToEat.entity.Customer;
 import com.pgs.FoodToEat.entity.FoodItem;
 import com.pgs.FoodToEat.entity.FoodOrder;
 import com.pgs.FoodToEat.entity.FoodOrderStatus;
 import com.pgs.FoodToEat.entity.LoginData;
 import com.pgs.FoodToEat.entity.OrderDetails;
 import com.pgs.FoodToEat.entity.OrderItem;
-import com.pgs.FoodToEat.entity.SignUpData;
 import com.pgs.FoodToEat.entity.Vendor;
 import com.pgs.FoodToEat.entity.VendorRequest;
 import com.pgs.FoodToEat.entity.VendorSignupData;
 import com.pgs.FoodToEat.entity.VendorStatus;
-import com.pgs.FoodToEat.error.CustomerNotFoundException;
 import com.pgs.FoodToEat.error.FoodNotFoundException;
 import com.pgs.FoodToEat.error.VendorNotFoundException;
 import com.pgs.FoodToEat.service.CustomerService;
 import com.pgs.FoodToEat.service.FoodOrderService;
 import com.pgs.FoodToEat.service.FoodService;
-import com.pgs.FoodToEat.service.FoodServiceImpl;
 import com.pgs.FoodToEat.service.OrderItemService;
 import com.pgs.FoodToEat.service.VendorRequestService;
 import com.pgs.FoodToEat.service.VendorService;
-import com.pgs.FoodToEat.service.VendorServiceImpl;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,7 +48,7 @@ public class VendorController {
 
 	@Autowired
 	OrderItemService orderItemService;
-	
+
 	@GetMapping("/vendor/signup")
 	public String preVendorSignUp(Model m) {
 		m.addAttribute("sign_up_object", new VendorSignupData());
@@ -65,37 +56,35 @@ public class VendorController {
 	}
 
 	@PostMapping("/vendor/signup")
-	public String postVendorSignUp(@ModelAttribute("sign_up_data") VendorSignupData data, Model m)
-			throws VendorNotFoundException {
+	public String postVendorSignUp(@ModelAttribute("sign_up_data") VendorSignupData data, Model m) {
+		boolean vendorWithEmailExists = (vendorService.getVendorByEmail(data.getEmail()) != null);
+		boolean vendorWithPhoneExists = (vendorService.getVendorByEmail(data.getPhone()) != null);
+		
+		if(vendorWithEmailExists) {
+			m.addAttribute("vendor_sign_in_status_code", VendorStatus.VENDOR_WITH_EMAIL_FOUND);
+			return "redirect:/vendor/signup";
+		} else if(vendorWithPhoneExists) {
+			m.addAttribute("vendor_sign_in_status_code", VendorStatus.VENDOR_WITH_PHONE_FOUND);
+			return "redirect:/vendor/signup";
+		}
+		
 		Vendor vendor = new Vendor(data.getName(), data.getPhone(), data.getEmail(), data.getPassword(),
 				data.getTypesOfFood(), 0.0d, data.getImageUrl(), "false");
-//make a new request;
+		// make a new request;
 		vendorService.addVendor(vendor);
 		Long vendorId = vendorService.getVendorByEmail(data.getEmail()).getId();
 		VendorRequest vendorReq = new VendorRequest(vendorId);
 		vendorRequestService.addRequest(vendorReq);
-		
+		m.addAttribute("vendor_sign_in_status_code", VendorStatus.VENDOR_CODE_OK);
 		return "redirect:/";
 	}
-	
-	
+
 	@GetMapping("/vendor/login")
 	public String getvendorlogin(Model m) {
 		m.addAttribute("vendorobject", new LoginData());
 		return "vendorlogin";
 	}
 
-//	@PostMapping("/login/vendorlogin")
-//	public String postVendorlogin(@ModelAttribute("vendorobject") LoginData login, Model m)
-//			throws VendorNotFoundException {
-//		String mail = login.getEmail();
-//		String pass = login.getPassword();
-//		Vendor vendor = vendorService.signIn(mail, pass);
-//		m.addAttribute("VendorId", vendor.getId());
-//		m.addAttribute("VendorName", vendor.getName());
-//		return "vendorHome";
-//	}
-	
 	@PostMapping("/vendor/login")
 	public String postVendorlogin(@ModelAttribute("vendorobject") LoginData login, Model model)
 			throws VendorNotFoundException {
@@ -106,7 +95,7 @@ public class VendorController {
 		boolean vendorNotFound = (vendor == null);
 		if (vendorNotFound) {
 			model.addAttribute("vendor_sign_in_status_code", VendorStatus.VENDOR_WITH_PHONE_AND_EMAIL_NOT_FOUND);
-			return "redirect: /login/vendorlogin";
+			return "redirect:/vendor/login";
 		}
 		model.addAttribute("vendor_sign_in_status_code", VendorStatus.VENDOR_CODE_OK);
 		model.addAttribute("vendorId", vendor.getId());
@@ -114,87 +103,86 @@ public class VendorController {
 		model.addAttribute("foodItems", vendorService.getFoodByVendorId(vendor.getId()));
 		return "vendorHomePage";
 	}
-
-
 	
+
 	@GetMapping("/vendor/{vendorid}/orderRequest")
-	public String pendingCustomerOrders(@PathVariable("vendorid") Long vendorId , Model model) {
-		List<FoodOrder> list = foodOrderService.getOrderByOrderStatusAndVendorId(FoodOrderStatus.WAITING_FOR_VENDOR_CONFIRMATION, vendorId);
-	    List<OrderDetails>orderList =new ArrayList<>() ;
-	    for(FoodOrder o : list) {
-	   
-	    List<OrderItem> cartItems = orderItemService.getOrderItemsByOrderId(o.getOrderId());
-	    String foodPlusQunatity = "";
-	    Double totalPrice = 0.0 ;
-	    for(OrderItem item : cartItems ) {
-		String foodName = foodService.getFoodNameById(item.getFoodItemId());
-		Double unitPrice = foodService.getFoodUnitPriceById(item.getFoodItemId());
-			
-			foodPlusQunatity =foodPlusQunatity+ item.getQuantity()+" x "+foodName+", ";
-			totalPrice = totalPrice+item.getQuantity()*unitPrice;
+	public String pendingCustomerOrders(@PathVariable("vendorid") Long vendorId, Model model) {
+		List<FoodOrder> list = foodOrderService
+				.getOrderByOrderStatusAndVendorId(FoodOrderStatus.WAITING_FOR_VENDOR_CONFIRMATION, vendorId);
+		List<OrderDetails> orderList = new ArrayList<>();
+		for (FoodOrder o : list) {
+
+			List<OrderItem> cartItems = orderItemService.getOrderItemsByOrderId(o.getOrderId());
+			String foodPlusQunatity = "";
+			Double totalPrice = 0.0;
+			for (OrderItem item : cartItems) {
+				String foodName = foodService.getFoodNameById(item.getFoodItemId());
+				Double unitPrice = foodService.getFoodUnitPriceById(item.getFoodItemId());
+
+				foodPlusQunatity = foodPlusQunatity + item.getQuantity() + " x " + foodName + ", ";
+				totalPrice = totalPrice + item.getQuantity() * unitPrice;
+			}
+			String vendorImgUrl = vendorService.getVendorImageUrlById(vendorId);
+			String vendorName = vendorService.getVendorNameById(vendorId);
+			String customerName = customerService.getCustomerNameById(o.getCustomerId());
+			LocalDateTime orderDateAndTime = o.getOrderDateAndTime();
+			Long OrderId = o.getOrderId();
+			OrderDetails order = new OrderDetails(OrderId, vendorImgUrl, foodPlusQunatity, customerName, vendorName,
+					orderDateAndTime, totalPrice);
+			orderList.add(order);
 		}
-	    String vendorImgUrl =  vendorService.getVendorImageUrlById(vendorId);
-	    String vendorName = vendorService.getVendorNameById(vendorId);
-	    String customerName =customerService.getCustomerNameById(o.getCustomerId());
-        LocalDateTime orderDateAndTime = o.getOrderDateAndTime();
-        Long OrderId = o.getOrderId();
-        OrderDetails order = new OrderDetails(OrderId,vendorImgUrl ,foodPlusQunatity,customerName,vendorName,orderDateAndTime,totalPrice);
-       orderList.add(order);
-	    } 
-	    model.addAttribute("MyOrders", orderList);
-	    model.addAttribute("vendorid" , vendorId);
-	    return "vendorPendingOrders" ;
-	  
+		model.addAttribute("MyOrders", orderList);
+		model.addAttribute("vendorid", vendorId);
+		return "vendorPendingOrders";
+
 	}
-	
-	@GetMapping("/vendor/acceptOrder/{vendorid}/{orderid}")
-	public String  AcceptOrder(@PathVariable("vendorid") Long vendorId ,@PathVariable("orderid") Long orderId ) {
-		foodOrderService.acceptOrderByVendor(vendorId , orderId);
-		return "redirect:/vendor/"+ vendorId+ "/orderRequest" ;
-	 
-	
+
+	@GetMapping("/vendor/{vendorid}/acceptOrder/{orderid}")
+	public String AcceptOrder(@PathVariable("vendorid") Long vendorId, @PathVariable("orderid") Long orderId) {
+		foodOrderService.acceptOrderByVendor(vendorId, orderId);
+		return "redirect:/vendor/" + vendorId + "/orderRequest";
+
 	}
-	
-	@GetMapping("/vendor/rejectOrder/{vendorid}/{orderid}")
-	public String  RejectOrder(@PathVariable("vendorid") Long vendorId ,@PathVariable("orderid") Long orderId ) {
-		foodOrderService.rejectOrderByVendor(vendorId , orderId);
-		return "redirect:/vendor/"+ vendorId+ "/orderRequest" ;
-	 
-	
+
+	@GetMapping("/vendor/{vendorid}/rejectOrder/{orderid}")
+	public String RejectOrder(@PathVariable("vendorid") Long vendorId, @PathVariable("orderid") Long orderId) {
+		foodOrderService.rejectOrderByVendor(vendorId, orderId);
+		return "redirect:/vendor/" + vendorId + "/orderRequest";
+
 	}
 
 	@GetMapping("/vendor/login/{vendorid}")
-	public String vendorHome(@PathVariable("vendorid") Long vendorId , Model model) {
+	public String vendorHome(@PathVariable("vendorid") Long vendorId, Model model) {
 		model.addAttribute("vendorId", vendorId);
 		model.addAttribute("vendorName", vendorService.getVendorNameById(vendorId));
-		model.addAttribute("foodItems", vendorService.getFoodByVendorId( vendorId));
-		
+		model.addAttribute("foodItems", vendorService.getFoodByVendorId(vendorId));
+
 		return "vendorHomePage";
 	}
-	
-	@GetMapping("/vendor/{vendorid}/orderHistory")
-	public String completeCustomerOrders(@PathVariable("vendorid") Long vendorId , Model model) {
-		List<FoodOrder> list = foodOrderService.getOrderByOrderStatusAndVendorId(FoodOrderStatus.CONFIRMED_BY_VENDOR, vendorId);
-	    List<OrderDetails>orderList =new ArrayList<>() ;
-	    for(FoodOrder o : list) {
-	   
-	    List<OrderItem> cartItems = orderItemService.getOrderItemsByOrderId(o.getOrderId());
-	    String foodPlusQunatity = "";
-	    Double totalPrice = 0.0 ;
-	    for(OrderItem item : cartItems ) {
-		String foodName = foodService.getFoodNameById(item.getFoodItemId());
-		Double unitPrice = foodService.getFoodUnitPriceById(item.getFoodItemId());
-			
-			foodPlusQunatity =foodPlusQunatity+ item.getQuantity()+" x "+foodName+", ";
-			totalPrice = totalPrice+item.getQuantity()*unitPrice;
-		}
 
+	@GetMapping("/vendor/{vendorid}/orderHistory")
+	public String completeCustomerOrders(@PathVariable("vendorid") Long vendorId, Model model) {
+		List<FoodOrder> list = foodOrderService.getOrderByOrderStatusAndVendorId(FoodOrderStatus.CONFIRMED_BY_VENDOR,
+				vendorId);
+		List<OrderDetails> orderList = new ArrayList<>();
+		for (FoodOrder o : list) {
+			List<OrderItem> cartItems = orderItemService.getOrderItemsByOrderId(o.getOrderId());
+			String foodPlusQunatity = "";
+			Double totalPrice = 0.0;
+
+			for (OrderItem item : cartItems) {
+				String foodName = foodService.getFoodNameById(item.getFoodItemId());
+				Double unitPrice = foodService.getFoodUnitPriceById(item.getFoodItemId());
+
+				foodPlusQunatity = foodPlusQunatity + item.getQuantity() + " x " + foodName + ", ";
+				totalPrice = totalPrice + item.getQuantity() * unitPrice;
+			}
+		}
 		model.addAttribute("MyOrders", orderList);
 		model.addAttribute("vendorid", vendorId);
 		return "vendorCompleteOrders";
-
 	}
-	
+
 	@GetMapping("/vendor/{vendorid}/addNewFoodItems")
 	public String getFoodItemsAdd(@PathVariable Long vendorid, Model model) {
 		model.addAttribute("fooditem", new FoodItem());
@@ -203,32 +191,34 @@ public class VendorController {
 	}
 
 	@PostMapping("/vendor/{vendorid}/addNewFoodItems")
-	public String postFoodItemsAdd(Model model,@ModelAttribute("fooditem") FoodItem food, @PathVariable("vendorid") Long id) {
+	public String postFoodItemsAdd(Model model, @ModelAttribute("fooditem") FoodItem food,
+			@PathVariable("vendorid") Long id) {
 		food.setVendorId(id);
 		foodService.addfood(food);
 		model.addAttribute("vendorId", id);
 		model.addAttribute("vendorName", vendorService.getVendorNameById(id));
-		model.addAttribute("foodItems", vendorService.getFoodByVendorId( id));
-	    return "vendorHomePage";
+		model.addAttribute("foodItems", vendorService.getFoodByVendorId(id));
+		return "vendorHomePage";
 
 	}
-	
-	
+
 	@PostMapping("/vendor/{vendorid}/foodItemsByName")
-	public String  searchFoodItem(@PathVariable("vendorid") Long vendorId ,@RequestParam("name") String name , Model model) {
-	List <FoodItem> FoodItemList = foodService.getFoodByFoodNameAndVendorId(vendorId , name);
-	model.addAttribute("vendorId", vendorId);
-	model.addAttribute("vendorName", vendorService.getVendorNameById(vendorId));
-	model.addAttribute("foodItems", FoodItemList);
-	
-	return "vendorHomePage";	
-}
-	
+	public String searchFoodItem(@PathVariable("vendorid") Long vendorId, @RequestParam("name") String name,
+			Model model) {
+		List<FoodItem> FoodItemList = foodService.getFoodByFoodNameAndVendorId(vendorId, name);
+		model.addAttribute("vendorId", vendorId);
+		model.addAttribute("vendorName", vendorService.getVendorNameById(vendorId));
+		model.addAttribute("foodItems", FoodItemList);
+
+		return "vendorHomePage";
+	}
+
 	@GetMapping("/vendor/{vendorid}/deleteFoodItem/{foodid}")
-	public String deleteFoodItem(@PathVariable("vendorid") Long vid, @PathVariable("foodid") Long fid, Model model) throws FoodNotFoundException {
+	public String deleteFoodItem(@PathVariable("vendorid") Long vid, @PathVariable("foodid") Long fid, Model model)
+			throws FoodNotFoundException {
 		foodService.removeFoodById(fid);
-		return "redirect:/vendor/login/"+vid ;
-		
+		return "redirect:/vendor/login/" + vid;
+
 	}
 
 	@GetMapping("/vendor/{vendorid}/updateFoodItem/{foodid}")
@@ -239,39 +229,18 @@ public class VendorController {
 		model.addAttribute("vendorId", id);
 		return "FooditemsAdd";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
-	
-
-	//Customer Controller 
-
-	@GetMapping("/vendor/home/{c_id}/{v_id}")
-	public String getVendorPageForCustomer(@PathVariable("c_id") Long customerId, @PathVariable("v_id") Long vendorId, Model m) throws VendorNotFoundException {
+	@GetMapping("/customer/{c_id}/vendor/{v_id}")
+	public String getVendorPageForCustomer(@PathVariable("c_id") Long customerId, @PathVariable("v_id") Long vendorId,
+			Model m) throws VendorNotFoundException {
 		List<FoodItem> foodItems = vendorService.getFoodByVendorId(vendorId);
 		String vendorName = vendorService.getVendorById(vendorId).getName();
-		String vendorImageUrl=vendorService.getVendorById(vendorId).getImageUrl();
-		String vendorDescription=vendorService.getVendorById(vendorId).getTypesOfFood();
-		Double vendorRating=vendorService.getVendorById(vendorId).getRating();
+		String vendorImageUrl = vendorService.getVendorById(vendorId).getImageUrl();
+		String vendorDescription = vendorService.getVendorById(vendorId).getTypesOfFood();
+		Double vendorRating = vendorService.getVendorById(vendorId).getRating();
 		m.addAttribute("list_food_items", foodItems);
 		m.addAttribute("vendor_name", vendorName);
-		m.addAttribute("vendor_imageUrl",vendorImageUrl);
+		m.addAttribute("vendor_imageUrl", vendorImageUrl);
 		m.addAttribute("vendor_description", vendorDescription);
 		m.addAttribute("vendor_rating", vendorRating);
 		m.addAttribute("customer_id", customerId);
@@ -280,16 +249,4 @@ public class VendorController {
 		return "vendorPageForCustomer.html";
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

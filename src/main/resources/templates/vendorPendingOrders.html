@@ -69,8 +69,8 @@
             <td th:text="${myorder.orderDateAndTime}">Larry</td>
             <td th:text="${myorder.totalPrice}">Larry</td>
            
-            <td><a href=""  th:href="@{/vendor/acceptOrder/{vendorid}/{orderid}   (vendorid=${vendorid} , orderid=${myorder.orderId} )  }" class="btn btn-danger">Accept</a></td>
-            <td><a href=""  th:href="@{/vendor/rejectOrder/{vendorid}/{orderid}   (vendorid=${vendorid} , orderid=${myorder.orderId} )  }" class="btn btn-danger">Reject</a></td>
+            <td><a href=""  th:href="@{/vendor/{vendorid}/acceptOrder/{orderid}   (vendorid=${vendorid} , orderid=${myorder.orderId} )  }" class="btn btn-danger">Accept</a></td>
+            <td><a href=""  th:href="@{/vendor/{vendorid}/rejectOrder/{orderid}   (vendorid=${vendorid} , orderid=${myorder.orderId} )  }" class="btn btn-danger">Reject</a></td>
             
         </tr>
         </tbody>
