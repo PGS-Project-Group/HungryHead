@@ -58,14 +58,14 @@ public class VendorController {
 	@PostMapping("/vendor/signup")
 	public String postVendorSignUp(@ModelAttribute("sign_up_data") VendorSignupData data, Model m) {
 		boolean vendorWithEmailExists = (vendorService.getVendorByEmail(data.getEmail()) != null);
-		boolean vendorWithPhoneExists = (vendorService.getVendorByEmail(data.getPhone()) != null);
+		boolean vendorWithPhoneExists = (vendorService.getVendorByPhone(data.getPhone()) != null);
 		
 		if(vendorWithEmailExists) {
 			m.addAttribute("vendor_sign_up_status_code", VendorStatus.VENDOR_WITH_EMAIL_FOUND);
-			return "redirect:/vendor/signup";
+			return preVendorSignUp(m);
 		} else if(vendorWithPhoneExists) {
 			m.addAttribute("vendor_sign_up_status_code", VendorStatus.VENDOR_WITH_PHONE_FOUND);
-			return "redirect:/vendor/signup";
+			return preVendorSignUp(m);
 		}
 		
 		Vendor vendor = new Vendor(data.getName(), data.getPhone(), data.getEmail(), data.getPassword(),
@@ -80,13 +80,13 @@ public class VendorController {
 	}
 
 	@GetMapping("/vendor/login")
-	public String getvendorlogin(Model m) {
+	public String preVendorLogin(Model m) {
 		m.addAttribute("vendorobject", new LoginData());
 		return "vendorlogin";
 	}
 
 	@PostMapping("/vendor/login")
-	public String postVendorlogin(@ModelAttribute("vendorobject") LoginData login, Model model)
+	public String postVendorLogin(@ModelAttribute("vendorobject") LoginData login, Model model)
 			throws VendorNotFoundException {
 		String mail = login.getEmail();
 		String pass = login.getPassword();
@@ -94,8 +94,8 @@ public class VendorController {
 		// combination of email and password should be present
 		boolean vendorNotFound = (vendor == null);
 		if (vendorNotFound) {
-			model.addAttribute("vendor_sign_in_status_code", VendorStatus.VENDOR_WITH_PHONE_AND_EMAIL_NOT_FOUND);
-			return "redirect:/vendor/login";
+			model.addAttribute("vendor_sign_in_status_code", VendorStatus.VENDOR_WITH_EMAIL_AND_PASSWORD_NOT_FOUND);
+			return preVendorLogin(model);
 		}
 		model.addAttribute("vendor_sign_in_status_code", VendorStatus.VENDOR_CODE_OK);
 		model.addAttribute("vendorId", vendor.getId());

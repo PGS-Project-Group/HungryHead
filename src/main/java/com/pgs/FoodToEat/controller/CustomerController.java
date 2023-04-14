@@ -65,8 +65,8 @@ public class CustomerController {
 		// combination of email and password should be present
 		boolean customerNotFound = (cust == null);
 		if (customerNotFound) {
-			m.addAttribute("customer_sign_in_status_code", CustomerStatus.CUSTOMER_WITH_PHONE_AND_EMAIL_NOT_FOUND);
-			return "redirect:/customer/login";
+			m.addAttribute("customer_sign_in_status_code", CustomerStatus.CUSTOMER_WITH_EMAIL_AND_PASSWORD_NOT_FOUND);
+			return preCustomerlogin(m);
 		}
 
 		m.addAttribute("custId", cust.getId());
@@ -88,14 +88,14 @@ public class CustomerController {
 	public String postCustomerSignUp(@ModelAttribute("sign_up_object") SignUpData data, Model m) {
 
 		boolean customerWithEmailExists = (customerService.getCustomerByEmail(data.getEmail()) != null);
-		boolean customerWithPhoneExists = (customerService.getCustomerByEmail(data.getPhone()) != null);
+		boolean customerWithPhoneExists = (customerService.getCustomerByPhone(data.getPhone()) != null);
 
 		if (customerWithEmailExists) {
 			m.addAttribute("customer_sign_up_status_code", CustomerStatus.CUSTOMER_WITH_EMAIL_FOUND);
-			return "redirect:/customer/signup";
+			return preCustomerSignUp(m);
 		} else if (customerWithPhoneExists) {
 			m.addAttribute("customer_sign_up_status_code", CustomerStatus.CUSTOMER_WITH_PHONE_FOUND);
-			return "redirect:/customer/signup";
+			return preCustomerSignUp(m);
 		}
 
 		Customer cust = new Customer(data.getName(), data.getPhone(), data.getEmail(), data.getPassword());
