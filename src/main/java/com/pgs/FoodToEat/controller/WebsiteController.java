@@ -38,7 +38,7 @@ public class WebsiteController {
 		return "login.html";
 	}
 	
-	@GetMapping("/getfood/{type}/{c_id}") 
+	@GetMapping("customer/{c_id}/food/getbytype={type}") 
 	public String getFoodByType(@PathVariable("c_id") Long customerId, @PathVariable("type") String foodType, Model m) {	
 		List<FoodItem> foodItems = vendorService.getFoodByType(foodType);
 		m.addAttribute("list_food_items", foodItems);
