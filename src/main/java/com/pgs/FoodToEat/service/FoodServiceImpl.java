@@ -68,6 +68,12 @@ public class FoodServiceImpl implements FoodService {
 		FoodItem foodItem = foodRepository.findById(foodItemId).get();
 		return foodItem.getUnitPrice();
 	}
+
+	@Override
+	public List<FoodItem> getFoodByFoodNameAndVendorId(Long vendorId, String name) {
+		List<FoodItem> foods = foodRepository.findAllSimilarFoodByFoodName( vendorId, name);
+		return foods;
+	}
 	
 	
 	

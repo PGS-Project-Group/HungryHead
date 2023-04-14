@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class VendorController {
@@ -62,15 +63,28 @@ public class VendorController {
 		return "vendorlogin";
 	}
 
+//	@PostMapping("/login/vendorlogin")
+//	public String postVendorlogin(@ModelAttribute("vendorobject") LoginData login, Model m)
+//			throws VendorNotFoundException {
+//		String mail = login.getEmail();
+//		String pass = login.getPassword();
+//		Vendor vendor = vendorService.signIn(mail, pass);
+//		m.addAttribute("VendorId", vendor.getId());
+//		m.addAttribute("VendorName", vendor.getName());
+//		return "vendorHome";
+//	}
+	
 	@PostMapping("/login/vendorlogin")
-	public String postVendorlogin(@ModelAttribute("vendorobject") LoginData login, Model m)
+	public String postVendorlogin(@ModelAttribute("vendorobject") LoginData login, Model model)
 			throws VendorNotFoundException {
 		String mail = login.getEmail();
 		String pass = login.getPassword();
 		Vendor vendor = vendorService.signIn(mail, pass);
-		m.addAttribute("VendorId", vendor.getId());
-		m.addAttribute("VendorName", vendor.getName());
-		return "vendorHome";
+		model.addAttribute("vendorId", vendor.getId());
+		model.addAttribute("vendorName", vendor.getName());
+		model.addAttribute("foodItems", vendorService.getFoodByVendorId( vendor.getId()));
+		
+		return "vendorHomePage";
 	}
 
 	@GetMapping("/login/vendorlogin/fooditems/{id}")
@@ -228,6 +242,20 @@ public class VendorController {
 	    model.addAttribute("vendorid" , vendorId);
 	    return "vendorCompleteOrders" ;
 	  
+	}
+	
+	
+	
+	@PostMapping("/searchFood/{vendorid}")
+	public String  searchFoodItem(@PathVariable("vendorid") Long vendorId ,@RequestParam("name") String name , Model model) {
+	List <FoodItem> FoodItemList = foodService.getFoodByFoodNameAndVendorId(vendorId , name);
+	model.addAttribute("vendorId", vendorId);
+	model.addAttribute("vendorName", vendorService.getVendorNameById(vendorId));
+	model.addAttribute("foodItems", FoodItemList);
+	
+	return "vendorHomePage";	
+	 
+	
 	}
 	
 	
