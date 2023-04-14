@@ -60,20 +60,13 @@ public class CustomerController {
 		String mail = login.getEmail();
 		String pass = login.getPassword();
 		Customer cust = customerService.signIn(mail, pass);
-		m.addAttribute("custId", cust.getId());
+		m.addAttribute("custId", cust.getId());	
 		m.addAttribute("custName", cust.getName());
 
 		getCurrNotConfirmedOrder(cust.getId());
 		FetchHomeData(m);
 		return "index";
 	}
-
-//	@GetMapping("/login/customerlogin/viewfood/{id}")
-//	public String getViewFood(@PathVariable Long id, Model model) {
-//		model.addAttribute("fooditems", foodService.getAllFood());
-//		model.addAttribute("custId", id);
-//		return "viewallfood";
-//	}
 
 	@GetMapping("/signup/customersignup")
 	public String preCustomerSignUp(Model m) {
