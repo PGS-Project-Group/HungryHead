@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class VendorController {
@@ -241,6 +242,20 @@ public class VendorController {
 	    model.addAttribute("vendorid" , vendorId);
 	    return "vendorCompleteOrders" ;
 	  
+	}
+	
+	
+	
+	@PostMapping("/searchFood/{vendorid}")
+	public String  searchFoodItem(@PathVariable("vendorid") Long vendorId ,@RequestParam("name") String name , Model model) {
+	List <FoodItem> FoodItemList = foodService.getFoodByFoodNameAndVendorId(vendorId , name);
+	model.addAttribute("vendorId", vendorId);
+	model.addAttribute("vendorName", vendorService.getVendorNameById(vendorId));
+	model.addAttribute("foodItems", FoodItemList);
+	
+	return "vendorHomePage";	
+	 
+	
 	}
 	
 	

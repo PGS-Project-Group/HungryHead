@@ -120,8 +120,12 @@
         </tbody>
     </table>
     <br>
-    <h5 style="color: gray; font-size: 30px; margin-left: 35%; margin-bottom: 40px; font-weight: normal"><span th:text="${vendorName}"></span>'s Menu</h5>
-	
+    <h5 style="color: gray; font-size: 30px; margin-left: 40%; margin-bottom: 40px; font-weight: normal"><span th:text="${vendorName}"></span>'s Menu</h5>
+	<h5 style="color: gray;  margin-left: 35%; margin-bottom: 40px; font-weight: normal">
+	<form th:action="@{/searchFood/{vendorid}   (vendorid=${vendorId})}" method="post">
+    <input type="text" id="name" name="name"   placeholder="Enter Food Name"/>
+    <button type="submit">Search</button></h5>
+</form>
 	 <hr style="border-color: #444444;">
       
 	  <div class="container">

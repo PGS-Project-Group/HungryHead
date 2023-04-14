@@ -23,4 +23,6 @@ public interface FoodService {
 	public String getFoodNameById(Long foodItemId);
 
 	public Double getFoodUnitPriceById(Long foodItemId);
+
+	public List<FoodItem> getFoodByFoodNameAndVendorId(Long vendorId, String name);
 }
