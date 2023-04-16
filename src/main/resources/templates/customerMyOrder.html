@@ -12,6 +12,7 @@
     <title>Document</title>
 </head>
 <body>
+<!--  
 <nav class="navbar navbar-expand-lg navbar-light bg-light" >
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
@@ -35,8 +36,49 @@
 
         </div>
     </div>
+</nav>-->
+
+<nav class="navbar navbar-expand-lg navbar-light  " style="box-shadow: 0px 2px 4px rgba(0,0,0,0.5); background-color:rgb(189, 192, 196);;">
+  <img src="https://drive.google.com/file/d/1AMHUz-qUk_nUyVOZRrvkA56ueJf3ZBJJ/view" alt="logo Image">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" 
+  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+  aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto" style="font-size:18px;">
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/}" >
+        <i class="fas fa-home"></i>Home</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/customerlogin/home/{id}/myOrders  (id=${custId})}">
+        <i class="fas fa-file-alt"></i>My Orders</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/customerlogin/home/{id}/myOrderHistory  (id=${custId})}">
+        <i class="fas fa-history"></i>Order History</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/cart/{c_id}(c_id = ${customer_id})}">
+        <i class="fas fa-shopping-cart"></i>Cart</a>
+      </li>      
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/}">
+        <i class="fas fa-sign-out-alt"></i>Logout</a>
+      </li>
+    </ul>
+   <!--   <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    -->
+  </div>
 </nav>
-<div class="container">
+
+
+<div class="container" style="padding-top:10px;">
 
    
     <table class="table">

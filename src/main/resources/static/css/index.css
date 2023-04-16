@@ -143,7 +143,7 @@ input[type="text"]:focus {
 
 .order-cat img {
 	width: 100%;
-	border-radius: 15px;
+	border-radius: 50%;
 }
 
 .order-cat .order-title-bg {

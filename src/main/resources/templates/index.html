@@ -513,6 +513,9 @@ h1, h2, h3, h4, h5, h6 {
 		</div>
 	</nav> -->
 	
+	
+	
+	<!--  
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#"> <img
@@ -535,21 +538,59 @@ h1, h2, h3, h4, h5, h6 {
 				<a th:href="@{/customerlogin/home/{id}/myOrders  (id=${custId})}" href="#" >My Orders</a>
 				<a th:href="@{/customerlogin/home/{id}/myOrderHistory  (id=${custId})}" >Order History</a>
 				<a th:href="@{/cart/{c_id}(c_id = ${customer_id})}">Cart</a> 
-				<!--  <a href="#contact" >AboutUs</a> 
-				<a href="#contact" >Contact</a>-->
 				</div>
 				</ul>
-
 			</div>
 		</div>
-	</nav> 
+	</nav> -->
 	
 		<!--  g src="images/hero1.jpg" style="width:100%; " > -->
+		
+<nav class="navbar navbar-expand-lg navbar-light" style="position:fixed; top:0; width:100%; z-index:1;box-shadow: 0px 2px 4px rgba(0,0,0,0.5); background-color:rgb(189, 192, 196);">
+  <img src="https://vegconom.de/vegconomistcom/wp-content/uploads/sites/3/eat.life_logo.webp" alt="logo Image" style="width:100px;  height:50px;">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" 
+  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+  aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto" style="font-size:18px;">
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/}" >
+        <i class="fas fa-home"></i>Home</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/customerlogin/home/{id}/myOrders  (id=${custId})}">
+        <i class="fas fa-file-alt"></i>My Orders</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/customerlogin/home/{id}/myOrderHistory  (id=${custId})}">
+        <i class="fas fa-history"></i>Order History</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/cart/{c_id}(c_id = ${customer_id})}">
+        <i class="fas fa-shopping-cart"></i>Cart</a>
+      </li>      
+    </ul>
+    
+     <form class="form-inline ml-auto my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-secondary btn-outline-dark my-2 my-sm-0"  type="submit">
+      Search</button>
+        <a class="nav-link" href="#" th:href="@{/}" style="color: #6c757d; font-size:18px; margin-left:10px;" onmouseover="this.style.color='black';" onmouseout="this.style.color='#6c757d';">
+        <i class="fas fa-sign-out-alt"></i>Logout
+        </a>  
+    </form>
+    
+  </div>
+</nav>
+		
 	</header>
 
 	<!-- Order section -->
 	<h5
-			style="color: gray; font-size: 30px; margin-left: 34%;padding-top:0px; margin-bottom: 40px;  font-weight: normal">Discover
+			style="color: black; font-size: 30px;padding-top:10px; margin-bottom: 40px;  font-weight: normal; text-align:center;">Discover
 			restaurants by type of meal</h5>
 	<section class="container">
 		<div class="order-cat" style:"">
@@ -557,42 +598,42 @@ h1, h2, h3, h4, h5, h6 {
 		
 			<div class="hover" >
 			<a href="#" th:href="@{/getfood/{type}/{c_id}   (type='Pizza' , c_id = ${custId})}" > <img src="https://kauveryhospital.com/blog/wp-content/uploads/2021/04/pizza-5179939_960_720.jpg" style="height:150px;"></a>
-				<div class="order-title-bg">
+				<div class="container">
 					<p class="order-title">Pizza</p>
 				</div>
 			</div>
 			
 			<div class="hover">
 				<a href="#" th:href="@{/getfood/{type}/{c_id}   (type='Burger'  , c_id = ${custId} )}" > <img src="https://images.pexels.com/photos/1633578/pexels-photo-1633578.jpeg?auto=compress&cs=tinysrgb&w=600" style="height:150px;"></a>
-				<div class="order-title-bg">
+				<div class="container">
 					<p class="order-title">Burger</p>
 				</div>
 			</div>
 			
 			<div class="hover">
 				<a href="#" th:href="@{/getfood/{type}/{c_id}   (type='Biryani'  , c_id = ${custId} )}" > <img src="https://images.pexels.com/photos/7837978/pexels-photo-7837978.jpeg?auto=compress&cs=tinysrgb&w=600" style="height:150px;"></a>
-				<div class="order-title-bg">
+				<div class="container">
 					<p class="order-title">Biryani</p>
 				</div>
 			</div>
 			
 			<div class="hover">
 				<a href="#" th:href="@{/getfood/{type}/{c_id}   (type='Rolls'  , c_id = ${custId} )}" > <img src="https://static.toiimg.com/thumb/53942854.cms?width=1200&height=900" style="height:150px;"></a>
-				<div class="order-title-bg">
+				<div class="container">
 					<p class="order-title">Rolls</p>
 				</div>
 			</div>
 			
 			<div class="hover">
 				<a href="#" th:href="@{/getfood/{type}/{c_id}   (type='Thali' , c_id = ${custId})}" > <img src="https://thumbs.dreamstime.com/b/indian-thali-26440151.jpg" style="height:150px;"></a>
-				<div class="order-title-bg">
+				<div class="container">
 					<p class="order-title">Thali</p>
 				</div>
 			</div>
 			
 			<div class="hover">
 				<a href="#" th:href="@{/getfood/{type}/{c_id}   (type='Cake' , c_id = ${custId})}" > <img src="https://images.pexels.com/photos/8478058/pexels-photo-8478058.jpeg?auto=compress&cs=tinysrgb&w=600" style="height:150px;"></a>
-				<div class="order-title-bg">
+				<div class="container">
 					<p class="order-title">Cake</p>
 				</div>
 			</div>
@@ -600,7 +641,7 @@ h1, h2, h3, h4, h5, h6 {
 	</section>
 	
  	
-	<h5 style="color: gray; font-size: 30px; margin-left: 35%; margin-bottom: 40px; font-weight: normal">All Our Partnered Restaurants</h5>
+	<h5 style="color: black; font-size: 30px; text-align:center; margin-bottom: 40px; font-weight: normal">All Our Partnered Restaurants</h5>
 	
 	
 	   <div class="container">
@@ -656,14 +697,11 @@ h1, h2, h3, h4, h5, h6 {
 						<div class="cards-container"
 							style="width: 30%; margin-left: 20px; margin-bottom: 20px; padding-top: 20px;">
 							<div class="card"
-								style="background-color: #fff; box-shadow: 10px 10px 40px 2px rgba(128, 128, 128, 0.4); display: inline-block; width: 300px; height:300px; border-radius: 10px;">
+								style="background-color: #fff;  display: inline-block; width: 300px; height:300px; border-radius: 0px;">
 								  <div class="card-media"
 									style=" background-position: center; background-size: cover; height: 200px; width: 100%; object-fit: fit; border-radius: 10px 10px 0 0; position: relative;">
 									<img th:src="${vendor.imageUrl}" alt="Vendor Image" style="width: 299px; height: 180px;">
-									<div class="delivery-time"
-										style="position: absolute; background-color: #f5f5f5; max-width: 60px; padding: 3px 6px; font-size: 12px; right: 3%; bottom: 6%; border-radius: 4px;">25
-										mins</div>
-									<div class="bookmark"></div>
+			
 								</div>
 								
 								<div class="card-description" style="padding: 10px;">
@@ -776,7 +814,7 @@ h1, h2, h3, h4, h5, h6 {
 			<div class="footer-lang">
 				<img class="footer-logo" src="images/logo.png" style="width:15%; height:50px">
 				<div class="btn-lang-top">
-					<a class="lang-btn" href="#"><img src="images/india-flag.jpg" height="13px"> India <small><i class="fa fa-chevron-down"></i></small></a>
+					<a class="lang-btn" href="#"><img src="data:image/png;base64,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" height="13px"> India <small><i class="fa fa-chevron-down"></i></small></a>
 					<a class="lang-btn" href="#"> <i class="fa fa-globe"></i> English <small><i class="fa fa-chevron-down"></i></small></a>
 				</div>
 			</div>
@@ -820,8 +858,8 @@ h1, h2, h3, h4, h5, h6 {
 						<a href="#"><i class="fab fa-instagram"></i></a>
 					</div>
 					<div>
-						<img src="images/app-store1.webp" width="137px">
-						<img src="images/app-store2.webp" width="137px">
+						<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAX4AAACECAMAAACgerAFAAAAkFBMVEUDBgb///8AAADm5ub8/Pzx8fHj4+P09PTr6+v5+fne3t4OEBCFhobo6Oi5urplZmbX2NhKS0szNDSpqqqSk5OMjIxERUVTVFR4eHg5OjqhoaHJyso9Pj7S0tIaHBzDw8Oam5tfYGAfISHFxcWnqKh8fX26u7tub28tLi6BgYFISUkmJycvMDAMDw9RUlKxsrID4RNWAAAUb0lEQVR4nO2di5qiOgyAJQIKXsfLjPe747jujO//dqdJCrRYEIRxdveQ831nHYsF/pY0SdNSs0iadZQGfW7Mx2+tWiXfIZftZu806k2m7tZrcfxeewUAP32Z/6oItLA6N+0k/JuK/XeLILwx4vfqiwr+EwRg0bnF7ywr+E8SgL6G33VdZ17Rf5oQf9etNUk827Pciv4TBcB3bK9GSt/FoXhR0X+mwEBYOhK/Z1mziv5zBUYK/sZnhf+5AuBZofJpV/SfLdAO8dvVuPt0gZZXa7DsK/rPF5hLu98bV/ifLzCS+Cur8ycEthJ/pfp/QmAVKJ/y8WNstWrTdPmU+J2SSQnyg/N7vV7xvyMeS7n4AY59btUya/0XRdr9ZeIH6LnBQ1Verf+mEP56mfhhsJTmVIX/rpSOHyZ2QN/yK/x3pGz8cLUiuVb470jJ+GGm0LdGFf470kEpDT+0VfrWrsJ/R5hToxz8sNXoV6r/rpTpdgE4Gv5zhf+elNn7oavRd35qAi13uKNweOThCkrEDwuNvrXJUScoUvg6xptZK08tsNkUC7jDaJPnZhUpUfnAWu/8OeqE1WIyuwqZ9T6Kd0Xhc+fBj5OuhYYpVLpeEfxl9H4AvfP38hAYR7/rDD+KXQz4efE7Vv+hU8qeAtB81MEnw7NThuEZMzq7uR5/8dvmvNvtLqXaKtQZn4Uf4EjpOQXwl+d2gavSz5exiPi3rPlf1nnb7qayp+FvWnW8zT8BP7QaCv1mvgoRv1RWABPx+0mB63kefleMGX8K/q1C383p7yr4xR8nUQMEjREZQ9GYHH6iMmAE0XER/pgtFTetAlvrBr92IMRPEH5N+FEIv7HyOzdeHv5TRH+dtzoNfw3eA6tVPArDfXf8gvV9Tk7BAzKZXLj4dTLZwXYi9NZ0/L4eT/nbAD/A7nidd9vTYIT8OB7e16OvkOvqeF3PTrf4AU6H9bs8ED5PkwXA22bfnah0L5Ne0+qchDB++Biv34+tsM0G4+561rtDorTpFjiG9Nu5a4vhFw5EhzpcWwavceUBiM+M8RRkpGKW9gqWAt6IjyPzPcAPcJAX9E7ddzXXxyU4cu39OH44enxgf0W/w87Av3V+RRfZC27XZvy8ZKXxKpt6yIX1dDOutMnGAL/dveSvK4Zf3E5D1IJPgbcfXR1xV6IHX3F4rrF/4dKHVQMbpmsthd3q95tyzJD4QbSL1ejSzzv4986yl7Px0MGnsyaNXb+7Fux1/Nhq9np0qIt/FkCD2mZpNfo+NsrvUAFum65t2a7r9vF6m5vgiAvI9P3luC2u1EvVw8ysBLeL8Df37YuqMrPWquOvITihcESX9ndYSxefBhxcUCUhDtvCToYdsI39TLTCAKh9Ggr+K3V7cQ2i52IWH0x+0zX5WDmNVXYP/57RE6BdS+eCBQcyIcipsoQfDS1Xtlxwf4rut/iIPj5bomyIPUFID68h5cYZf163yxQiUL+gDx+XS9YmMOB/QxXE3YKInaHGzqm4pf6StI8AbA/oMe9A0OW+QOJHvEsIzHJRHX6gyl+oGaHDX9aodSP8sLIlDsDHbEP4rSFINdRYKZepWD7CVqZPtuWJu97hL+gQoZJqKQQe6P3ignaTzXvf7y83k9tlqEh8cV77Hdv26v56vM3QBEb8M6nLmZhAOaebF7QOM24IH5UQ4ud5HVQnmxD/e2TLtgNPgjtIA22DQcgcG0rBPw7XOsBv1HKEXw7q4rp+JeDnPEEcI7a0dFF2xml64Dd37wdYbTqqjTm6xJ6BX0M97uytt/cawID/FfvyNLAfXexUZ/bNPKsnnmnR7VfEHfHL8e6LOp3E3wiTxzAc0mTb8WV23e9tHHxH4WQcajMF/550U8DXIvwdeeRVPjFhcdzuR4XVw8dwCSshrVYrfeFK3t4Pr+9WXPrtXahzFjP3plyM/8f0E9wOvU5LaIfQeeNO9WFbB2EBIhJckIA/2jF+2TkHKn45PlOBw71xFniGc1JZoaOnDr2olMLfdQlmhH94F/+MfqF6oFINmYXzy7NaPpEtp4u355DB2DcW40MySDtFDP8Homs5VpglJ5/pDqqgIeuhNarmvhzmzPhDpviNuDphyjSv29epg/ivoR6J4fcU/KLq04P4vfDW03p/Lrsf3ppJeIVy7vaTCy3U48nniOEf0tH1aMIG8QsnaIwUm0jkjJ88GhuS8XdCjIgUNdpGOrnzyIw19v7gtO902kfwr03WSQL+jF5vLKaZV/bJJ9GDDjhtA2THLAJADRye4FPQWFgNwVbA7X0x9iT8Xpi3zU9CC4dv+pPwbyLdf/FU/OsIsVRa+fG7UdOnSw78wVYED0vyqnkVP2odXGqGdxKYINJ8Fre1OZPpLQbIzYgnSZLwr0ObAzXmASN5HB5ueYj/JUwFQC9at3xkfhIOM/N0/K4Z/yx8tErDHzj2BSQx7SrEL2721UEaQDA5VYV06Rt39PVa6B7xaWL159YmDf82iLvCh4fe6kmeH+9DuEbYsycMr67hbwlf9pVP65LqT8bvW17LiH9qhavU08lmxo/qtrAk5V2F8f7dGSdc+oxtTCEUYWC60ncU3dFxSDMLK8husL2ZgJ8Ut4tG8bTJSl94uTiTifFsxN+j6xHFfauuLunHa7HfgLUfHpiM/8o13OCnEn9KRV+pC4doT4EMs13wqwT6VjPBA9RGleYZoru1/DU2yFr6oU7gxONAylAS8VOYrL9GgwC7PaU/rt/r+NjgIMC61Bc1jjbajgpU0FzjrynUl4xfKCfLc/YG/Og9WM5y3k+3O7O6XQAmcz6vvCedJprrbcyjeKkwcNjScoLvkCiPEahCWJchVulyTuk7tF1YJ8jBqnnitnuXF3FlWEE8dSSoapY3nPi03ogetJoXwtXdLplS2UflaEfDTI/OPQps/9QcCD7krttVguK3rGTfC2qXxVevt31d6YaacOM2s9Gv8DuhiGTMBWqrFZul8Bl8VwP6Dv1NLhEDwGY2XoRaeDea4WZdn6udLO9tNqjzohqC07yOZhjuB1lrcNLWaqVf93Q0G0/BcAR62KPZ7PiaTlb2uXtBgUFx+F6aLZBkJBviekpJ/Dv5UT9IL5YTV2qxVoPpd6ZPCTXenjsdbEb863S0WWSazRL+fwmjuaN8MLhVVLLZwf83YTZ3er+etf+QHCr6JskS84lnLj8g1VZZZsnidpF9W0x+VfSNkgn/sCj9ZUXfLJnwJ0bxs8pbhd8sGfDHU5fzS6fS/AmSYehV89cek9RcC/M5s+ZIPCpZ5kKeIBnSrArH+a1j3puE2qeQtAyNQoJh7clmeN20T7ufbQHmk+p2xZZsPSCvOe9QmFq2bX/bqmyozSJLurNZ/SB/vob03r9MoJpV7Lxr7IIJ/e/hAj1buzy1lZ/9KPAVpPf+ekH8edc9QWBqfUug4iZ4GzybOBKcnryrGl9BatBBz1p5QPIuPcC4vYU9NP+QnaFyntlZnhcA0+OwGZplsJot861IK0Gegb+ZFz+GmNpW+Zts1XgqN8itJekFG8ji5PvT8Tso6WlWhfHnVj442fQbf1m+9mHVoyY0hvH5n8Cfxe5/Mn6aBO/QbGmhJXbmynFYMcZAfg7/Ha+3KH47n2lHhu6Vpn/tsmHACk1OY8LFH4u/cLg5lw7hxQpvmOgZCxaFXqrJZU0tjI4aoOo3bCGAnhhfauy35mnQ4IubqdCcrnQW/IUjbrm2R+fwNnBuhbq3NEzb5zZlcUB777quv1HmseF3+3w+YWGt/Y4rfmbGSW5KuTIkH8D5fCbnfnYUn9pRwiNMx3Su7lnjfBIHocP8dnU7QWMCbGe+OHY53mVugCz4b1PKc8o8F37Mx+lykiFnkYX3bFm0mieKfy8HISdsNGFDKinY/d+mTt6xTCFAMF6wAKp0PWXRGr35ZgE8BS6X+cEpWvaQeWmnfHdLKv7CU41eHuWPKxhRXfEGKcr6ahqSfVhpWdanoOt9WWjh7hxToVq7JBbPWNAveC+JXvWvo4cCc7CmUi3IjQW0bARnkO2O+eh0u79wyM3EIfFsqIIps5y62D6G32EfnJPXUOToQAOnTX3b8tdBn3251TJbKhjGdbl+vXMmyqtJm93rda7fBymEgXzQDpRpgoaaVT8cz0NKSMsYY5eNlYq/+Fxjjv1aqMdxRifZPlG8iDq4g4tNzzS+tckia7B6omfFEzZTY0yFZzbXdrf8uZc2TzcDLD1tPPRSrJWP7HzxaMoPQrAkAIsw7dI5tMf4HSvECR96ClvwrmTBX3i6JYftw9P6nBXY4lsKi164rn5LGh0r6uS81BOmHEfzV7Kw1owK9RPICGJ9pgbYQDM8qYozUwyGAcqDlGqCen8fzWOZZvWl3iSvuP7Kcst8KemJJoVjbjm22OC0VXmTCGofxx9dK5sxnL8l8Uf9CBdNWKbkLqknULqqdRSz+9n+bURDPz8Mcg0lx+DDEZastGgREbXObcsbhK8jPbhSRo5bap6vei68MRlq4+hYBJSTrJVxhCMIPPSRQa8VUu81JLgKzRQuvFpfYq0b4cdEdHWiCJdlWLyDjMQfrfx707oFV+VkmS2yYj3KiKTYoiIrTi3tVGT3BEsOCWmofdgvUsc0XEEUbDAw8G4KUf2b4wswDs2nqPoYfhxt9cRn0u8vEf6waWlgOKinxuIssWuX5E6mw1cJ+LOl+tCwFfUqNG/mOn4tCM0DYtT7tfkxZmS8M6Gwt8EGG8FzqeMH6ph6fduQOVcdjuukexagiG9l25MoU6JJ8bCDEC/LlCNpzVl4F7RNR7AnCOPX1oizhkAMjF9zr3mwTHI5AAbSqp8opmuEn06mRSe4T79H+EErGI0jaetjQbJkWlxU3O+V93nvgoxG1lgjovUpRkaWHykfvW3o+ORGF6Ym+wdyoNfxU8vrTyz1wnmIP1p1/GG83SxT1dnwH43155bh3VUcE8Ov+in4XwNk8PsW/yBom8TTsd86NuEnX1PfG4d0TIQ/WjT/knC36TeLkg1/CZY/ifvrzon2pl8FpncqfkPvJ/yp5jeD62fFjwb40oCf/NK6W1fFdbJszZpl6JVmQCmyTrMHcH8kcch4FAr59eNk/GQUvIa6X8dPVNJ3k6LBXRqTOn6y9mLKB1t4b8D/yp0kLqlIWWySe3s6FE90CyUt+Mzu4kW9BTQQ+8n4z3zjZvyjoDDljBhObOwM+N+UhpdfkQ7oGvCTe34b38ggzOTenDZ8Fp3xCiU1vIH+nbYcn00MuXCR8GszVfQDmstk3a8XosFwx90m/M7KgP8zZB0eS33wZMBP7ZI7lQ+Fmdzd0aR4jrmUtEgU34Y2YvHz0Fbwq34UO2n7CL9We6QrUk7ZtQJnLe52+XEuSlfQ8d/EZrMLQ7m/sLSEpY0kaanmbKhrliL7tUsFv6VMorB64f5IQ6+lhNlZe98427o2J1tyqQy9kRNMF6M8TpR9FAzTMfzjsGFyCkO5v5tV4UxDltQwOHWi2DIk9mtZOzD+aGMO7hNyvzeO+SiFU+P5QMsj5JkkRs4B55A378prR9NpbKT2jPh3ePL6A1lJmfEXD/qjpC3xhhV24Jizwp7+WMFPUV7iwZFYqZkYv1LYDH+o1dcfS7ME/zdRbj4Y5iFYHUyPlhtO4FPcMdgERccfLW8PRo6s0+2UZuVk2M2q+IS7pU/d3p6BzJjYI8yBMyfCLyjXt5/i9i5tUjfBtCzpflHYoQS2HRfeBNyojv2JVs9PT3xL4WhL1vVBFA14E1wq9o7UWi/8FsSdGT8/uJY35m00YLddZ3trU+bdrKJdWwtI6v4GpN9u3rLJAQ+MM0rLhzD4vs9BYx9U/DN8BJqisKEVKrXJiVOnXg8mxsMHRFrXDbfDvhq0uHma84OcvXSCvnGLfyX3vHD99dJ3G1mXs+XYz6d490+f0Se75yZOxdrnEOI/bdUaw33qeeg9aoWG7Ztupy7UfMNwN7Q3qXB0Jzwalm7wR5NogWTbICwH/uJh51Q3nC2Vm9kpNk5wfA3crpfwRpvK7ifS7YoKO6atpIW6VzE5QzUgCq2gLNzj8BT1OV+JGFIr6pnDomZ1L7vOMNMe9nk2E4ulXeSW9Nl/+Hp7ezMEyGCB368i/Lhb5d7vz69bdXJF4gd4ne37/ny4NZ+MFPOhO/f9ZXf26zOeu7a9Lv3+ehZF8mExWvfpWC3NCq8pbkPjsVes+P3aXmQce3PsZFg47H9neWlSnCQIoERBB0NUJYp43g25pIRlbr9PONZ8gpwBn1oOywdrN4WDs0vRtdWGmI9SeBtw/huEyWTcRNgcD84ohd+ilo7/NuT2N0g+/J8F1E/hpRL/Lv6sq3gKWD9ZM01STp6O/y9WPpnfXvFwvucjAZH4uf9Z3Z9jB/MHQ28lbCX2L+Knya7svV8GpnJLGVua/Iu6P9tcryLw8cDEVylvDeckw4RJJQ4+51pG8ydI/vd2wS8vnfWtZEk4ynDiy0ZIQrIc7EaiMFNW8Z8kD7w2DT5uzU/b7baPx+P50Dc8G6X0/Vrk/uYv/GPlkbfWxdb3WJZ7jLITVm9x3+zJazX/KnnopYEAs0gBOcPf8SDJRolNL39yv5Y/XnIPvSQAuw2FV5dXw1uJMOw4mvue1+gfXv4+hfBM4S6a/6WBAvFnq5U4qZk38vd/FalAHsF0D27F/r4w/jLe1V7JA1Kg91dSXKTu/7ZNAytJFrhI/A8lyFVSUOBN7ulQmmNaSQ6BkZxqfyw9t5JiAssg06GEl7VXklNg5QX4/75Q7d8v0LYkfs9qFM1DqCSnYPJw2PtLislXklkwgV2mWTUaDSvj/kuVlCOw8BoNafc36/VOvxp9nyi4qZxbj/DXnXnF/2lCr0PV8Ned5NcZV1KuAC9j0/DXvfqiaoAnCMArLa3R8eOSmE0VpP9ugfBFtgI/vbnFdijy0/BsejVu1QTfJZSL0HY8m7A3m7W6i//xokwH9+RwnOWmd6n4f4tctpulZ1me6yJ2y/oPkJQW+IJBWxUAAAAASUVORK5CYII=" width="137px">
+						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMfGkTalluSDP26-RVaQO9HKxUonQEXudWww&usqp=CAU" width="137px">
 					</div>
 				</div>
 			</div>

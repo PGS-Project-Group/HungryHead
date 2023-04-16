@@ -150,30 +150,33 @@ public class VendorController {
 	
 	
 	@GetMapping("/pendingOrders/{vendorid}")
-	public String pendingCustomerOrders(@PathVariable("vendorid") Long vendorId , Model model) {
+	public String pendingCustomerOrders(@PathVariable("vendorid") Long vendorId , Model model) throws CustomerNotFoundException {
 		List<FoodOrder> list = foodOrderService.getOrderByOrderStatusAndVendorId(FoodOrderStatus.WAITING_FOR_VENDOR_CONFIRMATION, vendorId);
 	    List<OrderDetails>orderList =new ArrayList<>() ;
+	    String customerPhone="";
 	    for(FoodOrder o : list) {
 	   
 	    List<OrderItem> cartItems = orderItemService.getOrderItemsByOrderId(o.getOrderId());
-	    String foodPlusQunatity = "";
+	    String foodPlusQunatitys = "";
 	    Double totalPrice = 0.0 ;
 	    for(OrderItem item : cartItems ) {
 		String foodName = foodService.getFoodNameById(item.getFoodItemId());
 		Double unitPrice = foodService.getFoodUnitPriceById(item.getFoodItemId());
 			
-			foodPlusQunatity =foodPlusQunatity+ item.getQuantity()+" x "+foodName+", ";
+			foodPlusQunatitys =foodPlusQunatitys+ item.getQuantity()+" x "+foodName+", ";
 			totalPrice = totalPrice+item.getQuantity()*unitPrice;
 		}
+	    String foodPlusQunatity=foodPlusQunatitys.substring(0, foodPlusQunatitys.length() - 2);
 	    String vendorImgUrl =  vendorService.getVendorImageUrlById(vendorId);
 	    String vendorName = vendorService.getVendorNameById(vendorId);
 	    String customerName =customerService.getCustomerNameById(o.getCustomerId());
         LocalDateTime orderDateAndTime = o.getOrderDateAndTime();
         Long OrderId = o.getOrderId();
+        customerPhone=customerService.getCustomerById(o.getCustomerId()).getPhone();
         OrderDetails order = new OrderDetails(OrderId,vendorImgUrl ,foodPlusQunatity,customerName,vendorName,orderDateAndTime,totalPrice);
        orderList.add(order);
 	    }
-	    
+	    model.addAttribute("customer_phone", customerPhone);
 	    model.addAttribute("MyOrders", orderList);
 	    model.addAttribute("vendorid" , vendorId);
 	    return "vendorPendingOrders" ;
@@ -200,30 +203,33 @@ public class VendorController {
 	
 	
 	@GetMapping("/completeOrders/{vendorid}")
-	public String completeCustomerOrders(@PathVariable("vendorid") Long vendorId , Model model) {
+	public String completeCustomerOrders(@PathVariable("vendorid") Long vendorId , Model model) throws CustomerNotFoundException {
 		List<FoodOrder> list = foodOrderService.getOrderByOrderStatusAndVendorId(FoodOrderStatus.CONFIRMED_BY_VENDOR, vendorId);
 	    List<OrderDetails>orderList =new ArrayList<>() ;
+	    String customerPhone="";
 	    for(FoodOrder o : list) {
 	   
 	    List<OrderItem> cartItems = orderItemService.getOrderItemsByOrderId(o.getOrderId());
-	    String foodPlusQunatity = "";
+	    String foodPlusQunatitys = "";
 	    Double totalPrice = 0.0 ;
 	    for(OrderItem item : cartItems ) {
 		String foodName = foodService.getFoodNameById(item.getFoodItemId());
 		Double unitPrice = foodService.getFoodUnitPriceById(item.getFoodItemId());
 			
-			foodPlusQunatity =foodPlusQunatity+ item.getQuantity()+" x "+foodName+", ";
+			foodPlusQunatitys =foodPlusQunatitys+ item.getQuantity()+" x "+foodName+", ";
 			totalPrice = totalPrice+item.getQuantity()*unitPrice;
 		}
+	    String foodPlusQunatity=foodPlusQunatitys.substring(0, foodPlusQunatitys.length() - 2);
 	    String vendorImgUrl =  vendorService.getVendorImageUrlById(vendorId);
 	    String vendorName = vendorService.getVendorNameById(vendorId);
 	    String customerName =customerService.getCustomerNameById(o.getCustomerId());
         LocalDateTime orderDateAndTime = o.getOrderDateAndTime();
         Long OrderId = o.getOrderId();
+        customerPhone=customerService.getCustomerById(o.getCustomerId()).getPhone();
         OrderDetails order = new OrderDetails(OrderId,vendorImgUrl ,foodPlusQunatity,customerName,vendorName,orderDateAndTime,totalPrice);
        orderList.add(order);
 	    }
-	    
+	    model.addAttribute("customer_phone", customerPhone);
 	    model.addAttribute("MyOrders", orderList);
 	    model.addAttribute("vendorid" , vendorId);
 	    return "vendorCompleteOrders" ;

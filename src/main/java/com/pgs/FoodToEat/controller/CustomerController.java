@@ -272,9 +272,10 @@ public class CustomerController {
         OrderDetails order = new OrderDetails(OrderId ,vendorImgUrl ,foodPlusQunatity,customerName,vendorName,orderDateAndTime,totalPrice);
        orderList.add(order);
 	    }
-	    model.addAttribute("customerid",customerId );
+	    model.addAttribute("custId",customerId );
 	    model.addAttribute("MyOrders", orderList);
 	    return "customerMyOrder" ;
+	    
 	  
 	}
 	
@@ -308,7 +309,7 @@ public class CustomerController {
         order.setOrderStatus(new FoodOrderStatus().findOrderStatus(o.getOrderStatus()));
         orderList.add(order);
 	    }
-	    
+	    model.addAttribute("custId",customerId );
 	    model.addAttribute("MyOrders", orderList);
 	    return "customerMyOrderHistory" ;
 	  
