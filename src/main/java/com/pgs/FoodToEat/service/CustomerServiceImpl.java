@@ -31,29 +31,29 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public void removeCustomerById(Long id) throws CustomerNotFoundException {
+	public void removeCustomerById(Long id) {
 		//validate data
 		boolean customerPresent = customerRepository.existsById(id);
 		if(!customerPresent) 
-			throw new CustomerNotFoundException("Customer with this id do not exists!");
+			return;
 		customerRepository.deleteById(id);
 	}
 
 	@Override
-	public Customer signIn(String email, String password) throws CustomerNotFoundException {
+	public Customer signIn(String email, String password) {
 		//validate data
 		Optional<Customer> customer = customerRepository.findByEmailAndPassword(email, password);
 		if(customer.isEmpty())
-			throw new CustomerNotFoundException("Customer with this combination of email and password not found!");
+			return null;
 		this.custId = customer.get().getId();
 		return customer.get();
 	}
 
 	@Override
-	public Customer getCustomerById(Long id) throws CustomerNotFoundException {
+	public Customer getCustomerById(Long id) {
 		Optional<Customer> customer = customerRepository.findById(id);
 		if(customer.isEmpty())
-			throw new CustomerNotFoundException("Customer with this combination of email and password not found!");
+			return null;
 		return customer.get();
 	}
 
@@ -61,6 +61,22 @@ public class CustomerServiceImpl implements CustomerService {
 	public String getCustomerNameById(Long customerId) {
 		Customer customer = customerRepository.findById(customerId).get();
 		return customer.getName();
+	}
+
+	@Override
+	public Customer getCustomerByEmail(String email) {
+		Optional<Customer> customer = customerRepository.findByEmail(email);
+		if(customer.isEmpty())
+			return null;
+		return customer.get();
+	}
+
+	@Override
+	public Customer getCustomerByPhone(String phoneNo) {
+		Optional<Customer> customer = customerRepository.findByPhone(phoneNo);
+		if(customer.isEmpty())
+			return null;
+		return customer.get();
 	}
 	
 	

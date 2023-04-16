@@ -11,6 +11,11 @@
 </head>
 
 <body>
+	<td>
+    <span th:if="${customer_sign_in_status_code == 104}"><h1 style="color: red; z-index: +5;">Email and pass not found</h1></span>
+	</td>
+
+
       <section class="hero__section" style="background-image: url(https://images.unsplash.com/photo-1615719413546-198b25453f85?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYzMDQwMjkwNA&ixlib=rb-1.2.1&q=85);  
                min-height: 100%;min-width: 1024px;width: 100%;height: auto;position:fixed;top: 0;left: 0; filter: blur(8px);">
       </section>
