@@ -48,31 +48,31 @@ public class VendorServiceImpl implements VendorService{
 
 
 	@Override
-	public void removeVendorById(Long id) throws VendorNotFoundException {
+	public void removeVendorById(Long id) {
 		//validate data
 		boolean vendorExists = vendorRepository.existsById(id);
 		if(!vendorExists) 
-			throw new VendorNotFoundException("Vendor with this id do not exists!");
+			return;
 		vendorRepository.deleteById(id);
 	}
 
 
 	@Override
-	public Vendor getVendorById(Long id) throws VendorNotFoundException {
+	public Vendor getVendorById(Long id) {
 		//validate data
 		Optional<Vendor> vendor = vendorRepository.findById(id);
 		if(vendor.isEmpty()) 
-			throw new VendorNotFoundException("Vendor with this id do not exists!");
+			return null;
 		return vendor.get();
 	}
 
 
 	@Override
-	public Vendor signIn(String email, String password) throws VendorNotFoundException {
+	public Vendor signIn(String email, String password) {
 		//validate data
 		Optional<Vendor> vendor = vendorRepository.findByEmailAndPassword(email, password);
 		if(vendor.isEmpty())
-			throw new VendorNotFoundException("Vendor with this combination of email and password not found!");
+			return null;
 		this.vendorId = vendor.get().getId();
 		return vendor.get();
 	}
@@ -92,10 +92,10 @@ public class VendorServiceImpl implements VendorService{
 
 
 	@Override
-	public Vendor getVendorByEmail(String email) throws VendorNotFoundException {
+	public Vendor getVendorByEmail(String email) {
 		Optional<Vendor> vendor = vendorRepository.findByEmail(email);
 		if(vendor.isEmpty()) 
-			throw new VendorNotFoundException("Vendor with this email do not exists!");
+			return null;
 		return vendor.get();
 	}
 	
@@ -120,46 +120,14 @@ public class VendorServiceImpl implements VendorService{
 		Vendor v = vendorRepository.findById(vendorId).get();
 		return v.getImageUrl();
 	}
+
+
+	@Override
+	public Vendor getVendorByPhone(String phoneNo) {
+		Optional<Vendor> vendor = vendorRepository.findByPhone(phoneNo);
+		if(vendor.isEmpty()) 
+			return null;
+		return vendor.get();
+	}
 	
-	
-	
-//	public Long getVendorid() {
-//		return this.vendorid;
-//	}
-//
-//	public void addVendor(Vendors vendor) {
-//		  vendorRepository.save(vendor) ;
-//	}
-//	
-//	public List<Vendors> getAllVendors(){
-//		return (List<Vendors>)vendorRepository.findAll();
-//	}
-//	public void removeVendorById(Long id) {
-//		vendorRepository.deleteById(id);
-//	}
-//	public Optional<Vendors> getVendorById(Long id){
-//		return vendorRepository.findById(id);
-//	}
-//
-//	public Vendors signIn(String mail, String pass) {
-//		Vendors vendor = vendorRepository.signIn(mail, pass);
-//		if(vendor !=null) {
-//			
-//			this.vendorid = vendor.getId();
-//			
-//		}
-//		
-//		return vendor ;
-//		
-//	}
-//	
-//  why it is here
-//	@Autowired
-//	FoodRepository foodRepository ;
-//	
-//	public List<FoodItems> getFoodsById(Long id){
-//		return foodRepository.findFoodsById(id) ;
-//		
-//		
-//	}
 }

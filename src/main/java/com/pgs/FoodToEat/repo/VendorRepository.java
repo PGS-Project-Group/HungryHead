@@ -15,4 +15,5 @@ public interface VendorRepository extends JpaRepository< Vendor ,Long> {
 	Optional<Vendor> findByEmailAndPassword(String email, String password);
 	List<Vendor> findByVerified(String verified);
 	Optional<Vendor> findByEmail(String email);
+	Optional<Vendor> findByPhone(String phone);
 }
