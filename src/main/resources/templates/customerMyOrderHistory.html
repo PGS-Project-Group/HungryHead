@@ -37,8 +37,8 @@
     </div>
 </nav>-->
 
-<nav class="navbar navbar-expand-lg navbar-light  " style="box-shadow: 0px 2px 4px rgba(0,0,0,0.5); background-color:rgb(189, 192, 196);;">
-  <img src="https://drive.google.com/file/d/1AMHUz-qUk_nUyVOZRrvkA56ueJf3ZBJJ/view" alt="logo Image">
+<nav class="navbar navbar-expand-lg navbar-light  " style="position:fixed; top:0; width:100%; z-index:1; background-color:white;">
+  <img src="https://imgtr.ee/images/2023/04/16/y4JTV.png" alt="logo Image" style="width:10%;  height:50px;">
   <button class="navbar-toggler" type="button" data-toggle="collapse" 
   data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
   aria-expanded="false" aria-label="Toggle navigation">
@@ -48,23 +48,23 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto" style="font-size:18px;">
       <li class="nav-item" style="margin-right:10px;">
-        <a class="nav-link" href="#" th:href="@{/}" >
+        <a class="nav-link" href="#" th:href="@{/}" style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
         <i class="fas fa-home"></i>Home</a>
       </li> 
       <li class="nav-item" style="margin-right:10px;">
-        <a class="nav-link" href="#" th:href="@{/customerlogin/home/{id}/myOrders  (id=${custId})}">
+        <a class="nav-link" href="#" th:href="@{/customer/{id}/myOrders  (id=${custId})}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
         <i class="fas fa-file-alt"></i>My Orders</a>
       </li>
       <li class="nav-item" style="margin-right:10px;">
-        <a class="nav-link" href="#" th:href="@{/customerlogin/home/{id}/myOrderHistory  (id=${custId})}">
+        <a class="nav-link" href="#" th:href="@{/customer/{id}/myOrderHistory  (id=${custId})}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
         <i class="fas fa-history"></i>Order History</a>
       </li>
       <li class="nav-item" style="margin-right:10px;">
-        <a class="nav-link" href="#" th:href="@{/cart/{c_id}(c_id = ${customer_id})}">
+        <a class="nav-link" href="#" th:href="@{/customer/{id}/cart (id = ${custId})}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
         <i class="fas fa-shopping-cart"></i>Cart</a>
       </li>
       <li class="nav-item" style="margin-right:10px;">
-        <a class="nav-link" href="#" th:href="@{/}">
+        <a class="nav-link" href="#" th:href="@{/}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
         <i class="fas fa-sign-out-alt"></i>Logout</a>
       </li>
     </ul>
@@ -77,7 +77,7 @@
 </nav>
 
 
-<div class="container">
+<div class="container" style="padding-top:90px;">
 
    
     <table class="table">

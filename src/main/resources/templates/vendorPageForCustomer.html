@@ -25,108 +25,126 @@
 
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<style>
-body {
-	font-family: "Times New Roman", Georgia, Serif;
+
+  <style>
+	 
+.search-field {
+  width: 100%;
+  
+  padding: 10px 35px 10px 15px;
+  border: none;
+  border-radius: 100px;
+  outline: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
-	font-family: "Playfair Display";
-	letter-spacing: 5px;
+.search-button {
+  background: transparent;
+  border: none;
+  outline: none;
+  margin-left: -33px;
 }
-</style>
 
+.search-button img {
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+}
+	  </style>
 
 <title>Document</title>
 
 </head>
 <body>
+<header class="header" style="height:39px;" > 
+<nav class="navbar navbar-expand-lg navbar-light" style="position:fixed; top:0; width:100%; z-index:1; background-color:white;">
+     <img src="https://imgtr.ee/images/2023/04/16/y4JTV.png" alt="logo Image" style="width:10%;  height:50px;">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" 
+  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+  aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-
-	<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="#"> <img
-				th:src="@{/images/logo.png}" src="../static/images/logo.png"
-				width="auto" height="40" class="d-inline-block align-top" alt="" />
-			</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto"></ul>
-				<ul class="navbar-nav">
-					<li class="nav-item active"><a class="nav-link" th:href="@{/}"
-						href="#">Home</a></li>
-					<li class="nav-item active"><a class="nav-link"
-						th:href="@{/login}" href="#">Login</a></li>
-					
-				</ul>
-
-			</div>
-		</div>
-	</nav> -->
-
-
-	<div class="w3-top">
-		<div class="w3-bar w3-white w3-padding w3-card"
-			style="letter-spacing: 4px;">
-			<a class="navbar-brand" href="#"> <img
-				th:src="@{/images/logo.png}" src="../static/images/logo.png"
-				width="150" height="50" class="d-inline-block align-top" alt="" />
-			</a>
-
-			<div class="w3-right w3-hide-small">
-				<a th:href="@{/}" class="w3-bar-item w3-button">Home</a> <a
-					th:href="@{/login}" href="#" class="w3-bar-item w3-button">Login
-					/ Signup</a> <a th:href="@{vendorHome}" class="w3-bar-item w3-button">Partnered
-					Restaurants</a> <a href="#contact" class="w3-bar-item w3-button">About
-					Us</a> <a href="#contact" class="w3-bar-item w3-button">Contact</a>
-			</div>
-		</div>
-	</div>
-
-	<!-- Header -->
-	<!-- <header class="w3-display-container w3-content w3-wide" style="max-width:1600px;min-width:500px" id="home">
-  <img class="w3-image" th:src="@{/images/hamburger.jpg}" alt="Hamburger Catering" width="1600" height="700">
-  <div class="w3-display-bottomleft w3-padding-large w3-opacity">
-    <h1 class="w3-xxlarge">Food To Eat</h1>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+   <div style="padding-left:550px;">
+  <form th:action="@{/search}" method="get">
+  <div class="search-box">
+    <input type="text" name="query" th:placeholder="'Search for food'" required />
+    <button type="submit" class="search-button">
+      <i class="fa fa-search"></i>  
+    </button>
   </div>
-</header>
-
-
-  <hr> -->
-
-	<!--  <div class="wrapper_menu">
-		<!-- <h3 style="margin-left: 20px;">Quick Searches</h3> -->
-<!--  
-		<h5
-			style="color: rgb(0, 0, 0); font-size: 30px; margin-left: 350px; margin-right: 350px; margin-bottom: 40px; margin-top: 100px; font-weight: normal"><td th:text="${vendor_name}"></td></h5>
-		<div class="w3-center">
-			<div class="w3-center">
-				<div style="margin-left: 60px; margin-right: 60px;">
-					<img src="https://i.pinimg.com/originals/cb/e0/62/cbe062b0eccd6b91ea1b9c2b0fa7d89f.png"
-						style="width: 1800px; height: 700px; border-radius: 0px;">
-						</div>
-				</div>
-			</div>
-	</div>-->
+</form>
+</div>
+    <ul class="navbar-nav ml-auto" style="font-size:18px;">
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/}" style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-home"></i>Home</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/customer/{id}/myOrders  (id=${customer_id})}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-file-alt"></i>My Orders</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/customer/{id}/myOrderHistory  (id=${customer_id})}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-history"></i>Order History</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/customer/{id}/cart (id = ${customer_id})}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-shopping-cart"></i>Cart</a>
+      </li>      
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-sign-out-alt"></i>Logout</a>
+      </li>
+    </ul>
+   <!--   
+     <form class="form-inline ml-auto my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-secondary btn-outline-dark my-2 my-sm-0"  type="submit">
+      Search</button>
+        <a class="nav-link" href="#" th:href="@{/}" style="color: #6c757d; font-size:18px; margin-left:10px;" onmouseover="this.style.color='black';" onmouseout="this.style.color='#6c757d';">
+        <i class="fas fa-sign-out-alt"></i>Logout
+        </a>  
+    </form>-->
+    
+  </div>
+</nav>
 	
-	
-	
-	<div class="container" style="padding-right:150px; padding-left:150px; padding-top:100px;">
-
-      <div style="overflow: auto; margin-top:0px; margin-left:30px">
+	<div class="container" style="padding-right:150px; padding-left:150px; padding-top:80px;">
+       <!--  
+         <div style="overflow: auto; margin-top:0px; margin-left:30px">
          <img th:src="${vendor_imageUrl}" alt="Example Image"
-         style="width: 100px; height: 75px; border-radius: 10px; float: left; margin-right: 20px;">
+         style="width: 100px; height: 75px; border-radius:0px; float: left; margin-right: 20px;">
          <h5 style="color: rgb(0, 0, 0); font-size: 24px; font-weight: bold;">
          <td th:text="${vendor_name}"></td>
          </h5>
          <td th:text="${vendor_description}">Larry</td>
-         </div>
+         </div>-->
+   <div class="container">
+  <div style="overflow: auto; margin-top:0px;top:110px; margin-left:30px;display:flex;">
+    <img th:src="${vendor_imageUrl}" alt="Example Image" style="width: 100px; height: 75px; border-radius: 0px; margin-right: 20px;">
+    <div>
+      <h5 style="color: rgb(0, 0, 0); font-size: 24px; font-weight: bold;">
+        <td th:text="${vendor_name}"></td>
+      </h5>
+      <div style="margin-top:10px;">
+        <td th:text="${vendor_description}"></td>
+      </div>
+    </div>
+  </div>
+  <div class="dropdown" style="position: absolute; top: 100px; right: 350px; padding-right:10px;">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Filter
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" href="#">Cost:Low to High</a>
+      <a class="dropdown-item" href="#">Cost:High to Low</a>
+    </div>
+  </div>
+</div>
+   
+   
+  
         
          
       
@@ -154,7 +172,7 @@ h1, h2, h3, h4, h5, h6 {
 	                    <img th:src="${foodItem.imageUrl}" alt="Food Image" style="width: 100px; height: 75px; border-radius: 10px;">
 	                  </div>		
 	                  <div style="padding-top:15px;display: flex; justify-content: center; align-items: center;">
-                      <a href="#" th:href="@{/cart/addFood/{c_Id}/{f_Id}(c_Id = ${customer_id}, f_Id = ${foodItem.id})}" class="btn btn-primary btn-sm" style="margin-top:-10px;">Add To Cart</a>
+                      <a href="#" th:href="@{/cart/addFood/{c_Id}/{f_Id}(c_Id = ${customer_id}, f_Id = ${foodItem.id})}" class="btn btn-secondary btn-sm" style="margin-top:-10px;">Add To Cart</a>
                       </div>
                   </div>
 	          </div>

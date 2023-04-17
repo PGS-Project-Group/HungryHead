@@ -12,7 +12,8 @@
     <title>Document</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light" style="position:fixed;">
+<!--  
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
             <img th:src="@{/images/logo.png}"  src="../static/images/logo.png" width="auto" height="40" class="d-inline-block align-top" alt=""/>
@@ -35,10 +36,45 @@
 
         </div>
     </div>
+</nav>-->
+  
+  
+<nav class="navbar navbar-expand-lg navbar-light" style="position:fixed; top:0; width:100%; z-index:1;">
+  <img src="https://imgtr.ee/images/2023/04/16/y4JTV.png" alt="logo Image" style="width:100px;  height:50px;">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" 
+  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+  aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto" style="font-size:18px;">
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/}" style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-home"></i>Home</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/vendor/{vendorid}/orderRequest    (vendorid=${vendorId})}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-clock"></i>Pending Orders</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/vendor/{vendorid}/orderHistory   (vendorid=${vendorId})}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-check" ></i>Completed Orders</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/vendor/{vendorid}/addNewFoodItems (vendorid=${vendorId})}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-plus-circle" ></i>Add Food Item</a>
+      </li>      
+       <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-sign-out-alt"></i>Logout</a>
+      </li>
+    </ul>
+  </div>
 </nav>
 
 
-<div class="container" style="padding-top:20px;">
+<div class="container" style="padding-top:70px;">
 	<div class="row">
 	<div class="col">
 	<div class="card-group">
@@ -47,7 +83,7 @@
 	<div class="cards-container"
 	  style="width: 30%; margin-left: 20px; margin-bottom: 20px; padding-top: 20px;">
 	<div class="card"
-	style="background-color: #fff;  display: inline-block; width: 300px; height:330px; border-radius: 0px;">
+	style="background-color: #fff;  display: inline-block; width: 300px; height:340px; border-radius: 0px;">
 		<div class="card-header">
 		<span style="font-weight:500;">Order Id:</span>
     		<td th:text="'#'+${myorder.orderId}"/>
@@ -58,7 +94,8 @@
 				<p class="place-name"
 				style="font-weight:450; padding-bottom: 10px;padding-top:0px; font-size:16px; color: rgba(0, 0, 0, 0.87);">
 				<td th:text="${myorder.customerName}">Larry</td><br>
-				<td th:text="${customer_phone}">Larry</td>
+				<td th:text="${customer_phone}">Larry</td><br>
+				<td th:text="Address">Larry</td>
 				</p>
 			</div>
     		<h5 class="card-title" style="padding-top:0px;">Order Details:</h5>

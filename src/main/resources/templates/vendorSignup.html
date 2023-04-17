@@ -14,14 +14,12 @@
 </head>
 <body>
 
-   <section class="hero__section" style="background-image: url(https://images.unsplash.com/photo-1615719413546-198b25453f85?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYzMDQwMjkwNA&ixlib=rb-1.2.1&q=85);  
-                min-height: 100%;min-width: 1024px;width: 100%;height: auto;position:fixed;top: 0;left: 0; filter: blur(8px);">
-   </section>
+    <section class="hero__section" style="background-image: url(https://imgtr.ee/images/2023/04/17/yjbCm.png);  min-height: 100%;min-width: 1024px;width: 100%;height: auto;position: fixed;top: 0;left: 0;">
 
  <nav class="navbar navbar-expand-sm  ">
 	  <div class="container-fluid">	    
 		<div class="collapse navbar-collapse " id="navbarSupportedContent">
-		  <ul class="navbar-nav me-auto order-0 ">
+		  <ul class="navbar-nav me-auto order-0 " style="margin-left:auto;">
 			<div class="right-menu">
 				 <a href="#" th:href="@{/}" style = "font-size:25px; margin-right:20px">Home</a>
 				 <a href="#" th:href="@{/vendor/login}" style = "font-size:25px;">LogIn Here</a>
@@ -36,42 +34,44 @@
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
             <form th:action="@{/vendor/signup}" method="post" enctype="multipart/form-data" th:object="${sign_up_object}">
              <div class="divider d-flex align-items-center my-2">
-            <div class="divider d-flex align-items-center my-2">
-                <div style = "color:white; margin-left:90%; font-weight: 400; font-size:40px;">SignUp</div>
+            <div class="divider d-flex text-center align-items-center my-2">
+                <div style = "color:white; margin-left:90%; font-weight: 400;text-align:center; font-size:28px; margin-left:170px;">SignUp</div>
             </div>
           </div>
-                <div class="form-outline mb-2">
+                <div class="form-outline mb-1">
                     <label for="email" class="form-label" style = "color:white; font-size:20px; ">Email</label>
                     <input type="text" name="email" id="email"  required th:field="*{email}" placeholder="Your Email" class="form-control form-control-md">
                 </div>
 
-                <div class="form-outline mb-3">
+                <div class="form-outline mb-1">
                     <label for="name" class="form-label" style = "color:white; font-size:20px; " >Full Name</label>
                     <input type="text" name="full_name" id="name"  required th:field="*{name}" placeholder="Your Full Name" class="form-control form-control-md">
                 </div>
 
-                <div class="form-outline mb-2">
+                <div class="form-outline mb-1">
                     <label for="phone" class="form-label" style = "color:white; font-size:20px; ">Phone</label>
                     <input type="text" name="phone" id="phone"  required th:field="*{phone}" placeholder="Your Phone Number" class="form-control form-control-md">
                 </div>
 
-                <div class="form-outline mb-2">
+                <div class="form-outline mb-1">
                     <label for="password" class="form-label" style = "color:white; font-size:20px; ">Password</label>
                     <input type="text" class="form-control form-control-md" th:field="*{password}" placeholder="Password" name="password" id="password">
                 </div> 
                 
-                 <div class="form-outline mb-2">
+                 <div class="form-outline mb-1">
                     <label for="types_of_food" class="form-label" style = "color:white; font-size:20px; ">Types of Food</label>
                     <input type="text" class="form-control form-control-md" th:field="*{typesOfFood}" placeholder="Food Tags" name="types_of_food" id="types_of_food">
                 </div> 
                 
-                 <div class="form-outline mb-2">
+                 <div class="form-outline mb-1">
                     <label for="vendor_img_url" class="form-label" style = "color:white; font-size:20px; ">Restaurant Home Page Image Url</label>
                     <input type="text" class="form-control form-control-md" th:field="*{imageUrl}" placeholder="Restaurant Home Page Image Url" name="vendor_img_url" id="vendor_img_url">
                 </div>                
                <div class="text-center text-lg-start mt-3 pt-2">
             <button type="submit" value="Login" class="btn btn-secondary btn-md"
               style="padding-left: 1.5rem; padding-right: 1.5rem;">Signup</button>
+              
+              <p class="medium fw-bold mt-2 pt-1 mb-0" style = "color:white; font-weight: 600; font-size: 20px;">Already an existing user? <a href="#" th:href="@{/vendor/login}"  style = "font-weight: 600; font-color:grey;" >Login Here!</a></p>
 
             </div>
             </form>

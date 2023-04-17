@@ -35,7 +35,7 @@
 </head>
 <body>
 	<!-- Header showcase-->
-	<header class="header" style="height:27px;" > 
+	<header class="header" style="height:39px;" > 
 	
 <!--  
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -69,7 +69,7 @@
 		</div>
 	</nav> -->
 	
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<!--  <nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#"> <img
 				th:src="@{/images/logo.png}" src="../static/images/logo.png"
@@ -95,10 +95,55 @@
 
 			</div>
 		</div>
-	</nav> 
+	</nav> -->
+	
+	<nav class="navbar navbar-expand-lg navbar-light" style="position:fixed; top:0; width:100%; z-index:1;">
+  <img src="https://imgtr.ee/images/2023/04/16/y4JTV.png" alt="logo Image" style="width:100px;  height:50px;">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" 
+  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+  aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto" style="font-size:18px;">
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/}" style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-home"></i>Home</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/vendor/{vendorid}/orderRequest    (vendorid=${vendorId})}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-clock"></i>Pending Orders</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/vendor/{vendorid}/orderHistory   (vendorid=${vendorId})}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-check"></i>Completed Orders</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/vendor/{vendorid}/addNewFoodItems (vendorid=${vendorId})}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-plus-circle"></i>Add Food Item</a>
+        <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-sign-out-alt"></i>Logout</a>
+      </li>
+      </li>      
+    </ul>
+    <!--  
+     <form th:action="@{/vendor/{vendorid}/foodItemsByName  (vendorid=${vendorId})}" method="post" class="form-inline ml-auto my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" id="name" name="name"   placeholder="Enter Food Name" aria-label="Search">
+      <button class="btn btn-secondary btn-outline-dark my-2 my-sm-0"  type="submit">
+      Search</button>
+        <a class="nav-link" href="#" th:href="@{/}" style="color: #6c757d; font-size:18px; margin-left:10px;" onmouseover="this.style.color='black';" onmouseout="this.style.color='#6c757d';">
+        <i class="fas fa-sign-out-alt"></i>Logout
+        </a>  
+    </form>-->
+    
+  </div>
+</nav>
 	
 		
 	</header>
+	<!--  
 	<br>
 	<br>
 	<table class="table">
@@ -125,9 +170,25 @@
 	<form th:action="@{/vendor/{vendorid}/foodItemsByName  (vendorid=${vendorId})}" method="post">
     <input type="text" id="name" name="name"   placeholder="Enter Food Name"/>
     <button type="submit">Search</button></h5>
-</form>
-	 <hr style="border-color: #444444;">
-      
+</form>-->
+  <div class="container" style=" padding-top:50px;">
+    <div style="overflow: auto; margin-top:0px;top:110px; margin-left:30px;display:flex;">
+    <img th:src="${vendor_imageUrl}" alt="Example Image" style="width: 100px; height: 75px; border-radius: 0px; margin-right: 20px;">
+    
+      <h5 style="color: rgb(0, 0, 0); font-size: 24px; font-weight: bold;">
+       <span th:text="${vendorName}"></span>'s Menu
+      </h5>
+      <div style="padding-left:400px; top:50px; ">
+      <form th:action="@{/vendor/{vendorid}/foodItemsByName  (vendorid=${vendorId})}" method="post" class="form-inline ml-auto my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" id="name" name="name"   placeholder="Enter Food Name" aria-label="Search" style="border: 1px solid black;">
+      <button class="btn btn-secondary btn-outline-dark my-2 my-sm-0" style="margin-left: -8px;" type="submit">
+      Search</button>
+      </form>
+      </div>
+  </div>
+   <!--   <h5 style="color: black; font-size: 30px; margin-left: 40%;font-weight:500; margin-bottom: 40px; ; margin-top:50px;"><span th:text="${vendorName}"></span>'s Menu</h5>-->
+	  <hr style="border-color: #444444;">
+     <!--   
 	  <div class="container">
 	      <tr th:each="foodItem, iStat : ${foodItems}">
 	           <div class="about-place"
@@ -150,10 +211,10 @@
 	                    <img th:src="${foodItem.imageUrl}" alt="Food Image" style="width: 100px; height: 75px; border-radius: 10px;">
 	                  </div>		
 	                  <div style="padding-top:15px;display: flex; justify-content: center; align-items: center;">
-                      <a href="#" th:href="@{/vendor/{vendorid}/updateFoodItem/{foodid} (vendorid=${vendorId}, foodid=${foodItem.id})}" class="btn btn-primary btn-sm" style="margin-top:-10px;">Update</a>
+                      <a href="#" th:href="@{/vendor/{vendorid}/updateFoodItem/{foodid} (vendorid=${vendorId}, foodid=${foodItem.id})}" class="btn btn-secondary btn-sm" style="margin-top:-10px;">Update</a>
                       </div>
                       <div style="padding-top:15px;display: flex; justify-content: center; align-items: center;">
-                      <a href="#" th:href="@{/vendor/{vendorid}/deleteFoodItem/{foodid} (vendorid=${vendorId}, foodid=${foodItem.id})}" class="btn btn-primary btn-sm" style="margin-top:-10px;">Delete</a>
+                      <a href="#" th:href="@{/vendor/{vendorid}/deleteFoodItem/{foodid} (vendorid=${vendorId}, foodid=${foodItem.id})}" class="btn btn-secondary btn-sm" style="margin-top:-10px;">Delete</a>
                       </div>
                   </div>
 	          </div>
@@ -161,25 +222,61 @@
        </tr>
     </div>
 </div>
+	</div>-->
+	<div class="container">
+	<div class="row">
+	
+	<tr th:each="foodItem, iStat : ${foodItems}">
+				
+					<div class="col-lg-4">
+						<div class="cards-container"
+							style="width: 30%; margin-left: 20px; margin-bottom: 20px; padding-top: 20px;">
+							<div class="card"
+								style="background-color: #fff;  display: inline-block; width: 300px; height:310px;border:none; border-radius: 0px;">
+								  <div class="card-media"
+									style=" background-position: center; background-size: cover; height: 200px; width: 100%; object-fit: fit; border-radius: 10px 10px 0 0; position: relative;">
+									<img th:src="${foodItem.imageUrl}" alt="Food Image" style="width: 299px; height: 180px;">
+								</div>
+								
+								<div class="card-description" style="padding: 10px; margin-top:0; padding-top:0px;">
+								<div class="about-place" style="display: flex; margin-top:0; padding-top:0; justify-content: space-between; align-items: center;">
+   									 <div class="place">
+      								 <p class="place-name" style="font-weight: 600; padding-bottom: 5px; margin: 0;">
+        							 <td th:text="${foodItem.name}"></td>
+     								 </p>
+     								 <p class="place-speciality" style="font-size: 14px; margin: 0; padding: 0; color: rgba(128, 128, 128, 0.97);">
+       								 <td th:text="${foodItem.description}"></td>
+     								 </p>
+   									 </div>
+   								 <div class="place" style="margin-left: auto; margin-top:-10px;">
+     								 <p class="place-name" style="font-size: 16px; color: black; ">
+      								  <span>INR</span><td th:text="${foodItem.unitPrice}"></td>
+    								 </p>
+   								 </div>
+									</div>
+								</div>
+								<div class="container" style="display: flex; justify-content: space-between;">
+    		                       <a href="#" th:href="@{/vendor/{vendorid}/updateFoodItem/{foodid} (vendorid=${vendorId}, foodid=${foodItem.id})}" class="btn btn-success" style="margin-left:0px;">Update</a>
+                                   <a href="#" th:href="@{/vendor/{vendorid}/deleteFoodItem/{foodid} (vendorid=${vendorId}, foodid=${foodItem.id})}" class="btn btn-danger" style="margin-right:0px;" >Delete</a>
+  		                        </div>
+							</div>
+						</div>
+					</div>
+			</tr>
+		</div>
+	</div>
 	
 	
-	
-	
-
+</div>
 	
 	<!-- Footer -->
-	<section class="footer-bar" style="width:100%;margin-top:20px;">
-		
-			<div class="footer-copyright" style="text-align:center; padding-bottom:0px;">
-					<p>
+	<footer class="w3-center w3-light-grey" style="position:fixed;bottom:0;width:100%; height:50px;">
+		<p>
 			Powered by <a href="" title="" target="_blank"
-				class="w3-hover-text-green">PGS Interns</a><br>
-				Food To Eat, Copyright @ 2023
-		</p>
-			</div>
-		
-		
-	</section>
+				class="w3-hover-text-green">PGS Interns</a>
+		<br>
+		Food To Eat, Copyright @ 2023</p>
+	</footer>
 	
 		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

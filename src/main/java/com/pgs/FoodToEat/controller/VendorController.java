@@ -13,6 +13,7 @@ import com.pgs.FoodToEat.entity.Vendor;
 import com.pgs.FoodToEat.entity.VendorRequest;
 import com.pgs.FoodToEat.entity.VendorSignupData;
 import com.pgs.FoodToEat.entity.VendorStatus;
+import com.pgs.FoodToEat.error.CustomerNotFoundException;
 import com.pgs.FoodToEat.error.FoodNotFoundException;
 import com.pgs.FoodToEat.error.VendorNotFoundException;
 import com.pgs.FoodToEat.service.CustomerService;
@@ -99,6 +100,7 @@ public class VendorController {
 		}
 		model.addAttribute("vendor_sign_in_status_code", VendorStatus.VENDOR_CODE_OK);
 		model.addAttribute("vendorId", vendor.getId());
+		model.addAttribute("vendor_imageUrl", vendorService.getVendorImageUrlById(vendor.getId()));
 		model.addAttribute("vendorName", vendor.getName());
 		model.addAttribute("foodItems", vendorService.getFoodByVendorId(vendor.getId()));
 		return "vendorHomePage";
@@ -110,29 +112,33 @@ public class VendorController {
 		List<FoodOrder> list = foodOrderService
 				.getOrderByOrderStatusAndVendorId(FoodOrderStatus.WAITING_FOR_VENDOR_CONFIRMATION, vendorId);
 		List<OrderDetails> orderList = new ArrayList<>();
+		String customerPhone="";
 		for (FoodOrder o : list) {
 
 			List<OrderItem> cartItems = orderItemService.getOrderItemsByOrderId(o.getOrderId());
-			String foodPlusQunatity = "";
+			String foodPlusQunatitys = "";
 			Double totalPrice = 0.0;
 			for (OrderItem item : cartItems) {
 				String foodName = foodService.getFoodNameById(item.getFoodItemId());
 				Double unitPrice = foodService.getFoodUnitPriceById(item.getFoodItemId());
 
-				foodPlusQunatity = foodPlusQunatity + item.getQuantity() + " x " + foodName + ", ";
+				foodPlusQunatitys = foodPlusQunatitys + item.getQuantity() + " x " + foodName + ", ";
 				totalPrice = totalPrice + item.getQuantity() * unitPrice;
 			}
+			String foodPlusQunatity=foodPlusQunatitys.substring(0, foodPlusQunatitys.length() - 2);
 			String vendorImgUrl = vendorService.getVendorImageUrlById(vendorId);
 			String vendorName = vendorService.getVendorNameById(vendorId);
 			String customerName = customerService.getCustomerNameById(o.getCustomerId());
 			LocalDateTime orderDateAndTime = o.getOrderDateAndTime();
 			Long OrderId = o.getOrderId();
+			customerPhone=customerService.getCustomerById(o.getCustomerId()).getPhone();
 			OrderDetails order = new OrderDetails(OrderId, vendorImgUrl, foodPlusQunatity, customerName, vendorName,
 					orderDateAndTime, totalPrice);
 			orderList.add(order);
 		}
+		model.addAttribute("customer_phone", customerPhone);
 		model.addAttribute("MyOrders", orderList);
-		model.addAttribute("vendorid", vendorId);
+		model.addAttribute("vendorId", vendorId);
 		return "vendorPendingOrders";
 
 	}
@@ -153,7 +159,9 @@ public class VendorController {
 
 	@GetMapping("/vendor/login/{vendorid}")
 	public String vendorHome(@PathVariable("vendorid") Long vendorId, Model model) {
+		String vendorImgUrl=vendorService.getVendorImageUrlById(vendorId);
 		model.addAttribute("vendorId", vendorId);
+		model.addAttribute("vendor_imageUrl", vendorImgUrl);
 		model.addAttribute("vendorName", vendorService.getVendorNameById(vendorId));
 		model.addAttribute("foodItems", vendorService.getFoodByVendorId(vendorId));
 
@@ -161,26 +169,37 @@ public class VendorController {
 	}
 
 	@GetMapping("/vendor/{vendorid}/orderHistory")
-	public String completeCustomerOrders(@PathVariable("vendorid") Long vendorId, Model model) {
-		List<FoodOrder> list = foodOrderService.getOrderByOrderStatusAndVendorId(FoodOrderStatus.CONFIRMED_BY_VENDOR,
-				vendorId);
-		List<OrderDetails> orderList = new ArrayList<>();
-		for (FoodOrder o : list) {
-			List<OrderItem> cartItems = orderItemService.getOrderItemsByOrderId(o.getOrderId());
-			String foodPlusQunatity = "";
-			Double totalPrice = 0.0;
-
-			for (OrderItem item : cartItems) {
-				String foodName = foodService.getFoodNameById(item.getFoodItemId());
-				Double unitPrice = foodService.getFoodUnitPriceById(item.getFoodItemId());
-
-				foodPlusQunatity = foodPlusQunatity + item.getQuantity() + " x " + foodName + ", ";
-				totalPrice = totalPrice + item.getQuantity() * unitPrice;
-			}
+	public String completeCustomerOrders(@PathVariable("vendorid") Long vendorId , Model model) throws CustomerNotFoundException {
+		List<FoodOrder> list = foodOrderService.getOrderByOrderStatusAndVendorId(FoodOrderStatus.CONFIRMED_BY_VENDOR, vendorId);
+	    List<OrderDetails>orderList =new ArrayList<>() ;
+	    String customerPhone="";
+	    for(FoodOrder o : list) {
+	   
+	    List<OrderItem> cartItems = orderItemService.getOrderItemsByOrderId(o.getOrderId());
+	    String foodPlusQunatitys = "";
+	    Double totalPrice = 0.0 ;
+	    for(OrderItem item : cartItems ) {
+		String foodName = foodService.getFoodNameById(item.getFoodItemId());
+		Double unitPrice = foodService.getFoodUnitPriceById(item.getFoodItemId());
+			
+			foodPlusQunatitys =foodPlusQunatitys+ item.getQuantity()+" x "+foodName+", ";
+			totalPrice = totalPrice+item.getQuantity()*unitPrice;
 		}
-		model.addAttribute("MyOrders", orderList);
-		model.addAttribute("vendorid", vendorId);
-		return "vendorCompleteOrders";
+	    String foodPlusQunatity=foodPlusQunatitys.substring(0, foodPlusQunatitys.length() - 2);
+	    String vendorImgUrl =  vendorService.getVendorImageUrlById(vendorId);
+	    String vendorName = vendorService.getVendorNameById(vendorId);
+	    String customerName =customerService.getCustomerNameById(o.getCustomerId());
+        LocalDateTime orderDateAndTime = o.getOrderDateAndTime();
+        Long OrderId = o.getOrderId();
+        customerPhone=customerService.getCustomerById(o.getCustomerId()).getPhone();
+        OrderDetails order = new OrderDetails(OrderId,vendorImgUrl ,foodPlusQunatity,customerName,vendorName,orderDateAndTime,totalPrice);
+       orderList.add(order);
+	    }
+	    model.addAttribute("customer_phone", customerPhone);
+	    model.addAttribute("MyOrders", orderList);
+	    model.addAttribute("vendorId" , vendorId);
+	    return "vendorCompleteOrders" ;
+	  
 	}
 
 	@GetMapping("/vendor/{vendorid}/addNewFoodItems")
@@ -207,6 +226,7 @@ public class VendorController {
 			Model model) {
 		List<FoodItem> FoodItemList = foodService.getFoodByFoodNameAndVendorId(vendorId, name);
 		model.addAttribute("vendorId", vendorId);
+		model.addAttribute("vendor_imageUrl", vendorService.getVendorImageUrlById(vendorId));
 		model.addAttribute("vendorName", vendorService.getVendorNameById(vendorId));
 		model.addAttribute("foodItems", FoodItemList);
 

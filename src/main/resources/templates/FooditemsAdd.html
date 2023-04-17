@@ -12,6 +12,7 @@
     <title>Document</title>
 </head>
 <body>
+<!--  
 <nav class="navbar navbar-expand-lg navbar-light bg-light" >
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
@@ -35,15 +36,56 @@
 
         </div>
     </div>
+</nav>-->
+<section class="hero__section" style="background: url(https://imgtr.ee/images/2023/04/17/yjbCm.png) no-repeat; background-size:cover; min-height: 100%;min-width: 1024px;width: 100%;height: auto;position:fixed;top: 0;left: 0;">
+       </section>
+<nav class="navbar navbar-expand-lg navbar-light" style="position:fixed; top:0; width:100%; z-index:1;background-color:white;">
+  <img src="https://imgtr.ee/images/2023/04/16/y4JTV.png" alt="logo Image" style="width:100px;  height:50px;">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" 
+  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+  aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto" style="font-size:18px;">
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/}" style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-home"></i>Home</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/vendor/{vendorid}/orderRequest    (vendorid=${vendorId})}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-clock"></i>Pending Orders</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/vendor/{vendorid}/orderHistory   (vendorid=${vendorId})}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-check" ></i>Completed Orders</a>
+      </li>
+      <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/vendor/{vendorid}/addNewFoodItems (vendorid=${vendorId})}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-plus-circle" ></i>Add Food Item</a>
+      </li>      
+       <li class="nav-item" style="margin-right:10px;">
+        <a class="nav-link" href="#" th:href="@{/}"style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <i class="fas fa-sign-out-alt"></i>Logout</a>
+      </li>
+    </ul>
+  </div>
 </nav>
-<div class="container">
+
+
+<div class="container" style="padding-top:100px;justify-content:center;">
     <div class="row">
-        <div class="col-sm-4">
+    
+        <div class="col-sm-4 mx-auto" style="justify-content:center;">
+        <div class="divider d-flex align-items-center my-2" style="justify-content:center;">
+                <div  style = "color:white;  font-weight: 400; font-size:36px;">Add food Item Details</div>
+      </div>
             <form th:action="@{/vendor/{vendorid}/addNewFoodItems  (vendorid=${vendorId}) }" method="post" th:object="${fooditem}">
                 <input type="hidden" name="id"  th:field="*{id}">
                 
                 
-                <div class="form-group"> 
+                <div class="form-group" style="color:white; "> 
                     <!-- <label for="vendorId">Vendor</label>
                     <input type="text" class="form-control" required th:field="*{vendorId}" th:value="${vendorId}" name="vendorId" id="vendorId"  placeholder=""> -->
                    
@@ -59,11 +101,14 @@
                 
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+               <div style="text-align: center;">
+  <button type="submit" class="btn btn-secondary">Submit</button>
+</div>
             </form>
         </div>
     </div>
 </div>
+
 
 
 
