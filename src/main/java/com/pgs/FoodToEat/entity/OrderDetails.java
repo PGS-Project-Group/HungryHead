@@ -18,6 +18,20 @@ public class OrderDetails {
 	public LocalDateTime orderDateAndTime ;
 	public Double totalPrice ;
 	public String  orderStatus ;
+	public String orderDeliveryAddress;
+	public OrderDetails(Long orderId,String vendorImgUrl, String foodItems, String customerName, String vendorName,
+			LocalDateTime orderDateAndTime, Double totalPrice, String deliveryAddress) {
+		super();
+		this.orderId =orderId ;
+		this.vendorImgUrl = vendorImgUrl;
+		this.foodItems = foodItems;
+		this.customerName = customerName;
+		this.vendorName = vendorName;
+		this.orderDateAndTime = orderDateAndTime;
+		this.totalPrice = totalPrice;
+		this.orderDeliveryAddress = deliveryAddress;
+	}
+	
 	public OrderDetails(Long orderId,String vendorImgUrl, String foodItems, String customerName, String vendorName,
 			LocalDateTime orderDateAndTime, Double totalPrice) {
 		super();
@@ -28,6 +42,7 @@ public class OrderDetails {
 		this.vendorName = vendorName;
 		this.orderDateAndTime = orderDateAndTime;
 		this.totalPrice = totalPrice;
+		this.orderDeliveryAddress = "";
 	}
 	
     
