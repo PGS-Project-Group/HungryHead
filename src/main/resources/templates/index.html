@@ -547,7 +547,7 @@ h1, h2, h3, h4, h5, h6 {
 	
 		
 <nav class="navbar navbar-expand-lg navbar-light" style="position:fixed; top:0; width:100%; z-index:1; background-color:white;">
-  <img src="https://imgtr.ee/images/2023/04/17/yi7kL.png" alt="logo Image" style="width:10%;  height:50px;">
+  <img th:src="@{/images/logo.png}" alt="logo Image" style="width:10%;  height:40px;">
   <button class="navbar-toggler" type="button" data-toggle="collapse" 
   data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
   aria-expanded="false" aria-label="Toggle navigation">
@@ -556,9 +556,9 @@ h1, h2, h3, h4, h5, h6 {
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
   <div style="padding-left:530px;">
-  <form th:action="@{/search}" method="get">
+  <form th:action="@{/search/{id} (id=${custId})}" method="post" th:object="${searchrobject}">
   <div class="search-box">
-    <input type="text" name="query" th:placeholder="'Search for food'" required />
+    <input type="text" name="keyword" th:value="${keyword}" th:placeholder="'Search for food'" required />
     <button type="submit" class="search-button">
       <i class="fa fa-search"></i>
       
@@ -569,7 +569,7 @@ h1, h2, h3, h4, h5, h6 {
   
     <ul class="navbar-nav ml-auto" style="font-size:18px;">
       <li class="nav-item" style="margin-right:10px;">
-        <a class="nav-link" href="#" th:href="@{/}" style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <a class="nav-link" href="#" th:href="@{/customer/{id}/home  (id=${custId})}" style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
         <i class="fas fa-home"></i>Home</a>
       </li>
       <li class="nav-item" style="margin-right:10px;">
@@ -830,7 +830,7 @@ h1, h2, h3, h4, h5, h6 {
 	<section class="footer-bar" style="width:100%;margin-top:20px;">
 		<div class="container">
 			<div class="footer-lang">
-				<img class="footer-logo" src="https://imgtr.ee/images/2023/04/16/y4JTV.png" style="width:13%; height:70px">
+				<img th:src="@{/images/logo.png}" alt="logo Image" style="width:15%;  height:40px;">
 				<div class="btn-lang-top">
 					<a class="lang-btn" href="#"><img src="data:image/png;base64,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" height="13px"> India <small><i class="fa fa-chevron-down"></i></small></a>
 					<a class="lang-btn" href="#"> <i class="fa fa-globe"></i> English <small><i class="fa fa-chevron-down"></i></small></a>

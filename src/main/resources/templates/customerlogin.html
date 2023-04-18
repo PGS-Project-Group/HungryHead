@@ -12,8 +12,9 @@
 
 <body>
 	<td>
-    <span th:if="${customer_sign_in_status_code == 104}"><h1 style="color: red; z-index: +5;">Email and pass not found</h1></span>
+    <span th:if="${customer_sign_in_status_code == 104}"><h1 style="color: red; z-index: +5;">alert(Email and pass not found)</h1></span>
 	</td>
+
 
 
        <section class="hero__section" style="background-image: url(https://imgtr.ee/images/2023/04/17/yjbCm.png);  min-height: 100%;min-width: 1024px;width: 100%;height: auto;position: fixed;top: 0;left: 0;">
@@ -51,8 +52,8 @@
           </div>
           
           <div class="text-center text-lg-start mt-4 pt-2">
-           <button type="submit" value="Login" class="btn btn-secondary btn-md"
-                   style="padding-left: 1.5rem; padding-right: 1.5rem;">Login
+           <button onclick="myFunction()" type="submit" value="Login" class="btn btn-secondary btn-md"
+                   style="padding-left: 1.5rem; padding-right: 1.5rem; ">Login
            </button>
        
             <p class="medium fw-bold mt-2 pt-1 mb-0" style = "color:white; font-weight: 600; font-size: 20px;">Don't have an account? <a href="#" th:href="@{/customer/signup}"  style = "font-weight: 600; font-color:grey;" >Register Here!</a></p>
@@ -62,6 +63,34 @@
     </div>
   </div>
   
+
+<!-- <script>
+
+
+function myFunction() {
+	/* <span th:if="${customer_sign_in_status_code == 104}"></span> */
+    alert("Hello! I am an alert box!");
+}
+</script> -->
+
+
+<!-- <script th:inline="javascript">
+
+var status_code = "[[${customer_sign_in_status_code}]]";
+
+function myFunction() {
+	
+	if(status_code==104){
+		alert("Please Enter Correct Details");
+	}
+	
+	 else{
+		 alert("Login Successful");
+	} 
+}
+
+</script>
+ -->  
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

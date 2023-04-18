@@ -76,6 +76,7 @@ public class CustomerController {
 		getCurrNotConfirmedOrder(cust.getId());
 		FetchHomeData(m);
 		m.addAttribute("customer_sign_in_status_code", CustomerStatus.CUSTOMER_CODE_OK);
+		
 		return "redirect:/customer/" + cust.getId() + "/home";
 	}
 
@@ -106,6 +107,7 @@ public class CustomerController {
 		m.addAttribute("custName", cust.getName());
 		FetchHomeData(m);
 		m.addAttribute("customer_sign_up_status_code", CustomerStatus.CUSTOMER_CODE_OK);
+		
 		return "redirect:/customer/" + cust.getId() + "/home";
 	}
 

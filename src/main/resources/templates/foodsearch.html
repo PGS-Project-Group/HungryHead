@@ -59,7 +59,7 @@
 <header class="header" style="height:39px;" > 
 	
 	<nav class="navbar navbar-expand-lg navbar-light " style="position:fixed; top:0; width:100%; z-index:1; background-color:white;">
-  <img th:src="@{/images/logo.png}" alt="logo Image" style="width:10%;  height:40px;">
+ <img th:src="@{/images/logo.png}" alt="logo Image" style="width:10%;  height:40px;">
   <button class="navbar-toggler" type="button" data-toggle="collapse" 
   data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
   aria-expanded="false" aria-label="Toggle navigation">
@@ -104,8 +104,8 @@
 
   <div class="container">
    <div style="overflow: auto; margin-top:0px;top:110px; margin-left:30px;display:flex;">
-     <img th:src="@{/images/__${food_type}__.jpg}" alt="Example Image" style="width: 100px; height: 75px; border-radius: 0px; margin-right: 20px;">
-     <h5 style="color: rgb(0, 0, 0); font-size: 24px; font-weight: bold; margin-right: auto;"><td th:text="${food_type}"></td></h5>
+     <img th:src="@{/images/search.jpg}" alt="Example Image" style="width: 100px; height: 75px; border-radius: 0px; margin-right: 20px;">
+     <h5 style="color: rgb(0, 0, 0); font-size: 24px; font-weight: bold; margin-right: auto;">Dishes searched by item : <td th:text="${food_type}"></td></h5>
     
     </div>
   </div>

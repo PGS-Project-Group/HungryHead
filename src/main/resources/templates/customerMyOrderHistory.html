@@ -38,7 +38,7 @@
 </nav>-->
 
 <nav class="navbar navbar-expand-lg navbar-light  " style="position:fixed; top:0; width:100%; z-index:1; background-color:white;">
-  <img src="https://imgtr.ee/images/2023/04/16/y4JTV.png" alt="logo Image" style="width:10%;  height:50px;">
+  <img th:src="@{/images/logo.png}" alt="logo Image" style="width:10%;  height:40px;">
   <button class="navbar-toggler" type="button" data-toggle="collapse" 
   data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
   aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto" style="font-size:18px;">
       <li class="nav-item" style="margin-right:10px;">
-        <a class="nav-link" href="#" th:href="@{/}" style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
+        <a class="nav-link" href="#" th:href="@{/customer/{id}/home  (id=${custId})}" style="color:black; hover:gray;"onmouseover="this.style.color='gray';" onmouseout="this.style.color='black';">
         <i class="fas fa-home"></i>Home</a>
       </li> 
       <li class="nav-item" style="margin-right:10px;">
