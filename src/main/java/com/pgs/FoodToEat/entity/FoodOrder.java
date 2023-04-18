@@ -27,4 +27,5 @@ public class FoodOrder implements Serializable {
 	private Byte orderStatus;
 	private String remark;
 	private Double orderAmount;
+	private String orderDeliveryAddress;
 }

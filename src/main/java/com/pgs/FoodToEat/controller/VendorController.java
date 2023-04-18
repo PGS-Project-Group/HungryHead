@@ -131,9 +131,10 @@ public class VendorController {
 			String customerName = customerService.getCustomerNameById(o.getCustomerId());
 			LocalDateTime orderDateAndTime = o.getOrderDateAndTime();
 			Long OrderId = o.getOrderId();
+			String deliveryAddress = o.getOrderDeliveryAddress();
 			customerPhone=customerService.getCustomerById(o.getCustomerId()).getPhone();
 			OrderDetails order = new OrderDetails(OrderId, vendorImgUrl, foodPlusQunatity, customerName, vendorName,
-					orderDateAndTime, totalPrice);
+					orderDateAndTime, totalPrice, deliveryAddress);
 			orderList.add(order);
 		}
 		model.addAttribute("customer_phone", customerPhone);
@@ -191,8 +192,9 @@ public class VendorController {
 	    String customerName =customerService.getCustomerNameById(o.getCustomerId());
         LocalDateTime orderDateAndTime = o.getOrderDateAndTime();
         Long OrderId = o.getOrderId();
+        String deliveryAddress = o.getOrderDeliveryAddress();
         customerPhone=customerService.getCustomerById(o.getCustomerId()).getPhone();
-        OrderDetails order = new OrderDetails(OrderId,vendorImgUrl ,foodPlusQunatity,customerName,vendorName,orderDateAndTime,totalPrice);
+        OrderDetails order = new OrderDetails(OrderId,vendorImgUrl ,foodPlusQunatity,customerName,vendorName,orderDateAndTime,totalPrice, deliveryAddress);
        orderList.add(order);
 	    }
 	    model.addAttribute("customer_phone", customerPhone);

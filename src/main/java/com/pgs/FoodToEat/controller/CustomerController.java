@@ -2,6 +2,7 @@ package com.pgs.FoodToEat.controller;
 
 import com.pgs.FoodToEat.entity.Customer;
 import com.pgs.FoodToEat.entity.CustomerStatus;
+import com.pgs.FoodToEat.entity.DeliveryAddress;
 import com.pgs.FoodToEat.entity.FoodItem;
 import com.pgs.FoodToEat.entity.FoodOrder;
 import com.pgs.FoodToEat.entity.FoodOrderStatus;
@@ -145,6 +146,7 @@ public class CustomerController {
 		m.addAttribute("customer_id", customerId);
 		m.addAttribute("cart_items", cartItems);
 		m.addAttribute("food_items", foodItems);
+		m.addAttribute("delivery_address", new DeliveryAddress());
 		return "checkout.html";
 	}
 
@@ -252,12 +254,13 @@ public class CustomerController {
 		return "redirect:/customer/" + customerId + "/cart";
 	}
 
-	@GetMapping("/placeOrder/{customerId}")
-	public String placeOrder(@PathVariable("customerId") Long customerId, Model m) throws FoodOrderNotFoundException {
+	@PostMapping("/placeOrder/{customerId}")
+	public String placeOrder(@ModelAttribute("delivery_address") DeliveryAddress address, @PathVariable("customerId") Long customerId, Model m) throws FoodOrderNotFoundException {
 		FoodOrder order = foodOrderService.getOrderByOrderStatusAndCustomerId(FoodOrderStatus.NOT_CONFIRMED, customerId)
 				.get(0);
 		order.setOrderDateAndTime(LocalDateTime.now());
 		order.setOrderStatus(FoodOrderStatus.WAITING_FOR_VENDOR_CONFIRMATION);
+		order.setOrderDeliveryAddress(address.getHouseNoAndArea() + ", " + address.getCity() + ", " + address.getState() + ", " + address.getPinCode());
 		foodOrderService.addFoodOrder(order);
 		m.addAttribute("custId", customerId);
 		FetchHomeData(m);

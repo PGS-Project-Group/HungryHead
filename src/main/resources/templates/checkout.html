@@ -32,7 +32,8 @@
 			</div>
 		</div>
 		<div class="row cart-body">
-			<form class="form-horizontal" method="post" action="">
+			<form class="form-horizontal" method="post"
+				th:action="@{/placeOrder/{c_Id}(c_Id = ${customer_id})}" th:object="${delivery_address}">
 				<div
 					class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-push-6 col-sm-push-6">
 					<!--REVIEW ORDER-->
@@ -60,14 +61,14 @@
 													class="minus bg-dark" style="font-size: 300%"> <a
 														th:href="@{/cart/decrQuantity/{c_Id}/{f_Id} (c_Id = ${customer_id}, f_Id = ${food_items[iStat.index].id})}">
 															- </a></span>
-												<td th:text="${item.quantity}"></td>
-												<span class="plus bg-dark" style="font-size: 200%"> <a
+													<td th:text="${item.quantity}"></td> <span
+													class="plus bg-dark" style="font-size: 200%"> <a
 														th:href="@{/cart/incrQuantity/{c_Id}/{f_Id} (c_Id = ${customer_id}, f_Id = ${food_items[iStat.index].id})}">
 															+ </a>
 												</span></span></small>
 										</div>
-										
-										
+
+
 									</div>
 									<div class="col-sm-3 col-xs-3 text-right">
 										<h6>
@@ -130,9 +131,9 @@
 									<h4>Shipping Address</h4>
 								</div>
 							</div> -->
-							
-								
-							<div class="form-group">
+
+
+							<!-- <div class="form-group">
 								<div class="col-md-6 col-xs-12">
 									<strong>First Name:</strong> <input type="text"
 										name="first_name" class="form-control" value="" />
@@ -142,13 +143,13 @@
 									<strong>Last Name:</strong> <input type="text" name="last_name"
 										class="form-control" value="" />
 								</div>
-							</div>
+							</div> -->
 							<div class="form-group">
 								<div class="col-md-12">
-									<strong>Address:</strong>
+									<strong>House no, Area:</strong>
 								</div>
 								<div class="col-md-12">
-									<input type="text" name="address" class="form-control" value="" />
+									<input type="text" name="address" class="form-control" value="" required th:field="*{houseNoAndArea}"/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -156,7 +157,7 @@
 									<strong>City:</strong>
 								</div>
 								<div class="col-md-12">
-									<input type="text" name="city" class="form-control" value="" />
+									<input type="text" name="city" class="form-control" value="" required th:field="*{city}"/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -164,7 +165,7 @@
 									<strong>State:</strong>
 								</div>
 								<div class="col-md-12">
-									<input type="text" name="state" class="form-control" value="" />
+									<input type="text" name="state" class="form-control" value="" required th:field="*{state}"/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -173,10 +174,10 @@
 								</div>
 								<div class="col-md-12">
 									<input type="text" name="zip_code" class="form-control"
-										value="" />
+										value="" required th:field="*{pinCode}"/>
 								</div>
 							</div>
-							<div class="form-group">
+							<!-- <div class="form-group">
 								<div class="col-md-12">
 									<strong>Phone Number:</strong>
 								</div>
@@ -184,7 +185,7 @@
 									<input type="text" name="phone_number" class="form-control"
 										value="" />
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 					<!--SHIPPING METHOD END-->
@@ -270,10 +271,12 @@
 									<div class="clearfix"></div>
 								</div>
 							</div>
+
 							<div class="form-group">
-								<td><a href=""
-									th:href="@{/placeOrder/{c_Id}(c_Id = ${customer_id})}"
-									class="btn btn-success" style = "margin-left:40%;">Place Order</a></td>
+								<button type="submit" value="place_order"
+									class="btn btn-primary btn-md"
+									style="margin-left: 40%;">Place Order
+								</button>
 							</div>
 						</div>
 					</div>
