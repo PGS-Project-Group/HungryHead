@@ -77,7 +77,7 @@ public class CustomerController {
 		getCurrNotConfirmedOrder(cust.getId());
 		FetchHomeData(m);
 		m.addAttribute("customer_sign_in_status_code", CustomerStatus.CUSTOMER_CODE_OK);
-		
+
 		return "redirect:/customer/" + cust.getId() + "/home";
 	}
 
@@ -108,7 +108,7 @@ public class CustomerController {
 		m.addAttribute("custName", cust.getName());
 		FetchHomeData(m);
 		m.addAttribute("customer_sign_up_status_code", CustomerStatus.CUSTOMER_CODE_OK);
-		
+
 		return "redirect:/customer/" + cust.getId() + "/home";
 	}
 
@@ -255,12 +255,14 @@ public class CustomerController {
 	}
 
 	@PostMapping("/placeOrder/{customerId}")
-	public String placeOrder(@ModelAttribute("delivery_address") DeliveryAddress address, @PathVariable("customerId") Long customerId, Model m) throws FoodOrderNotFoundException {
+	public String placeOrder(@ModelAttribute("delivery_address") DeliveryAddress address,
+			@PathVariable("customerId") Long customerId, Model m) throws FoodOrderNotFoundException {
 		FoodOrder order = foodOrderService.getOrderByOrderStatusAndCustomerId(FoodOrderStatus.NOT_CONFIRMED, customerId)
 				.get(0);
 		order.setOrderDateAndTime(LocalDateTime.now());
 		order.setOrderStatus(FoodOrderStatus.WAITING_FOR_VENDOR_CONFIRMATION);
-		order.setOrderDeliveryAddress(address.getHouseNoAndArea() + ", " + address.getCity() + ", " + address.getState() + ", " + address.getPinCode());
+		order.setOrderDeliveryAddress(address.getHouseNoAndArea() + ", " + address.getCity() + ", " + address.getState()
+				+ ", " + address.getPinCode());
 		foodOrderService.addFoodOrder(order);
 		m.addAttribute("custId", customerId);
 		FetchHomeData(m);
@@ -289,8 +291,9 @@ public class CustomerController {
 			String customerName = customerService.getCustomerNameById(customerId);
 			LocalDateTime orderDateAndTime = o.getOrderDateAndTime();
 			Long OrderId = o.getOrderId();
+			String deliveryAddress = o.getOrderDeliveryAddress();
 			OrderDetails order = new OrderDetails(OrderId, vendorImgUrl, foodPlusQunatity, customerName, vendorName,
-					orderDateAndTime, totalPrice);
+					orderDateAndTime, totalPrice, deliveryAddress);
 			orderList.add(order);
 		}
 		model.addAttribute("custId", customerId);
@@ -322,13 +325,14 @@ public class CustomerController {
 			String customerName = customerService.getCustomerNameById(customerId);
 			LocalDateTime orderDateAndTime = o.getOrderDateAndTime();
 			Long OrderId = o.getOrderId();
+			String deliveryAddress = o.getOrderDeliveryAddress();
 
 			OrderDetails order = new OrderDetails(OrderId, vendorImgUrl, foodPlusQunatity, customerName, vendorName,
-					orderDateAndTime, totalPrice);
+					orderDateAndTime, totalPrice, deliveryAddress);
 			order.setOrderStatus(new FoodOrderStatus().findOrderStatus(o.getOrderStatus()));
 			orderList.add(order);
 		}
-        model.addAttribute("custId",customerId );
+		model.addAttribute("custId", customerId);
 		model.addAttribute("MyOrders", orderList);
 		return "customerMyOrderHistory";
 	}

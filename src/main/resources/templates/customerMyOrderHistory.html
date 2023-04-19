@@ -77,47 +77,64 @@
 </nav>
 
 
-<div class="container" style="padding-top:90px;">
+<div class="container" style="padding-top:0px;">
 
    
-    <table class="table">
-        <thead class="thead-light">
-        <tr>
-            <th scope="col">SN</th>
-              <th scope="col">Vendor</th>
-            <th scope="col">Vendor Name</th>
-            <th scope="col">Food Items</th>
-        
-            <th scope="col">Date/Time</th>
-            
-            <th scope="col">Total Price</th>
-             <th scope="col">Order Status</th>
-          
-            
-           
-           
-        </tr>
-        </thead>
-        <tbody>
-        
-    
+	<div class="container" style="padding-top: 70px;">
+		<div class="row">
+			<div class="col">
+				<div class="card-group">
 
-        <tr th:each="myorder, iStat : ${MyOrders}">
-            <th scope="row" th:text="${iStat.index + 1}">1</th>
-             <td ><div class="card-media" th:style="'background-image: url(' + ${myorder.vendorImgUrl} + '); background-position: center; background-size: cover; height: 200px; width: 100%; object-fit: fit; border-radius: 10px 10px 0 0; position: relative;'">
-									</td>
-		    <td th:text="${myorder.vendorName}">Larry</td>
-            <td th:text="${myorder.foodItems}">Larry</td>
-            
-            <td th:text="${myorder.orderDateAndTime}">Larry</td>
-            <td th:text="${myorder.totalPrice}">Larry</td>
-             <td th:text="${myorder.orderStatus}">Larry</td>
-           
-           
-            
-        </tr>
-        </tbody>
-    </table>
+					<tr th:each="myorder, iStat : ${MyOrders}">
+
+						<div class="cards-container"
+							style="width: 30%; margin-left: 20px; margin-bottom: 20px; padding-top: 20px;">
+							<div class="card"
+								style="background-color: #fff; display: inline-block; width: 300px; height: 450px; border-radius: 0px;">
+								<div class="card-header">
+									<span style="font-weight: 500;">Order Id:</span>
+									<td th:text="'#'+${myorder.orderId}" />
+								</div>
+								<div class="card-body" style="padding-top: 0px;">
+									<h5 class="card-title">Vendor Details:</h5>
+									<div class="place-review">
+										<p class="place-name"
+											style="font-weight: 450; padding-bottom: 0px; padding-top: 0px; font-size: 16px; color: rgba(0, 0, 0, 0.87);">
+											<td th:text="${myorder.vendorName}">Larry</td> <br>
+
+											<td><div class="card-media"
+													th:style="'background-image: url(' + ${myorder.vendorImgUrl} + '); background-position: center; background-size: cover; height: 100px; width: 50%; object-fit: fit; border-radius: 0px 0px 0 0; position: right;'"></td>
+										</p>
+									</div>
+									<h5 class="card-title" style="padding-top: 0px;">Order
+										Details:</h5>
+									<div class="place-review" style="padding-top: 0px;">
+										<p class="rating"
+											style="font-size: 14px; border-radius: 4px; font-weight: 700; margin-bottom: 6px; margin-left: 0px;">
+											<td th:text="${myorder.foodItems}"></td>
+										</p>
+										<img
+											src="https://www.kindpng.com/picc/m/276-2760684_yellow-location-icon-png-transparent-png.png"
+											style="height: 20px; width: 20px" />
+										<td th:text="${myorder.orderDeliveryAddress}">Larry</td>
+										<p class="per-person" style="font-size: 14px; color: black;">
+											Order Date and Time: <br>
+											<td th:text="${myorder.orderDateAndTime}">Larry</td>
+										</p>
+										<p class="place-name"
+											style="font-weight: 600; padding-bottom: 10px; color: rgba(0, 0, 0, 0.87);">
+											<span>Total Amount: INR </span>
+											<td th:text="${myorder.totalPrice}">Larry</td>
+										</p>
+									</div>
+								</div>
+							</div>
+							</div>
+							
+						</div>
+				</div>
+			</div>
+		</div>
 </div>
 
 
