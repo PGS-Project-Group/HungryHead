@@ -102,6 +102,7 @@ public class AdminController {
 
 	@PostMapping("/admin/vendors/add")
 	public String postVendorsAdd(@ModelAttribute("vendor") Vendor vend) {
+		vend.setVerified("true");
 		vendorService.addVendor(vend);
 		return "redirect:/admin/vendors";
 	}
